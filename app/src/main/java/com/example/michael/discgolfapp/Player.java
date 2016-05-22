@@ -8,5 +8,8 @@ public class Player {
     public String getName(){
         return name;
     }
+    public void setName(String name){
+        this.name = name;
+    }
     //TODO add player previous game data, stack push/pop style
 }

@@ -1,18 +1,23 @@
 package com.example.michael.discgolfapp;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Michael on 5/20/2016.
  */
 public class ScoreCard extends DiscGolfGameManager {
 
-    private int[] player;
+    private int[] playerScoreCard;
     private String date;
     private int currentHoleSelected= 0;
 
 
     public ScoreCard(Course courseLength){
         try {
-            player = new  int[courseLength.getHoleLength()];
+            playerScoreCard = new  int[courseLength.getHoleLength()];
         }
         catch(NegativeArraySizeException ex)
         {
@@ -35,13 +40,13 @@ public class ScoreCard extends DiscGolfGameManager {
     }
 
     protected void AddStroke(){
-        if (player != null){
-            player[currentHoleSelected]++;
+        if (playerScoreCard != null){
+            playerScoreCard[currentHoleSelected]++;
         }
     }
     protected void ReduceStroke(){
-        if (player != null){
-            player[currentHoleSelected]--;
+        if (playerScoreCard != null){
+            playerScoreCard[currentHoleSelected]--;
         }
     }
 }
