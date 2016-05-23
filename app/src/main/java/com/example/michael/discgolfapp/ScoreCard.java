@@ -7,17 +7,22 @@ public class ScoreCard extends DiscGolfGameManager {
 
     private String date;
     private Course currentCourse;
-    private PlayerInfo[] playerInfos;
-    private int frontNinePar;
-    private int backNinePar;
 
-    public ScoreCard(Course currentCourse, PlayerInfo[] playerInfos, String date){
+    private PlayerInfo[] players_with_Scores;
+
+
+    /*
+    public ScoreCard(Course currentCourse, PlayerInfo[] playersInfo, String date){
         this.currentCourse = currentCourse;
-        this.playerInfos = playerInfos;
+        this.playersInfo = playersInfo;
         this.date = date;
 
+    }
+*/
 
+    private void setUpScoreCard(){
 
     }
+
 
 }

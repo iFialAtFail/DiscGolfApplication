@@ -42,4 +42,8 @@ public class Course {
     public int getCurrentHolePar(int currentHole){
         return courseHoleArray[currentHole];
     }
+
+    public int[] getCourseHoleArray(){
+        return courseHoleArray;
+    }
 }
