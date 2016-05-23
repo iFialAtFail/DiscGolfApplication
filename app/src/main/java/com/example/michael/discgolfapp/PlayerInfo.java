@@ -3,7 +3,7 @@ package com.example.michael.discgolfapp;
 /**
  * Created by Michael on 5/22/2016.
  */
-public class Player {
+public class PlayerInfo {
     private String name;
     public String getName(){
         return name;
