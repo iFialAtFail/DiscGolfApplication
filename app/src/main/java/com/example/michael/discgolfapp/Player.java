@@ -31,7 +31,7 @@ public class Player {
             //throw new ArgumentNullException();
         }
 
-        score = (int[]) course.CurrentHolePar.Clone();
+        score = (int[]) course.getCurrentHolePar().clone();
     }
 
 
