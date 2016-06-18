@@ -17,7 +17,7 @@ public class ScoreCard extends DiscGolfGameManager {
         this.course = course;
         currentHole = 1;
     }
-  
+
 
     public int getCurrentHole(){
         return currentHole;

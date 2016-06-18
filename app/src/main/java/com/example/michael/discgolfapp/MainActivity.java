@@ -8,25 +8,39 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button myButton;
-    TextView tv1;
-    TextView tv2;
-    TextView tv3;
-    TextView tv4;
-    TextView tv5;
-    TextView tv6;
-    TextView tv7;
-    TextView tv8;
-    TextView tv9;
-    TextView tv10;
-    TextView tv11;
-    TextView tv12;
-    TextView tv13;
-    TextView tv14;
-    TextView tv15;
-    TextView tv16;
-    TextView tv17;
-    TextView tv18;
+    Course courseBigRapids = new Course("Big Rapids",18);
+    Player mike = new Player("Mike",courseBigRapids);
+    Player[] players = new Player[]{mike};
+    ScoreCard newGame = new ScoreCard(players,courseBigRapids);
+
+    Button btnIncrementScore;
+    Button btnDecrementScore;
+    Button btnNextHole;
+    Button btnPreviousHole;
+
+    TextView tvName;
+
+    TextView tvHole;
+    TextView tvHole1;
+    TextView tvHole2;
+    TextView tvHole3;
+    TextView tvHole4;
+    TextView tvHole5;
+    TextView tvHole6;
+    TextView tvHole7;
+    TextView tvHole8;
+    TextView tvHole9;
+    TextView tvHole10;
+    TextView tvHole11;
+    TextView tvHole12;
+    TextView tvHole13;
+    TextView tvHole14;
+    TextView tvHole15;
+    TextView tvHole16;
+    TextView tvHole17;
+
+
+    TextView[] tvArray;
 
 
     Integer incrementedInteger = 0;
@@ -37,53 +51,93 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        myButton = (Button)findViewById(R.id.btnHurtScore);
-        tv1 = (TextView)findViewById(R.id.textView);
-        tv2 = (TextView)findViewById(R.id.textView2);
-        tv3 = (TextView)findViewById(R.id.textView3);
-        tv4 = (TextView)findViewById(R.id.textView4);
-        tv5 = (TextView)findViewById(R.id.textView5);
-        tv6 = (TextView)findViewById(R.id.textView6);
-        tv7 = (TextView)findViewById(R.id.textView7);
-        tv8 = (TextView)findViewById(R.id.textView8);
-        tv9 = (TextView)findViewById(R.id.textView9);
-        tv10 = (TextView)findViewById(R.id.textView10);
-        tv11 = (TextView)findViewById(R.id.textView11);
-        tv12 = (TextView)findViewById(R.id.textView12);
-        tv13 = (TextView)findViewById(R.id.textView13);
-        tv14 = (TextView)findViewById(R.id.textView14);
-        tv15 = (TextView)findViewById(R.id.textView15);
-        tv16 = (TextView)findViewById(R.id.textView16);
-        tv17 = (TextView)findViewById(R.id.textView17);
-        tv18 = (TextView)findViewById(R.id.textView18);
+        btnIncrementScore = (Button)findViewById(R.id.btnIncrementScore);
+        btnDecrementScore = (Button)findViewById(R.id.btnDecrementScore);
+        btnNextHole = (Button)findViewById(R.id.btnNextHole);
+        btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
+
+        tvName = (TextView) findViewById(R.id.tvName);
+        tvName.setText(newGame.getPlayers()[0].getPlayerName());
+
+        tvHole = (TextView)findViewById(R.id.textView);
+        tvHole1 = (TextView)findViewById(R.id.textView1);
+        tvHole2 = (TextView)findViewById(R.id.textView2);
+        tvHole3 = (TextView)findViewById(R.id.textView3);
+        tvHole4 = (TextView)findViewById(R.id.textView4);
+        tvHole5 = (TextView)findViewById(R.id.textView5);
+        tvHole6 = (TextView)findViewById(R.id.textView6);
+        tvHole7 = (TextView)findViewById(R.id.textView7);
+        tvHole8 = (TextView)findViewById(R.id.textView8);
+        tvHole9 = (TextView)findViewById(R.id.textView9);
+        tvHole10 = (TextView)findViewById(R.id.textView10);
+        tvHole11 = (TextView)findViewById(R.id.textView11);
+        tvHole12 = (TextView)findViewById(R.id.textView12);
+        tvHole13 = (TextView)findViewById(R.id.textView13);
+        tvHole14 = (TextView)findViewById(R.id.textView14);
+        tvHole15 = (TextView)findViewById(R.id.textView15);
+        tvHole16 = (TextView)findViewById(R.id.textView16);
+        tvHole17 = (TextView)findViewById(R.id.textView17);
+
+
+        generateTable();
+        updateTable();
 
 
     }
 
-    public void OnButtonClick(View v){
-        incrementedTextNumber();
-        tv1.setText(incrementedInteger.toString());
-        tv2.setText(incrementedInteger.toString());
-        tv3.setText(incrementedInteger.toString());
-        tv4.setText(incrementedInteger.toString());
-        tv5.setText(incrementedInteger.toString());
-        tv6.setText(incrementedInteger.toString());
-        tv7.setText(incrementedInteger.toString());
-        tv8.setText(incrementedInteger.toString());
-        tv9.setText(incrementedInteger.toString());
-        tv10.setText(incrementedInteger.toString());
-        tv11.setText(incrementedInteger.toString());
-        tv12.setText(incrementedInteger.toString());
-        tv13.setText(incrementedInteger.toString());
-        tv14.setText(incrementedInteger.toString());
-        tv15.setText(incrementedInteger.toString());
-        tv16.setText(incrementedInteger.toString());
-        tv17.setText(incrementedInteger.toString());
-        tv18.setText(incrementedInteger.toString());
+    private void generateTable() {
+        if (tvArray == null){
+            tvArray = new TextView[]{
+                    tvHole,
+                    tvHole1,
+                    tvHole2,
+                    tvHole3,
+                    tvHole4,
+                    tvHole5,
+                    tvHole6,
+                    tvHole7,
+                    tvHole8,
+                    tvHole9,
+                    tvHole10,
+                    tvHole11,
+                    tvHole12,
+                    tvHole13,
+                    tvHole14,
+                    tvHole15,
+                    tvHole16,
+                    tvHole17,
+            };
+            for (int j = 0; j < courseBigRapids.getNumberOfHoles(); j++){
+                String temp = String.valueOf(newGame.getPlayers()[0].getScore()[j]);
+                tvArray[j].setText(temp);
+            }
+        }
     }
 
-    private String incrementedTextNumber(){
-        incrementedInteger -= 1;
-        return incrementedInteger.toString();
+    private void updateTable(){
+        if (tvArray != null){
+            for (int j = 0; j < courseBigRapids.getNumberOfHoles(); j++){
+                tvArray[j].setText(String.valueOf(newGame.getPlayers()[0].getScore()[j]));
+            }
+        }
     }
+
+    public void OnIncrementScoreClick(View v){
+        newGame.getPlayers()[0].IncrementCurrentScore(newGame.getCurrentHole());
+        updateTable();
+    }
+    public void OnDecrementScoreClick(View v){
+        newGame.getPlayers()[0].DecrementCurrentScore(newGame.getCurrentHole());
+        updateTable();
+    }
+    public void OnNextHoleClick(View v){
+        newGame.NextHole();
+        updateTable();
+    }
+    public void OnPreviousHoleClick(View v){
+        newGame.PreviousHole();
+        updateTable();
+    }
+
+
 }
