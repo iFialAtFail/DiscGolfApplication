@@ -1,5 +1,7 @@
 package com.example.michael.discgolfapp;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -92,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
             players = new Player[]{mike};
             newGame  = new ScoreCard(players,courseBigRapids);
             generateTable();
+            ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
+            ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE); //On recreation/orientation change, everything is red. This will force the last
+            //value of the shapes.xml to be white.
 
         }
 
@@ -105,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
             newGame = new ScoreCard(players,courseBigRapids);
             newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
             updateTable();
+            ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
+            ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
+
         }
     }
 
@@ -186,14 +194,25 @@ public class MainActivity extends AppCompatActivity {
     public void OnDecrementScoreClick(View v){
         newGame.getPlayers()[0].DecrementCurrentScore(newGame.getCurrentHole());
         updateTable();
+
     }
     public void OnNextHoleClick(View v){
         newGame.NextHole();
         updateTable();
+        //Set current hole color red for ease of reading.
+        //Change an arbitary array element to white, since the change acts on the entire
+        //xml document, messing up onCreate's redraw.
+        ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
+        ((GradientDrawable)tvArray[newGame.getCurrentHole()-2].getBackground()).setColor(Color.WHITE);
     }
     public void OnPreviousHoleClick(View v){
         newGame.PreviousHole();
         updateTable();
+        //Set current hole color red for ease of reading.
+        //Change an arbitary array element to white, since the change acts on the entire
+        //xml document, messing up onCreate's redraw.
+        ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
+        ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
     }
 
 
