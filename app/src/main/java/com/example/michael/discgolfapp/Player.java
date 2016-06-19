@@ -47,6 +47,10 @@ public class Player {
         return score;
     }
 
+    public void setScore(int[] value){
+        score = value;
+    }
+
     public void IncrementCurrentScore(int currentHole)
     {
         if (currentHole >= 1 && currentHole <= 18) {

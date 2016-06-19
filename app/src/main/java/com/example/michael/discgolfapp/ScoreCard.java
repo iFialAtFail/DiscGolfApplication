@@ -22,6 +22,11 @@ public class ScoreCard extends DiscGolfGameManager {
     public int getCurrentHole(){
         return currentHole;
     }
+    public void setCurrentHole(int value){
+        if (value >= 1 && value <= course.getNumberOfHoles()){
+            currentHole = value;
+        }
+    }
 
     public Player[] getPlayers(){
         return players;

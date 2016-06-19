@@ -13,6 +13,11 @@ public class MainActivity extends AppCompatActivity {
     Player[] players;
     ScoreCard newGame;
 
+    private final String PLAYER_SCORE = "Player Score";
+    private final String PLAYER_NAME = "Player Name";
+    private final String CURRENT_HOLE = "Current Hole";
+
+
     Button btnIncrementScore;
     Button btnDecrementScore;
     Button btnNextHole;
@@ -77,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
         tvHole15 = (TextView)findViewById(R.id.textView15);
         tvHole16 = (TextView)findViewById(R.id.textView16);
         tvHole17 = (TextView)findViewById(R.id.textView17);
+        generateTvArray();
 
+        //If first time go, create new stuff
         if (savedInstanceState == null) {
 
             courseBigRapids = new Course("Big Rapids",18);
@@ -87,13 +94,43 @@ public class MainActivity extends AppCompatActivity {
             generateTable();
 
         }
-        else {
+
+        //If on recreation, pull out the saved state information and reset the object
+        //to the previous state.
+        if (savedInstanceState != null) {
+            courseBigRapids = new Course("Big Rapids", 18);
+            mike = new Player("Mike", courseBigRapids);
+            mike.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
+            players = new Player[]{mike};
+            newGame = new ScoreCard(players,courseBigRapids);
+            newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
             updateTable();
         }
     }
 
-    private void generateTable() {
-        if (tvArray == null){
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        courseBigRapids = new Course("Big Rapids", 18);
+        mike = new Player("Mike", courseBigRapids);
+        mike.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
+        players = new Player[]{mike};
+        newGame = new ScoreCard(players,courseBigRapids);
+        newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(PLAYER_NAME, mike.getPlayerName());
+        outState.putIntArray(PLAYER_SCORE, mike.getScore());
+        outState.putInt(CURRENT_HOLE,newGame.getCurrentHole());
+    }
+
+    private void generateTvArray(){
+        if (tvArray == null) {
             tvArray = new TextView[]{
                     tvHole,
                     tvHole1,
@@ -112,17 +149,22 @@ public class MainActivity extends AppCompatActivity {
                     tvHole14,
                     tvHole15,
                     tvHole16,
-                    tvHole17,
+                    tvHole17
             };
-            for (int j = 0; j < courseBigRapids.getNumberOfHoles(); j++){
+        }
+    }
+
+
+    private void generateTable() {
+        if (tvArray != null) {
+            for (int j = 0; j < courseBigRapids.getNumberOfHoles(); j++) {
                 String temp = String.valueOf(newGame.getPlayers()[0].getScore()[j]);
                 tvArray[j].setText(temp);
             }
+        }
 
-            if (tvName != null){
+        if (tvName != null){
                 tvName.setText(newGame.getPlayers()[0].getPlayerName());
-            }
-
         }
     }
 
@@ -131,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 0; j < courseBigRapids.getNumberOfHoles(); j++){
                 tvArray[j].setText(String.valueOf(newGame.getPlayers()[0].getScore()[j]));
             }
+        }
+        if (tvName != null){
+            tvName.setText(newGame.getPlayers()[0].getPlayerName());
         }
     }
 
