@@ -8,10 +8,10 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Course courseBigRapids = new Course("Big Rapids",18);
-    Player mike = new Player("Mike",courseBigRapids);
-    Player[] players = new Player[]{mike};
-    ScoreCard newGame = new ScoreCard(players,courseBigRapids);
+    Course courseBigRapids;
+    Player mike;
+    Player[] players;
+    ScoreCard newGame;
 
     Button btnIncrementScore;
     Button btnDecrementScore;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
 
         tvName = (TextView) findViewById(R.id.tvName);
-        tvName.setText(newGame.getPlayers()[0].getPlayerName());
+
 
         tvHole = (TextView)findViewById(R.id.textView);
         tvHole1 = (TextView)findViewById(R.id.textView1);
@@ -78,11 +78,18 @@ public class MainActivity extends AppCompatActivity {
         tvHole16 = (TextView)findViewById(R.id.textView16);
         tvHole17 = (TextView)findViewById(R.id.textView17);
 
+        if (savedInstanceState == null) {
 
-        generateTable();
-        updateTable();
+            courseBigRapids = new Course("Big Rapids",18);
+            mike = new Player("Mike",courseBigRapids);
+            players = new Player[]{mike};
+            newGame  = new ScoreCard(players,courseBigRapids);
+            generateTable();
 
-
+        }
+        else {
+            updateTable();
+        }
     }
 
     private void generateTable() {
@@ -111,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
                 String temp = String.valueOf(newGame.getPlayers()[0].getScore()[j]);
                 tvArray[j].setText(temp);
             }
+
+            if (tvName != null){
+                tvName.setText(newGame.getPlayers()[0].getPlayerName());
+            }
+
         }
     }
 
