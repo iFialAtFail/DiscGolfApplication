@@ -9,10 +9,6 @@ public class Player {
     private String playerName;
     private int[] score;
 
-
-
-
-
     public Player(String playerName, Course course)
     {
         if (isValidPlayerName(playerName))
@@ -51,6 +47,15 @@ public class Player {
         score = value;
     }
 
+    public int getCurrentTotal(){
+        int total = 0;
+        for (int i : score){
+            total += i;
+        }
+        return total;
+    }
+
+
     public void IncrementCurrentScore(int currentHole)
     {
         if (currentHole >= 1 && currentHole <= 18) {
@@ -64,9 +69,6 @@ public class Player {
             score[currentHole - 1]--;
         }
     }
-
-
-
 
 
     private boolean isValidPlayerName(String nameInput)
@@ -84,9 +86,6 @@ public class Player {
         }
         return true;
     }
-
-
-
 
     //TODO add player previous game data, stack push/pop style
 }

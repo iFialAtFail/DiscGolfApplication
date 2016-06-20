@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity {
 
     Course courseBigRapids;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnPreviousHole;
 
     TextView tvName;
+    TextView tvCurrentTotal;
 
     TextView tvHole;
     TextView tvHole1;
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
 
         tvName = (TextView) findViewById(R.id.tvName);
-
+        tvCurrentTotal = (TextView) findViewById(R.id.tvCurrentTotal);
 
         tvHole = (TextView)findViewById(R.id.textView);
         tvHole1 = (TextView)findViewById(R.id.textView1);
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             players = new Player[]{mike};
             newGame  = new ScoreCard(players,courseBigRapids);
             generateTable();
+            tvCurrentTotal.setText(String.valueOf(players[0].getCurrentTotal()));
             ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
             ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE); //On recreation/orientation change, everything is red. This will force the last
             //value of the shapes.xml to be white.
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
             newGame = new ScoreCard(players,courseBigRapids);
             newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
             updateTable();
+            tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
             ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
             ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
 
@@ -190,10 +195,12 @@ public class MainActivity extends AppCompatActivity {
     public void OnIncrementScoreClick(View v){
         newGame.getPlayers()[0].IncrementCurrentScore(newGame.getCurrentHole());
         updateTable();
+        tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
     }
     public void OnDecrementScoreClick(View v){
         newGame.getPlayers()[0].DecrementCurrentScore(newGame.getCurrentHole());
         updateTable();
+        tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
 
     }
     public void OnNextHoleClick(View v){
