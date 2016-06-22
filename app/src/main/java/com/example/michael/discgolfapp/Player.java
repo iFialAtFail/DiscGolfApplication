@@ -66,7 +66,9 @@ public class Player {
     public void DecrementCurrentScore(int currentHole)
     {
         if (currentHole >= 1 && currentHole <= 18) {
-            score[currentHole - 1]--;
+            if (score[currentHole - 1] < 1) {
+                score[currentHole - 1]--;
+            }
         }
     }
 

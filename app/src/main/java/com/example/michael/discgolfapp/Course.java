@@ -36,6 +36,18 @@ public class Course {
         initializeCoursePars();
     }
 
+    public Course (String courseName, int[] prePopulatedPars){
+        if (isValidCoursename(courseName)){
+            this.courseName = courseName;
+        }
+        if (prePopulatedPars.length > 0){
+            if (isValidParArray(prePopulatedPars)){
+                holes = prePopulatedPars;
+            }
+        }
+    }
+
+
     public String getCourseName(){
         return courseName;
     }
@@ -66,6 +78,15 @@ public class Course {
         {
             holes[i] = 3;
         }
+    }
+
+    private boolean isValidParArray(int[] prePopulatedPars) {
+        for (int indexer : prePopulatedPars){
+            if (indexer <2){
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isValidCoursename(String nameInput)

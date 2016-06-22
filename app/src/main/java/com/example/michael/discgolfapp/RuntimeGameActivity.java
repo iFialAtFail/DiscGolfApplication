@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity {
+public class RuntimeGameActivity extends AppCompatActivity {
 
     Course courseBigRapids;
     Player mike;

@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * Created by Michael on 6/22/2016.
  */
-public class MainMenu extends Activity {
+public class MainMenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
