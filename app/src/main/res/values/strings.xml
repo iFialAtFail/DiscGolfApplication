@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">DiscGolfApp</string>
+    <string name="app_name">Mike\'s Disc Golf Tracker</string>
+    <string name="menu_new_game_lable">New Game</string>
+    <string name="menu_course_lable">Course Editor</string>
+    <string name="menu_player_lable">Player Editor</string>
+    <string name="menu_scorecard_lable">Scorecards</string>
 </resources>
