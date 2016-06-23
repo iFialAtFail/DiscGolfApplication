@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class RuntimeGameActivity extends AppCompatActivity {
 
     Course courseBigRapids;
@@ -59,7 +57,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.runtime_game_layout);
 
         btnIncrementScore = (Button)findViewById(R.id.btnIncrementScore);
         btnDecrementScore = (Button)findViewById(R.id.btnDecrementScore);

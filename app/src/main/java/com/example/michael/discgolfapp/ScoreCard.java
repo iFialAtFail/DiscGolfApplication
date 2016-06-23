@@ -3,7 +3,7 @@ package com.example.michael.discgolfapp;
 /**
  * Created by Michael on 5/20/2016.
  */
-public class ScoreCard extends DiscGolfGameManager {
+public class ScoreCard {
 
     private Player[] players;
     private static int currentHole;

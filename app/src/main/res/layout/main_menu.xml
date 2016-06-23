@@ -45,7 +45,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/btnNewGame"
-                android:visibility="invisible" />
+                android:visibility="visible"
+                android:onClick="OnNewGameClick"
+                android:enabled="true"
+                android:background="@android:color/transparent" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +77,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/btnCourses"
-                android:visibility="invisible" />
+                android:visibility="visible"
+                android:onClick="OnEditCoursesClick"
+                android:background="@android:color/transparent" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,7 +108,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/btnPlayers"
-                android:visibility="invisible" />
+                android:visibility="visible"
+                android:onClick="OnEditPlayersClick"
+                android:background="@android:color/transparent" />
         </LinearLayout>
 
         <LinearLayout
@@ -132,7 +139,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/btnScorecards"
-                android:visibility="invisible" />
+                android:visibility="visible"
+                android:onClick="OnScorecardsClick"
+                android:background="@android:color/transparent" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

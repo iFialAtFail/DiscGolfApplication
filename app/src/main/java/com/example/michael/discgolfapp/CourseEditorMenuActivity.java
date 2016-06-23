@@ -6,10 +6,11 @@ import android.os.Bundle;
 /**
  * Created by Michael on 6/22/2016.
  */
-public class NewCourseActivity extends Activity {
+public class CourseEditorMenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.course_editor_layout);
 
+    }
 }

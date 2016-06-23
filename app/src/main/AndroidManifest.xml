@@ -16,8 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".RuntimeGameActivity"/>
-        <activity android:name=".CourseEditorMenu"/>
-        <activity android:name=".NewCourseActivity"/>
+        <activity android:name=".CourseEditorMenuActivity"/>
+        <activity android:name=".CoursePickerActivity"/>
+        <activity android:name=".AddCourseMenuActivity"/>
     </application>
 
 </manifest>

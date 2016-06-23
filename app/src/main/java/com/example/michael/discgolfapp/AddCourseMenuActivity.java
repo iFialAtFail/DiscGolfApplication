@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by Michael on 6/22/2016.
+ * Created by Michael on 6/23/2016.
  */
-public class CourseEditorMenu extends Activity {
+public class AddCourseMenuActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_course_menu_layout);
 
     }
 }

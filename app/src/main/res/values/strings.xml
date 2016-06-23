@@ -5,4 +5,5 @@
     <string name="menu_player_lable">Player Editor</string>
     <string name="menu_scorecard_lable">Scorecards</string>
     <string name="course_editor_new_course_label">New Course</string>
+    <string name="create_new_course">Create New Course</string>
 </resources>
