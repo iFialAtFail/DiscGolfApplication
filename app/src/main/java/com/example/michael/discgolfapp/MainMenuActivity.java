@@ -42,8 +42,8 @@ public class MainMenuActivity extends Activity {
     }
 
     public void OnEditPlayersClick(View v){
-        Toast toast = Toast.makeText(context,"You've clicked Edit Players, still not Implemented...",Toast.LENGTH_LONG);
-        toast.show();
+        Intent intent = new Intent(context,PlayerEditorActivity.class);
+        startActivity(intent);
     }
     public void OnScorecardsClick(View v){
         Toast toast = Toast.makeText(context,"You've clicked View Scorecards, still not implemented",Toast.LENGTH_LONG);
