@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.michael.discgolfapp.Model.Course;
+import com.example.michael.discgolfapp.Model.Player;
+import com.example.michael.discgolfapp.Model.ScoreCard;
+
 public class RuntimeGameActivity extends AppCompatActivity {
 
     Course courseBigRapids;

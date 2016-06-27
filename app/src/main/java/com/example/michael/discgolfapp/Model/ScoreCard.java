@@ -1,4 +1,4 @@
-package com.example.michael.discgolfapp;
+package com.example.michael.discgolfapp.Model;
 
 /**
  * Created by Michael on 5/20/2016.
