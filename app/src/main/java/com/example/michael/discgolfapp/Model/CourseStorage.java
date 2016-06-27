@@ -1,12 +1,13 @@
 package com.example.michael.discgolfapp.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Michael on 6/27/2016.
  */
-public class CourseStorage {
+public class CourseStorage implements Serializable {
     List<Course> courseStorage;
 
     //region Constructors
