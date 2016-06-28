@@ -37,6 +37,12 @@ public class PlayerStorage implements Serializable {
     }
 
     public static void AddPlayerToStorage(Player player){
+        for (Player p : playerStorage){
+            if (player.getPlayerName() == p.getPlayerName()){
+                return;
+            }
+
+        }
         playerStorage.add(player);
     }
 }
