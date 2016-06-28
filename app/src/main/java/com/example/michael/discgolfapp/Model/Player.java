@@ -8,6 +8,8 @@ public class Player {
 
     private String playerName;
     private int[] score;
+    private boolean gameStarted = false;
+    private Course course;
 
     public Player(String playerName, Course course)
     {
@@ -27,11 +29,20 @@ public class Player {
             //throw new ArgumentNullException();
         }
 
-        score = (int[]) course.getCurrentHolePar().clone();
+        initializeScore();
+
+    }
+    public Player(String playerName){
+        this.playerName = playerName;
     }
 
 
     public String getPlayerName(){
+        return playerName;
+    }
+
+    @Override
+    public String toString() {
         return playerName;
     }
 
@@ -40,35 +51,60 @@ public class Player {
     }
 
     public int[] getScore(){
-        return score;
+        if (gameStarted) {
+            return score;
+        }
+        return null;
     }
 
     public void setScore(int[] value){
-        score = value;
+        if (gameStarted){
+            score = value;
+        }
+        //TODO throw exception saying game's not started yet
     }
 
     public int getCurrentTotal(){
-        int total = 0;
-        for (int i : score){
-            total += i;
+        if (gameStarted) {
+            int total = 0;
+            for (int i : score) {
+                total += i;
+            }
+            return total;
         }
-        return total;
+        else{
+            return -1;
+        }
     }
 
 
     public void IncrementCurrentScore(int currentHole)
     {
-        if (currentHole >= 1 && currentHole <= 18) {
-            score[currentHole - 1]++;
+        if (gameStarted) {
+            if (currentHole >= 1 && currentHole <= 18) {
+                score[currentHole - 1]++;
+            }
         }
     }
 
     public void DecrementCurrentScore(int currentHole)
     {
-        if (currentHole >= 1 && currentHole <= 18) {
-            if (score[currentHole - 1] < 1) {
-                score[currentHole - 1]--;
+        if (gameStarted) {
+            if (currentHole >= 1 && currentHole <= 18) {
+                if (score[currentHole - 1] < 1) {
+                    score[currentHole - 1]--;
+                }
             }
+        }
+    }
+
+    public void StartGame(Course course){
+        if (this.course == null) {
+            this.course = course;
+            initializeScore();
+        }
+        else{
+            //TODO throw exception for using startgame wrong.
         }
     }
 
@@ -87,6 +123,12 @@ public class Player {
             else { return false; }
         }
         return true;
+    }
+
+    private void initializeScore(){
+        if (course != null) {
+            score = (int[]) course.getCurrentHolePar().clone();
+        }
     }
 
     //TODO add player previous game data, stack push/pop style

@@ -2,46 +2,41 @@ package com.example.michael.discgolfapp.Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Michael on 6/27/2016.
  */
 public class PlayerStorage implements Serializable {
-    List<Player> playerStorage;
+    private static List<Player> playerStorage = new ArrayList<>();
 
     //region Constructors
 
-    public PlayerStorage(){
-        playerStorage = new ArrayList<Player>();
-    }
-
     public PlayerStorage(Player[] arrayOfPlayers){
-        playerStorage = new ArrayList<Player>();
-
-        for (Player player : arrayOfPlayers){
-            playerStorage.add(player);
-        }
+        playerStorage.addAll(Arrays.asList(arrayOfPlayers));
     }
 
     public PlayerStorage(ArrayList<Player> listOfPlayers){
-        playerStorage = new ArrayList<Player>(listOfPlayers);
+        playerStorage.addAll(listOfPlayers);
     }
 
     //endregion
 
-    public List<Player> getPlayerStorage() {
+    public static List<Player> getPlayerStorage() {
         return playerStorage;
     }
 
-    public void setPlayerStorage(List<Player> playerStorage) {
-        this.playerStorage = playerStorage;
-    }
 
-    public int getNumberOfStoredPlayers(){
+
+    public static int getNumberOfStoredPlayers(){
         if (!playerStorage.isEmpty()){
             return playerStorage.size();
         }
         return  0;
+    }
+
+    public static void AddPlayerToStorage(Player player){
+        playerStorage.add(player);
     }
 }
