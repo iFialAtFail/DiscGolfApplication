@@ -27,6 +27,7 @@ public class PlayerEditorActivity extends Activity {
     ArrayAdapter arrayAdapter;
     PlayerStorage playerStorage;
     Context context =  this;
+    playerDataAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,10 @@ public class PlayerEditorActivity extends Activity {
 
         playerListView = (ListView) findViewById(R.id.lvPlayerList);
         if (playerStorage != null && playerStorage.getNumberOfStoredPlayers() > 0) {
-            arrayAdapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1,playerStorage.getPlayerStorage() );
-            playerListView.setAdapter(arrayAdapter);
+            //arrayAdapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1,playerStorage.getPlayerStorage() );
+            //playerListView.setAdapter(arrayAdapter);
+            adapter = new playerDataAdapter(context, playerStorage.getPlayerStorage());
+            playerListView.setAdapter(adapter);
             String playerLength = String.valueOf(playerStorage.getNumberOfStoredPlayers());
             Toast toast = Toast.makeText(getApplicationContext(),playerLength,Toast.LENGTH_LONG);
             toast.show();
