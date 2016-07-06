@@ -1,9 +1,11 @@
 package com.example.michael.discgolfapp.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Michael on 5/22/2016.
  */
-public class Player {
+public class Player implements Serializable {
 
 
     private String playerName;
@@ -30,6 +32,7 @@ public class Player {
         }
 
         initializeScore();
+        gameStarted = true;
 
     }
     public Player(String playerName){
@@ -91,7 +94,7 @@ public class Player {
     {
         if (gameStarted) {
             if (currentHole >= 1 && currentHole <= 18) {
-                if (score[currentHole - 1] < 1) {
+                if (score[currentHole - 1] > 1) {
                     score[currentHole - 1]--;
                 }
             }
@@ -106,6 +109,7 @@ public class Player {
         else{
             //TODO throw exception for using startgame wrong.
         }
+        gameStarted = true;
     }
 
 

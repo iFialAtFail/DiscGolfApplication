@@ -95,7 +95,8 @@ public class RuntimeGameActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
 
             courseBigRapids = new Course("Big Rapids",18);
-            mike = new Player("Mike",courseBigRapids);
+            mike = new Player("Mike");
+            mike.StartGame(courseBigRapids);
             players = new Player[]{mike};
             newGame  = new ScoreCard(players,courseBigRapids);
             generateTable();
@@ -110,7 +111,8 @@ public class RuntimeGameActivity extends AppCompatActivity {
         //to the previous state.
         if (savedInstanceState != null) {
             courseBigRapids = new Course("Big Rapids", 18);
-            mike = new Player("Mike", courseBigRapids);
+            mike = new Player("Mike");
+            mike.StartGame(courseBigRapids);
             mike.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
             players = new Player[]{mike};
             newGame = new ScoreCard(players,courseBigRapids);

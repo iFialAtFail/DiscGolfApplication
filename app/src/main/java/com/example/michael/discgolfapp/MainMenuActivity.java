@@ -29,6 +29,15 @@ public class MainMenuActivity extends Activity {
         btnEditCourses = (Button) findViewById(R.id.btnCourses);
         btnEditPlayers = (Button) findViewById(R.id.btnPlayers);
         btnScorecards = (Button) findViewById(R.id.btnScorecards);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public void OnNewGameClick(View v){
@@ -48,5 +57,7 @@ public class MainMenuActivity extends Activity {
     public void OnScorecardsClick(View v){
         Toast toast = Toast.makeText(context,"You've clicked View Scorecards, still not implemented",Toast.LENGTH_LONG);
         toast.show();
+        Intent intent = new Intent(context, RuntimeGameActivity.class);
+        startActivity(intent);
     }
 }
