@@ -1,67 +1,48 @@
 package com.example.michael.discgolfapp.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Michael on 5/21/2016.
  */
-public class Course {
+public class Course implements Serializable{
 
+    //region private fields
     private int[] holes;
     private String courseName;
+    //endregion
 
+    //region Constructors
 
+    public Course(String courseName, int numHoles){
 
-
-
-    public Course(String courseName, int numHoles)
-    {
-        if (isValidCoursename(courseName))
-        {
-            this.courseName = courseName;
-        }
-        else
-        {
-            //TODO Implement java exception
-            //throw new ArgumentException("Invalid input for course name. AlphaNumeric characters and spaces only.");
-        }
-
-        if (numHoles > 0)
-        {
-            holes = new int[numHoles];
-        }
-        else
-        {   //todo implement java exception
-            //throw new ArgumentOutOfRangeException("Amount of holes per course must be greater than one.");
-        }
-
-        initializeCoursePars();
+        validateCourseName(courseName);
+        validateHoles(numHoles);
+        initializeCoursePars(); //Set all holes to generic par 3.
     }
 
     public Course (String courseName, int[] prePopulatedPars){
-        if (isValidCoursename(courseName)){
-            this.courseName = courseName;
-        }
-        if (prePopulatedPars.length > 0){
-            if (isValidParArray(prePopulatedPars)){
-                holes = prePopulatedPars;
-            }
-        }
+
+        validateCourseName(courseName);
+
+        validatePrePopulatedParValues(prePopulatedPars);
     }
 
 
-    public String getCourseName(){
+
+    //endregion
+
+    //region Getters and Setters
+
+    public String getName(){
         return courseName;
     }
 
-    public void setCourseName(String value){
-        if (isValidCoursename(value)){
-            courseName = value;
-        }
-        else {
-            //TODO implement java exception
-        }
+    public void setName(String value){
+        validateCourseName(value);
     }
 
-    public int getNumberOfHoles(){
+    public int getHoleCount(){
         return holes.length;
     }
 
@@ -69,8 +50,9 @@ public class Course {
         return holes;
     }
 
+    //endregion
 
-
+    //region Private Helper Methods
 
     private void initializeCoursePars()
     {
@@ -93,18 +75,50 @@ public class Course {
     {
         char[] charArray = nameInput.toCharArray();
 
-
         for(char letter : charArray)
         {
             if (Character.isLetterOrDigit(letter) || letter == ' ')
             {
                 //Let it keep iterating through the characters.
             }
-            else { return false; }
+            else { return false; } //Break the cycle
         }
-        return true;
+        return true; //Continue if nothing was out of place.
     }
 
+    private void validateCourseName(String courseName) {
+
+        if (isValidCoursename(courseName))
+        {
+            this.courseName = courseName;
+        }
+        else
+        {
+            throw new IllegalArgumentException("Must be only AlphaNumeric characters.");
+        }
+    }
+
+    private void validateHoles(int numHoles) {
+
+        if (numHoles > 0) {
+            holes = new int[numHoles];
+        }
+
+        else {
+            throw new IllegalArgumentException("Holes must be greater than 0.");
+        }
+    }
+
+    private void validatePrePopulatedParValues(int[] prePopulatedPars) {
+
+        if (prePopulatedPars.length > 0 && isValidParArray(prePopulatedPars)){
+            holes = prePopulatedPars;
+        }
+    }
+
+    //endregion
+
+    //region Public Methods
     public void IncrementHolePar(int currentHole)
     {
         holes[currentHole]++;
@@ -112,17 +126,22 @@ public class Course {
 
     public void DecrementHolePar(int currentHole)
     {
-        if (holes[currentHole] <= 1)
-        {
-            //Do nothing, this is the bottom limit
-        }
-        else
-        {
+        if (holes[currentHole] > 1) {
+
             holes[currentHole]--;
         }
 
     }
 
+    //endregion
+
+    //region Overrides
+
+    @Override
+    public String toString() {
+        return courseName;
+    }
 
 
+    //endregion
 }

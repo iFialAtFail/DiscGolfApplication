@@ -10,11 +10,15 @@ import java.util.List;
  */
 public class PlayerStorage implements Serializable {
 
+    //region Private Fields
+
     private static final long serialVersionUID = 1L;
     private List<Player> playerStorage;
 
+    //endregion
 
     //region Constructors
+
     public PlayerStorage(){
         playerStorage = new ArrayList<>();
     }
@@ -31,29 +35,33 @@ public class PlayerStorage implements Serializable {
 
     //endregion
 
-    public List<Player> getPlayerStorage() {
+    //region Getters and Setters
+
+    public List<Player> getPlayerStorageListArray() {
+
         return playerStorage;
     }
 
-
-
-    public int getNumberOfStoredPlayers(){
+    public int getStoredPlayersCount(){
         if (!playerStorage.isEmpty()){
             return playerStorage.size();
         }
         return  0;
     }
 
+    //endregion
 
+    //region Public Methods
 
     public void AddPlayerToStorage(Player player){
         for (Player p : playerStorage){
-            if (player.getPlayerName() == p.getPlayerName()){
+            if (player.getName().equals(p.getName())){
                 return;
             }
         }
 
         playerStorage.add(player);
-
     }
+
+    //endregion
 }

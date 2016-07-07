@@ -1,7 +1,6 @@
 package com.example.michael.discgolfapp;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.michael.discgolfapp.Model.Player;
-import com.example.michael.discgolfapp.Model.PlayerStorage;
 
 import java.util.List;
 
@@ -60,7 +58,7 @@ public class playerDataAdapter extends BaseAdapter {
             thumbnail.setImageResource(R.mipmap.roadrunnder_blank_100x100);
         }
 
-        tvNameText.setText(player.getPlayerName());
+        tvNameText.setText(player.getName());
         return rowView;
     }
 }

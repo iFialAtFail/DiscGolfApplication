@@ -5,11 +5,15 @@ package com.example.michael.discgolfapp.Model;
  */
 public class ScoreCard {
 
+    //region Private Fields
+
     private Player[] players;
-    private static int currentHole;
+    private int currentHole;
     private Course course;
 
+    //endregion
 
+    //region Constructors
 
     public ScoreCard(Player[] players, Course course)
     {
@@ -18,30 +22,39 @@ public class ScoreCard {
         currentHole = 1;
     }
 
+    //endregion
+
+    //region Getters and Setters
 
     public int getCurrentHole(){
         return currentHole;
     }
+
     public void setCurrentHole(int value){
-        if (value >= 1 && value <= course.getNumberOfHoles()){
+        if (isWithinCourseConstraints(value)){
             currentHole = value;
         }
     }
 
-    public Player[] getPlayers(){
+    public Player[] getPlayerArray(){
         return players;
     }
-    public void setPlayers(Player[] value){
+
+    public void setPlayerArray(Player[] value){
         players = value;
     }
 
-    public int getNumberOfPlayers(){
+    public int gerPlayersCount(){
         return players.length;
     }
 
+    //endregion
+
+    //region Public Methods
+
     public void NextHole()
     {
-        if (currentHole < course.getNumberOfHoles())
+        if (currentHole < course.getHoleCount())
         {
             currentHole++;
         }
@@ -55,5 +68,14 @@ public class ScoreCard {
         }
     }
 
+    //endregion
+
+    //region Private Helper Methods
+
+    private boolean isWithinCourseConstraints(int value) {
+        return (value >= 1 && value <= course.getHoleCount());
+    }
+
+    //endregion
 
 }

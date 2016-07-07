@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.PlayerStorage;
-import com.google.gson.Gson;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -63,9 +62,9 @@ public class AddPlayerMenuActivity extends Activity {
 
 
     private boolean validName(String nameInput){
-        if (playerStorage.getNumberOfStoredPlayers() > 0) {
-            for (Player player : playerStorage.getPlayerStorage()) {
-                if (nameInput.equals(player.getPlayerName())) {
+        if (playerStorage.getStoredPlayersCount() > 0) {
+            for (Player player : playerStorage.getPlayerStorageListArray()) {
+                if (nameInput.equals(player.getName())) {
                     return false;
                 }
             }

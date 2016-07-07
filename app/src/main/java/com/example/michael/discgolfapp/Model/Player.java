@@ -7,49 +7,47 @@ import java.io.Serializable;
  */
 public class Player implements Serializable {
 
+    //region Private Fields
 
     private String playerName;
-    private int[] score;
+
     private boolean gameStarted = false;
-    private Course course;
+    private Course course = null;
+    private int[] score;
+
+    //endregion
+
+    //region Constructors
 
     public Player(String playerName, Course course)
     {
-        if (isValidPlayerName(playerName))
-        {
-            this.playerName = playerName;
-        }
-        else
-        {
-            //TODO Throw Java exception
-            //throw new ArgumentException("Invalid input for player name. AlphaNumeric characters and spaces only.");
-        }
+        validatePlayerName(playerName);
 
         if (course == null)
         {
             //TODO Throw Java exception
-            //throw new ArgumentNullException();
+            throw new NullPointerException();
         }
 
         initializeScore();
         gameStarted = true;
 
     }
+
+
     public Player(String playerName){
-        this.playerName = playerName;
+        validatePlayerName(playerName);
     }
 
+    //endregion
 
-    public String getPlayerName(){
+    //region Getters and Setters
+
+    public String getName(){
         return playerName;
     }
 
-    @Override
-    public String toString() {
-        return playerName;
-    }
-
-    public void setPlayerName(String value){
+    public void setName(String value){
         playerName = value;
     }
 
@@ -64,7 +62,7 @@ public class Player implements Serializable {
         if (gameStarted){
             score = value;
         }
-        //TODO throw exception saying game's not started yet
+        throw new IllegalArgumentException("Game not started yet. Can't access without starting game");
     }
 
     public int getCurrentTotal(){
@@ -80,25 +78,34 @@ public class Player implements Serializable {
         }
     }
 
+    //endregion
+
+    //region Public Methods
 
     public void IncrementCurrentScore(int currentHole)
     {
-        if (gameStarted) {
-            if (currentHole >= 1 && currentHole <= 18) {
-                score[currentHole - 1]++;
-            }
+        if (!gameStarted) {
+            return;
         }
+
+        if (currentHole >= 1 && currentHole <= 18) {
+            score[currentHole - 1]++;
+        }
+
     }
 
     public void DecrementCurrentScore(int currentHole)
     {
-        if (gameStarted) {
-            if (currentHole >= 1 && currentHole <= 18) {
-                if (score[currentHole - 1] > 1) {
-                    score[currentHole - 1]--;
-                }
+        if (!gameStarted) {
+            return;
+        }
+
+        if (currentHole >= 1 && currentHole <= 18) {
+            if (score[currentHole - 1] > 1) {
+                score[currentHole - 1]--;
             }
         }
+
     }
 
     public void StartGame(Course course){
@@ -106,17 +113,17 @@ public class Player implements Serializable {
             this.course = course;
             initializeScore();
         }
-        else{
-            //TODO throw exception for using startgame wrong.
-        }
+
         gameStarted = true;
     }
 
+    //endregion
+
+    //region Private Helper Methods
 
     private boolean isValidPlayerName(String nameInput)
     {
         char[] charArray = nameInput.toCharArray();
-
 
         for(char letter : charArray)
         {
@@ -135,5 +142,27 @@ public class Player implements Serializable {
         }
     }
 
-    //TODO add player previous game data, stack push/pop style
+
+    private void validatePlayerName(String playerName) {
+        if (isValidPlayerName(playerName))
+        {
+            this.playerName = playerName;
+        }
+        else
+        {
+            throw new IllegalArgumentException("Invalid input for player name. AlphaNumeric characters and spaces only.");
+        }
+    }
+
+    //endregion
+
+    //region Overrides
+
+    @Override
+    public String toString() {
+        return playerName;
+    }
+
+    //endregion
+
 }

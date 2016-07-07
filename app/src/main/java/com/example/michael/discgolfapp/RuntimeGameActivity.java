@@ -141,7 +141,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(PLAYER_NAME, mike.getPlayerName());
+        outState.putString(PLAYER_NAME, mike.getName());
         outState.putIntArray(PLAYER_SCORE, mike.getScore());
         outState.putInt(CURRENT_HOLE,newGame.getCurrentHole());
     }
@@ -174,35 +174,35 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
     private void generateTable() {
         if (tvArray != null) {
-            for (int j = 0; j < courseBigRapids.getNumberOfHoles(); j++) {
-                String temp = String.valueOf(newGame.getPlayers()[0].getScore()[j]);
+            for (int j = 0; j < courseBigRapids.getHoleCount(); j++) {
+                String temp = String.valueOf(newGame.getPlayerArray()[0].getScore()[j]);
                 tvArray[j].setText(temp);
             }
         }
 
         if (tvName != null){
-                tvName.setText(newGame.getPlayers()[0].getPlayerName());
+                tvName.setText(newGame.getPlayerArray()[0].getName());
         }
     }
 
     private void updateTable(){
         if (tvArray != null){
-            for (int j = 0; j < courseBigRapids.getNumberOfHoles(); j++){
-                tvArray[j].setText(String.valueOf(newGame.getPlayers()[0].getScore()[j]));
+            for (int j = 0; j < courseBigRapids.getHoleCount(); j++){
+                tvArray[j].setText(String.valueOf(newGame.getPlayerArray()[0].getScore()[j]));
             }
         }
         if (tvName != null){
-            tvName.setText(newGame.getPlayers()[0].getPlayerName());
+            tvName.setText(newGame.getPlayerArray()[0].getName());
         }
     }
 
     public void OnIncrementScoreClick(View v){
-        newGame.getPlayers()[0].IncrementCurrentScore(newGame.getCurrentHole());
+        newGame.getPlayerArray()[0].IncrementCurrentScore(newGame.getCurrentHole());
         updateTable();
         tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
     }
     public void OnDecrementScoreClick(View v){
-        newGame.getPlayers()[0].DecrementCurrentScore(newGame.getCurrentHole());
+        newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
         updateTable();
         tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
 
