@@ -1,7 +1,9 @@
-package com.example.michael.discgolfapp;
+package com.example.michael.discgolfapp.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.example.michael.discgolfapp.R;
 
 /**
  * Created by Michael on 6/23/2016.

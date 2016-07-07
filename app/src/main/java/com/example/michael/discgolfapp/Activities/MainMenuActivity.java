@@ -1,4 +1,4 @@
-package com.example.michael.discgolfapp;
+package com.example.michael.discgolfapp.Activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.michael.discgolfapp.R;
 
 /**
  * Created by Michael on 6/22/2016.

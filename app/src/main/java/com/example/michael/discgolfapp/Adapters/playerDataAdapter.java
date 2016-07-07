@@ -1,4 +1,4 @@
-package com.example.michael.discgolfapp;
+package com.example.michael.discgolfapp.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.michael.discgolfapp.Model.Player;
+import com.example.michael.discgolfapp.R;
 
 import java.util.List;
 

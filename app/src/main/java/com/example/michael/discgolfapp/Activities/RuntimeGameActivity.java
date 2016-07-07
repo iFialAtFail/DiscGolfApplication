@@ -1,4 +1,4 @@
-package com.example.michael.discgolfapp;
+package com.example.michael.discgolfapp.Activities;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.michael.discgolfapp.Model.Course;
 import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.ScoreCard;
+import com.example.michael.discgolfapp.R;
 
 public class RuntimeGameActivity extends AppCompatActivity {
 

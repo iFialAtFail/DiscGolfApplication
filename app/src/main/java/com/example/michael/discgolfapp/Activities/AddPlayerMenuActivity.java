@@ -1,4 +1,4 @@
-package com.example.michael.discgolfapp;
+package com.example.michael.discgolfapp.Activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.PlayerStorage;
+import com.example.michael.discgolfapp.R;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -19,19 +20,23 @@ import java.io.ObjectOutputStream;
  * Created by Michael on 6/23/2016.
  */
 public class AddPlayerMenuActivity extends Activity {
-    EditText etName;
-    Button btnSavePlayer;
-    PlayerStorage playerStorage;
+
+    //region Private Fields
+
+    private EditText etName;
+    private Button btnSavePlayer;
+    private PlayerStorage playerStorage;
+
+    //endregion
+
+    //region Android Product Lifecycle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_player_menu_layout);
 
-        Bundle b = this.getIntent().getExtras();
-        if (b != null){
-            playerStorage = (PlayerStorage) b.getSerializable("PlayerStorage");
-        }
+        tryRestorePlayerStorageObj(); //using serializable and bundle
 
         etName = (EditText) findViewById(R.id.etName);
         btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
@@ -60,6 +65,10 @@ public class AddPlayerMenuActivity extends Activity {
     }
 
 
+
+    //endregion
+
+    //region Private Helper Methods
 
     private boolean validName(String nameInput){
         if (playerStorage.getStoredPlayersCount() > 0) {
@@ -105,4 +114,13 @@ public class AddPlayerMenuActivity extends Activity {
             toast.show();//TODO Throw proper exception
         }
     }
+
+    private void tryRestorePlayerStorageObj() {
+        Bundle b = this.getIntent().getExtras();
+        if (b != null){
+            playerStorage = (PlayerStorage) b.getSerializable("PlayerStorage");
+        }
+    }
+
+    //endregion
 }

@@ -1,4 +1,4 @@
-package com.example.michael.discgolfapp;
+package com.example.michael.discgolfapp.Activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.PlayerStorage;
+import com.example.michael.discgolfapp.R;
+import com.example.michael.discgolfapp.Adapters.playerDataAdapter;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,36 +24,29 @@ import java.io.ObjectOutputStream;
  * Created by Michael on 6/23/2016.
  */
 public class PlayerEditorActivity extends Activity {
+
+    //region Private Fields
+
     Button btnNewPlayer;
     ListView playerListView;
-    ArrayAdapter arrayAdapter;
     PlayerStorage playerStorage;
     Context context =  this;
     playerDataAdapter adapter;
+
+    //endregion
+
+    //region Android Lifecycle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_editor);
 
-        playerStorage = retrievePlayerStorage();
-        if (playerStorage == null){
-            playerStorage = new PlayerStorage();
-            Toast toast = Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG);
-            toast.show();
-        }
-
+        setupPlayerStorage();
 
         playerListView = (ListView) findViewById(R.id.lvPlayerList);
-        if (playerStorage != null && playerStorage.getStoredPlayersCount() > 0) {
-            //arrayAdapter = new ArrayAdapter(context,android.R.layout.simple_list_item_1,playerStorage.getPlayerStorageListArray() );
-            //playerListView.setAdapter(arrayAdapter);
-            adapter = new playerDataAdapter(context, playerStorage.getPlayerStorageListArray());
-            playerListView.setAdapter(adapter);
-            String playerLength = String.valueOf(playerStorage.getStoredPlayersCount());
-            Toast toast = Toast.makeText(getApplicationContext(),playerLength,Toast.LENGTH_LONG);
-            toast.show();
-        }
+        setupPlayerListView();
+
         btnNewPlayer = (Button) findViewById(R.id.btnNewPlayer);
         btnNewPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,9 +63,18 @@ public class PlayerEditorActivity extends Activity {
                 startActivity(intent);
             }
         });
-
-
     }
+
+
+    @Override
+    protected void onDestroy() {
+        savePlayerStorage(playerStorage);
+        super.onDestroy();
+    }
+
+    //endregion
+
+    //region Overriding normal behaviours
 
     @Override
     public void onBackPressed()
@@ -81,25 +85,9 @@ public class PlayerEditorActivity extends Activity {
 
     }
 
-    private void debugPlayerLV(){
-        Player mike = new Player("Mike");
-        Player drew = new Player("Drew");
-        Player brian = new Player("Brian");
+    //endregion
 
-
-
-        playerStorage.AddPlayerToStorage(mike);
-        playerStorage.AddPlayerToStorage(brian);
-        playerStorage.AddPlayerToStorage(drew);
-
-        //PlayerStorage ps = new PlayerStorage(playerArray);
-    }
-
-    @Override
-    protected void onDestroy() {
-        savePlayerStorage(playerStorage);
-        super.onDestroy();
-    }
+    //region Private helper methods
 
     private void savePlayerStorage(Object myObject){
         try {
@@ -115,10 +103,11 @@ public class PlayerEditorActivity extends Activity {
 
             oos.close();
             fos.close();
+
         } catch(Exception ex){
             ex.printStackTrace();
             Toast toast = Toast.makeText(getApplicationContext(),"File didn't save",Toast.LENGTH_LONG);
-            toast.show();//TODO Throw proper exception//TODO Throw proper exception
+            toast.show();
         }
     }
 
@@ -127,7 +116,6 @@ public class PlayerEditorActivity extends Activity {
         try {
             // Read from disk using FileInputStream
             FileInputStream fis = context.openFileInput("playerList.data");
-
 
             // Read object using ObjectInputStream
             ObjectInputStream ois =
@@ -152,4 +140,25 @@ public class PlayerEditorActivity extends Activity {
         }
         return null;
     }
+
+    private void setupPlayerListView() {
+        if (playerStorage != null && playerStorage.getStoredPlayersCount() > 0) {
+            adapter = new playerDataAdapter(context, playerStorage.getPlayerStorageListArray());
+            playerListView.setAdapter(adapter);
+            String playerLength = String.valueOf(playerStorage.getStoredPlayersCount());
+            Toast toast = Toast.makeText(getApplicationContext(),playerLength,Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    private void setupPlayerStorage() {
+        playerStorage = retrievePlayerStorage();
+        if (playerStorage == null){
+            playerStorage = new PlayerStorage();
+            Toast toast = Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
+    //endregion
 }
