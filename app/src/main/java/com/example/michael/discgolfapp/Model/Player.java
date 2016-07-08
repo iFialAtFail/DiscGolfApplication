@@ -163,6 +163,17 @@ public class Player implements Serializable {
         return playerName;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if ((o instanceof Player) && (((Player) o).getName() == this.getName())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
     //endregion
 
 }

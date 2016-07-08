@@ -63,5 +63,13 @@ public class PlayerStorage implements Serializable {
         playerStorage.add(player);
     }
 
+    public void DeletePlayerFromStorage(int position){
+        playerStorage.remove(position);
+    }
+
+    public void DeletePlayerFromStorage(Player player){
+        playerStorage.remove(player);
+    }
+
     //endregion
 }

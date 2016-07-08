@@ -1,10 +1,13 @@
 package com.example.michael.discgolfapp.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -46,6 +49,44 @@ public class PlayerEditorActivity extends Activity {
 
         playerListView = (ListView) findViewById(R.id.lvPlayerList);
         setupPlayerListView();
+        playerListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           final int position, long id) {
+                AlertDialog.Builder aat = new AlertDialog.Builder(context);
+                aat.setTitle("Delete?")
+                        .setMessage("Are you sure you want to delete "+parent.getItemAtPosition(position).toString()+"?")
+                        .setCancelable(true)
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+                                dialog.cancel();
+                            }
+
+                        })
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+                                //Make the change
+                                playerStorage.DeletePlayerFromStorage(position);
+
+                                //Commit the change to persistant memory
+                                savePlayerStorage(playerStorage);
+                                onCreate(null);
+                            }
+                        });
+                AlertDialog art = aat.create();
+
+                art.show();
+                return true;
+
+            }
+
+        });
 
         btnNewPlayer = (Button) findViewById(R.id.btnNewPlayer);
         btnNewPlayer.setOnClickListener(new View.OnClickListener() {
