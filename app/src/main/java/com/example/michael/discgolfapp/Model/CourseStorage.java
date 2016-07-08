@@ -65,5 +65,13 @@ public class CourseStorage implements Serializable {
         courseStorage.add(course);
     }
 
+    public void DeleteCourseFromStorage(int position){
+        courseStorage.remove(position);
+    }
+
+    public void DeleteCourseFromStorage(Course course){
+        courseStorage.remove(course);
+    }
+
     //endregion
 }

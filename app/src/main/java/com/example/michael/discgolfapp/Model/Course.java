@@ -142,6 +142,15 @@ public class Course implements Serializable{
         return courseName;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if ((o instanceof Course) && (((Course) o).getName() == this.getName())){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     //endregion
 }
