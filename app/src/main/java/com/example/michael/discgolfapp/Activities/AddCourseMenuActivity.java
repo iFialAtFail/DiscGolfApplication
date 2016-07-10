@@ -32,6 +32,10 @@ public class AddCourseMenuActivity extends Activity {
     //region Class Constants
     private static final String HOLE_ARRAY = "Hole Array";
     private static final String HOLE_COUNT = "Hole Count";
+    private static final String COURSE_EDITOR_KEY = "Course Editor Key";
+    private static final int COURSE_EDITOR_INTENT = 2;
+    private static final String COURSE_PICKER_KEY = "Course Picker Key";
+    private static final int COURSE_PICKER_INTENT = 1;
     //endregion
 
     //region Private Fields
@@ -118,8 +122,8 @@ public class AddCourseMenuActivity extends Activity {
 
                 saveCourseStorage(courseStorage);
 
-                Intent intent = new Intent(getApplicationContext(),CourseEditorMenuActivity.class);
-                startActivity(intent);
+                goToPreviousActivityExplicitly();
+
 
             }
         });
@@ -191,6 +195,20 @@ public class AddCourseMenuActivity extends Activity {
         Bundle b = this.getIntent().getExtras();
         if (b != null){
             courseStorage = (CourseStorage) b.getSerializable("CourseStorage");
+        }
+    }
+
+    private void goToPreviousActivityExplicitly(){
+        Bundle b = this.getIntent().getExtras();
+        if (b == null)
+            return;
+        if (b.getInt(COURSE_EDITOR_KEY) == COURSE_EDITOR_INTENT){
+            Intent intent = new Intent(getApplicationContext(),CourseEditorMenuActivity.class);
+            startActivity(intent);
+        }
+        if (b.getInt(COURSE_PICKER_KEY) == COURSE_PICKER_INTENT){
+            Intent intent = new Intent(getApplicationContext(),CoursePickerActivity.class);
+            startActivity(intent);
         }
     }
 

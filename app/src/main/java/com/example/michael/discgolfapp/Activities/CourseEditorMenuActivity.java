@@ -28,6 +28,9 @@ import java.io.ObjectOutputStream;
  * Created by Michael on 6/22/2016.
  */
 public class CourseEditorMenuActivity extends Activity {
+    private static final String COURSE_EDITOR_KEY = "Course Editor Key";
+    private static final int COURSE_EDITOR_INTENT = 2;
+
     Button btnNewCourse;
     ListView lvCourseList;
     CourseStorage courseStorage;
@@ -87,12 +90,17 @@ public class CourseEditorMenuActivity extends Activity {
                 //Bundle up object to pass over
                 Bundle extras = new Bundle();
                 extras.putSerializable("CourseStorage",courseStorage);
+                extras.putInt(COURSE_EDITOR_KEY, COURSE_EDITOR_INTENT);
 
                 //Create intent and add bundle to it.
                 Intent intent = new Intent(getApplicationContext(), AddCourseMenuActivity.class);
                 intent.putExtras(extras);
 
+                startActivityForResult(intent, 2); // TODO: cleanup if works.
+                //TODO: Replace this if startactivityforresult doesn't work.
+                /*
                 startActivity(intent);
+                */
             }
         });
     }
