@@ -16,13 +16,13 @@ import java.util.List;
 /**
  * Created by Michael on 7/6/2016.
  */
-public class playerDataAdapter extends BaseAdapter {
+public class PlayerDataAdapter extends BaseAdapter {
 
     private List<Player> playerList;
     private Context context;
     private LayoutInflater inflater;
 
-    public playerDataAdapter(Context context, List<Player> playerStorage) {
+    public PlayerDataAdapter(Context context, List<Player> playerStorage) {
         playerList = playerStorage;
         this.context = context;
     }

@@ -71,8 +71,14 @@ public class Course implements Serializable{
         return true;
     }
 
-    private boolean isValidCoursename(String nameInput)
+    public static boolean isValidCoursename(String nameInput)
     {
+        if (nameInput.isEmpty()){
+            return false;
+        }
+
+        //Convert to char array and iterate through
+        //characters to ensure no special characters.
         char[] charArray = nameInput.toCharArray();
 
         for(char letter : charArray)

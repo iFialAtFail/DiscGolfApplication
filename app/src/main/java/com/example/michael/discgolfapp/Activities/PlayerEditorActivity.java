@@ -8,15 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.PlayerStorage;
 import com.example.michael.discgolfapp.R;
-import com.example.michael.discgolfapp.Adapters.playerDataAdapter;
+import com.example.michael.discgolfapp.Adapters.PlayerDataAdapter;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,7 +32,7 @@ public class PlayerEditorActivity extends Activity {
     ListView playerListView;
     PlayerStorage playerStorage;
     Context context =  this;
-    playerDataAdapter adapter;
+    PlayerDataAdapter adapter;
 
     //endregion
 
@@ -184,7 +182,7 @@ public class PlayerEditorActivity extends Activity {
 
     private void setupPlayerListView() {
         if (playerStorage != null && playerStorage.getStoredPlayersCount() > 0) {
-            adapter = new playerDataAdapter(context, playerStorage.getPlayerStorageListArray());
+            adapter = new PlayerDataAdapter(context, playerStorage.getPlayerStorageListArray());
             playerListView.setAdapter(adapter);
             String playerLength = String.valueOf(playerStorage.getStoredPlayersCount());
             Toast toast = Toast.makeText(getApplicationContext(),playerLength,Toast.LENGTH_LONG);
