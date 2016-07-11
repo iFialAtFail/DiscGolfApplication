@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -28,16 +29,18 @@
                 android:id="@+id/tvName"
                 android:text="debug"
                 android:layout_gravity="left|center" />
-
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:padding="10dp"
-                android:layout_gravity="center">
+                android:layout_gravity="left">
 
                 <TableRow
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_gravity="center">
 
@@ -241,7 +244,7 @@
                 </TableRow>
 
             </TableLayout>
-
+</HorizontalScrollView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

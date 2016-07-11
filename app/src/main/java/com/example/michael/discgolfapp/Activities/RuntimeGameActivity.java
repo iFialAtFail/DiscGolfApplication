@@ -16,8 +16,8 @@ import com.example.michael.discgolfapp.R;
 
 public class RuntimeGameActivity extends AppCompatActivity {
 
-    Course courseBigRapids;
-    Player mike;
+    Course course;
+    Player player;
     Player[] players;
     ScoreCard newGame;
 
@@ -56,10 +56,6 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
     TextView[] tvArray;
 
-
-    Integer incrementedInteger = 0;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +69,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
         tvName = (TextView) findViewById(R.id.tvName);
         tvCurrentTotal = (TextView) findViewById(R.id.tvCurrentTotal);
 
-        debug();
+        retrieveGameData();
 
 
         tvHole = (TextView)findViewById(R.id.textView);
@@ -99,11 +95,9 @@ public class RuntimeGameActivity extends AppCompatActivity {
         //If first time go, create new stuff
         if (savedInstanceState == null) {
 
-            courseBigRapids = new Course("Big Rapids",18);
-            mike = new Player("Mike");
-            mike.StartGame(courseBigRapids);
-            players = new Player[]{mike};
-            newGame  = new ScoreCard(players,courseBigRapids);
+            player.StartGame(course);
+            players = new Player[]{player};
+            newGame  = new ScoreCard(players, course);
             generateTable();
             tvCurrentTotal.setText(String.valueOf(players[0].getCurrentTotal()));
             ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
@@ -115,12 +109,10 @@ public class RuntimeGameActivity extends AppCompatActivity {
         //If on recreation, pull out the saved state information and reset the object
         //to the previous state.
         if (savedInstanceState != null) {
-            courseBigRapids = new Course("Big Rapids", 18);
-            mike = new Player("Mike");
-            mike.StartGame(courseBigRapids);
-            mike.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
-            players = new Player[]{mike};
-            newGame = new ScoreCard(players,courseBigRapids);
+            player.StartGame(course);
+            player.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
+            players = new Player[]{player};
+            newGame = new ScoreCard(players, course);
             newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
             updateTable();
             tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
@@ -133,12 +125,10 @@ public class RuntimeGameActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
-        courseBigRapids = new Course("Big Rapids", 18);
-        mike = new Player("Mike", courseBigRapids);
-        mike.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
-        players = new Player[]{mike};
-        newGame = new ScoreCard(players,courseBigRapids);
+        player.StartGame(course);
+        player.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
+        players = new Player[]{player};
+        newGame = new ScoreCard(players, course);
         newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
     }
 
@@ -146,8 +136,8 @@ public class RuntimeGameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(PLAYER_NAME, mike.getName());
-        outState.putIntArray(PLAYER_SCORE, mike.getScore());
+        outState.putString(PLAYER_NAME, player.getName());
+        outState.putIntArray(PLAYER_SCORE, player.getScore());
         outState.putInt(CURRENT_HOLE,newGame.getCurrentHole());
     }
 
@@ -179,7 +169,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
     private void generateTable() {
         if (tvArray != null) {
-            for (int j = 0; j < courseBigRapids.getHoleCount(); j++) {
+            for (int j = 0; j < course.getHoleCount(); j++) {
                 String temp = String.valueOf(newGame.getPlayerArray()[0].getScore()[j]);
                 tvArray[j].setText(temp);
             }
@@ -192,7 +182,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
     private void updateTable(){
         if (tvArray != null){
-            for (int j = 0; j < courseBigRapids.getHoleCount(); j++){
+            for (int j = 0; j < course.getHoleCount(); j++){
                 tvArray[j].setText(String.valueOf(newGame.getPlayerArray()[0].getScore()[j]));
             }
         }
@@ -231,14 +221,15 @@ public class RuntimeGameActivity extends AppCompatActivity {
         ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
     }
 
-    private void debug(){
+    private void retrieveGameData(){
         Bundle b = this.getIntent().getExtras();
         if (b != null){
-            Player debugPlayer = (Player) b.getSerializable("Player");
-            Course debugCourse = (Course) b.getSerializable("Course");
+            player = (Player) b.getSerializable("Player");
+            course = (Course) b.getSerializable("Course");
 
-            if (debugCourse != null && debugPlayer != null){
+            if (course != null && player != null){
                 Toast.makeText(this,"SUCCESS!",Toast.LENGTH_LONG).show();
+                player.StartGame(course);
             }
         }
     }

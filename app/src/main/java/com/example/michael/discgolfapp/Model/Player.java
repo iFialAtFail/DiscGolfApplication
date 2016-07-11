@@ -62,7 +62,9 @@ public class Player implements Serializable {
         if (gameStarted){
             score = value;
         }
-        throw new IllegalArgumentException("Game not started yet. Can't access without starting game");
+        else{
+            throw new IllegalArgumentException("Game not started yet. Can't access without starting game");
+        }
     }
 
     public int getCurrentTotal(){

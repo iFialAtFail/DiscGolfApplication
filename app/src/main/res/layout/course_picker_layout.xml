@@ -6,7 +6,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Please please choose your course."
+        android:text="Please choose your course."
         android:id="@+id/tvChooseCoursesLable"
         android:layout_gravity="center_horizontal" />
 

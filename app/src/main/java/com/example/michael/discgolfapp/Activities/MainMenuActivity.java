@@ -59,7 +59,7 @@ public class MainMenuActivity extends Activity {
     public void OnScorecardsClick(View v){
         Toast toast = Toast.makeText(context,"You've clicked View Scorecards, still not implemented",Toast.LENGTH_LONG);
         toast.show();
-        Intent intent = new Intent(context, RuntimeGameActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(context, RuntimeGameActivity.class);
+        //startActivity(intent);
     }
 }

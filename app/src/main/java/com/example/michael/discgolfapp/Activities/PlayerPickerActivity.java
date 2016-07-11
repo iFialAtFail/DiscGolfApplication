@@ -29,6 +29,7 @@ import java.io.ObjectOutputStream;
  */
 public class PlayerPickerActivity extends Activity {
 
+    private static final int PLAYER_PICKER_INTENT = 3;
 
     PlayerDataAdapter adapter;
     PlayerStorage playerStorage;
@@ -43,6 +44,7 @@ public class PlayerPickerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_picker_layout);
         tvChoosePlayersLable = (TextView) findViewById(R.id.tvChooseCoursesLable); //Change text to be meant for players.
+        tvChoosePlayersLable.setText("Please choose your player.");
         setupPlayerStorage();
         tryCourseRetrieval();
 
@@ -103,10 +105,12 @@ public class PlayerPickerActivity extends Activity {
         btnNewPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddCourseMenuActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddPlayerMenuActivity.class);
                 Bundle bundle = new Bundle();
 
-                bundle.putSerializable("CourseStorage", playerStorage);
+                bundle.putInt("PlayerKey",PLAYER_PICKER_INTENT);
+                bundle.putSerializable("PlayerStorage", playerStorage);
+                bundle.putSerializable("Course", selectedCourse);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

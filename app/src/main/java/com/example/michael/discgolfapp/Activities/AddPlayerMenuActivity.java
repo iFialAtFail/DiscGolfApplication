@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.michael.discgolfapp.Model.Course;
 import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.PlayerStorage;
 import com.example.michael.discgolfapp.R;
@@ -26,6 +27,7 @@ public class AddPlayerMenuActivity extends Activity {
     private EditText etName;
     private Button btnSavePlayer;
     private PlayerStorage playerStorage;
+    private Course course;
 
     //endregion
 
@@ -37,6 +39,7 @@ public class AddPlayerMenuActivity extends Activity {
         setContentView(R.layout.add_player_menu_layout);
 
         tryRestorePlayerStorageObj(); //using serializable and bundle
+        tryRestoreCourseObject();
 
         etName = (EditText) findViewById(R.id.etName);
         btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
@@ -49,8 +52,8 @@ public class AddPlayerMenuActivity extends Activity {
                     playerStorage.AddPlayerToStorage(p);
                     savePlayerStorage(playerStorage);
 
-                    Intent intent = new Intent(getApplicationContext(),PlayerEditorActivity.class);
-                    startActivity(intent);
+                    gotoPriorActivity();
+
                 }
 
                 else{
@@ -121,6 +124,28 @@ public class AddPlayerMenuActivity extends Activity {
             playerStorage = (PlayerStorage) b.getSerializable("PlayerStorage");
         }
     }
+    private void gotoPriorActivity(){
+        Bundle b = this.getIntent().getExtras();
+        if (b.getInt("PlayerKey")== 3){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Course",course);
+            Intent intent = new Intent(getApplicationContext(),PlayerPickerActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(getApplicationContext(),PlayerEditorActivity.class);
+            startActivity(intent);
+        }
 
+
+    }
+
+    private void tryRestoreCourseObject(){
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle != null){
+            course = (Course) bundle.getSerializable("Course");
+        }
+    }
     //endregion
 }
