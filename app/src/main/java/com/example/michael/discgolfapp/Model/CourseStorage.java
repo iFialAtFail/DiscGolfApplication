@@ -73,5 +73,7 @@ public class CourseStorage implements Serializable {
         courseStorage.remove(course);
     }
 
+
+
     //endregion
 }

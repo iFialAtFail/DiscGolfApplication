@@ -21,6 +21,7 @@
         <activity android:name=".Activities.AddCourseMenuActivity"/>
         <activity android:name=".Activities.PlayerEditorActivity"/>
         <activity android:name=".Activities.AddPlayerMenuActivity"/>
+        <activity android:name=".Activities.PlayerPickerActivity"/>
     </application>
 
 </manifest>

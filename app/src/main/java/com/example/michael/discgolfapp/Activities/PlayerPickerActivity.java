@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.michael.discgolfapp.Adapters.CourseDataAdapter;
+import com.example.michael.discgolfapp.Adapters.PlayerDataAdapter;
 import com.example.michael.discgolfapp.Model.Course;
-import com.example.michael.discgolfapp.Model.CourseStorage;
+import com.example.michael.discgolfapp.Model.Player;
+import com.example.michael.discgolfapp.Model.PlayerStorage;
 import com.example.michael.discgolfapp.R;
 
 import java.io.FileInputStream;
@@ -23,40 +25,45 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * Created by Michael on 6/23/2016.
+ * Created by Michael on 7/10/2016.
  */
-public class CoursePickerActivity extends Activity {
-    private static final String COURSE_PICKER_KEY = "Course Picker Key";
-    private static final int COURSE_PICKER_INTENT = 1;
+public class PlayerPickerActivity extends Activity {
 
-    CourseDataAdapter adapter;
-    CourseStorage courseStorage;
+
+    PlayerDataAdapter adapter;
+    PlayerStorage playerStorage;
     Context context = this;
-    ListView lvCourseList;
-    Button btnNewCourse;
+    ListView lvPlayerList;
+    Button btnNewPlayer;
+    TextView tvChoosePlayersLable;
+    Course selectedCourse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_picker_layout);
-        setupCourseStorage();
+        tvChoosePlayersLable = (TextView) findViewById(R.id.tvChooseCoursesLable); //Change text to be meant for players.
+        setupPlayerStorage();
+        tryCourseRetrieval();
 
-        lvCourseList = (ListView) findViewById(R.id.lvCourseList);
-        setupCourseListView();
-        lvCourseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvPlayerList = (ListView) findViewById(R.id.lvCourseList);
+        setupPlayersListView();
+        lvPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Course course = (Course)adapter.getItem(position);
-                if (course == null){
+                Player player = (Player)adapter.getItem(position);
+                if (player == null){
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("Course",course);
-                Intent intent = new Intent(getApplicationContext(),PlayerPickerActivity.class);
+                bundle.putSerializable("Player",player);
+                bundle.putSerializable("Course",selectedCourse);
+                Intent intent = new Intent(getApplicationContext(),RuntimeGameActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
-        lvCourseList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        lvPlayerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder aat = new AlertDialog.Builder(context);
@@ -78,10 +85,10 @@ public class CoursePickerActivity extends Activity {
                             public void onClick(DialogInterface dialog, int which) {
                                 // TODO Auto-generated method stub
                                 //Make the change
-                                courseStorage.DeleteCourseFromStorage(position);
+                                playerStorage.DeletePlayerFromStorage(position);
 
                                 //Commit the change to persistant memory
-                                saveCourseStorage(courseStorage);
+                                savePlayerStorage(playerStorage);
                                 onCreate(null);
                             }
                         });
@@ -91,14 +98,15 @@ public class CoursePickerActivity extends Activity {
                 return true;
             }
         });
-        btnNewCourse = (Button) findViewById(R.id.btnNewCourse);
-        btnNewCourse.setOnClickListener(new View.OnClickListener() {
+        btnNewPlayer = (Button) findViewById(R.id.btnNewCourse);
+        btnNewPlayer.setText("Create New Player");
+        btnNewPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddCourseMenuActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt(COURSE_PICKER_KEY,COURSE_PICKER_INTENT);
-                bundle.putSerializable("CourseStorage", courseStorage);
+
+                bundle.putSerializable("CourseStorage", playerStorage);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -106,32 +114,34 @@ public class CoursePickerActivity extends Activity {
 
     }
 
+    /*
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
         finish();
     }
+    */
 
-    private void setupCourseListView(){
-        if (courseStorage != null && courseStorage.getStoredCoursesCount() > 0){
-            adapter = new CourseDataAdapter(context, courseStorage.getCourseStorage());
-            lvCourseList.setAdapter(adapter);
+    private void setupPlayersListView(){
+        if (playerStorage != null && playerStorage.getStoredPlayersCount() > 0){
+            adapter = new PlayerDataAdapter(context, playerStorage.getPlayerStorageListArray());
+            lvPlayerList.setAdapter(adapter);
         }
     }
 
-    private void setupCourseStorage() {
-        courseStorage = retrieveCourseStorage();
-        if (courseStorage == null){
-            courseStorage = new CourseStorage();
+    private void setupPlayerStorage() {
+        playerStorage = retrievePlayersStorage();
+        if (playerStorage == null){
+            playerStorage = new PlayerStorage();
             Toast toast = Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG);
             toast.show();
         }
     }
-    private void saveCourseStorage(Object myObject){
+    private void savePlayerStorage(Object myObject){
         try {
             // Write to disk with FileOutputStream
-            FileOutputStream fos = getApplicationContext().openFileOutput("courseList.data", Context.MODE_PRIVATE);
+            FileOutputStream fos = getApplicationContext().openFileOutput("playerList.data", Context.MODE_PRIVATE);
 
             // Write object with ObjectOutputStream
             ObjectOutputStream oos = new
@@ -150,11 +160,11 @@ public class CoursePickerActivity extends Activity {
         }
     }
 
-    private CourseStorage retrieveCourseStorage(){
-        CourseStorage _courseStorage;
+    private PlayerStorage retrievePlayersStorage(){
+        PlayerStorage playerStorage;
         try {
             // Read from disk using FileInputStream
-            FileInputStream fis = context.openFileInput("courseList.data");
+            FileInputStream fis = context.openFileInput("playerList.data");
 
             // Read object using ObjectInputStream
             ObjectInputStream ois =
@@ -163,10 +173,10 @@ public class CoursePickerActivity extends Activity {
             // Read an object
             Object obj = ois.readObject();
 
-            if (obj instanceof CourseStorage)
+            if (obj instanceof PlayerStorage)
             {
-                _courseStorage = (CourseStorage) obj;
-                return _courseStorage;
+                playerStorage = (PlayerStorage) obj;
+                return playerStorage;
             }
 
         }catch (Exception ex){
@@ -179,4 +189,10 @@ public class CoursePickerActivity extends Activity {
         return null;
     }
 
+    private void tryCourseRetrieval(){
+        Bundle b = this.getIntent().getExtras();
+        if (b != null){
+            selectedCourse = (Course)b.getSerializable("Course");
+        }
+    }
 }

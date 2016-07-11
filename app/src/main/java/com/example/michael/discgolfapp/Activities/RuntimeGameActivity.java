@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Model.Course;
 import com.example.michael.discgolfapp.Model.Player;
@@ -71,6 +72,9 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
         tvName = (TextView) findViewById(R.id.tvName);
         tvCurrentTotal = (TextView) findViewById(R.id.tvCurrentTotal);
+
+        debug();
+
 
         tvHole = (TextView)findViewById(R.id.textView);
         tvHole1 = (TextView)findViewById(R.id.textView1);
@@ -227,5 +231,16 @@ public class RuntimeGameActivity extends AppCompatActivity {
         ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
     }
 
+    private void debug(){
+        Bundle b = this.getIntent().getExtras();
+        if (b != null){
+            Player debugPlayer = (Player) b.getSerializable("Player");
+            Course debugCourse = (Course) b.getSerializable("Course");
+
+            if (debugCourse != null && debugPlayer != null){
+                Toast.makeText(this,"SUCCESS!",Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 
 }
