@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,12 +18,20 @@ import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.R;
 
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.Inflater;
+
 public class RuntimeGameActivity extends AppCompatActivity {
 
     Course course;
     Player player;
+    Player player2;
     Player[] players;
     ScoreCard newGame;
+    int currentPlayerSelected = 0;
 
     private final String PLAYER_SCORE = "Player Score";
     private final String PLAYER_NAME = "Player Name";
@@ -34,27 +46,8 @@ public class RuntimeGameActivity extends AppCompatActivity {
     TextView tvName;
     TextView tvCurrentTotal;
 
-    TextView tvHole;
-    TextView tvHole1;
-    TextView tvHole2;
-    TextView tvHole3;
-    TextView tvHole4;
-    TextView tvHole5;
-    TextView tvHole6;
-    TextView tvHole7;
-    TextView tvHole8;
-    TextView tvHole9;
-    TextView tvHole10;
-    TextView tvHole11;
-    TextView tvHole12;
-    TextView tvHole13;
-    TextView tvHole14;
-    TextView tvHole15;
-    TextView tvHole16;
-    TextView tvHole17;
-
-
-    TextView[] tvArray;
+    List<TableLayout> tableDiscGolf;
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,40 +62,27 @@ public class RuntimeGameActivity extends AppCompatActivity {
         tvName = (TextView) findViewById(R.id.tvName);
         tvCurrentTotal = (TextView) findViewById(R.id.tvCurrentTotal);
 
+        tableDiscGolf = new ArrayList<TableLayout>();
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+
+
         retrieveGameData();
 
 
-        tvHole = (TextView)findViewById(R.id.textView);
-        tvHole1 = (TextView)findViewById(R.id.textView1);
-        tvHole2 = (TextView)findViewById(R.id.textView2);
-        tvHole3 = (TextView)findViewById(R.id.textView3);
-        tvHole4 = (TextView)findViewById(R.id.textView4);
-        tvHole5 = (TextView)findViewById(R.id.textView5);
-        tvHole6 = (TextView)findViewById(R.id.textView6);
-        tvHole7 = (TextView)findViewById(R.id.textView7);
-        tvHole8 = (TextView)findViewById(R.id.textView8);
-        tvHole9 = (TextView)findViewById(R.id.textView9);
-        tvHole10 = (TextView)findViewById(R.id.textView10);
-        tvHole11 = (TextView)findViewById(R.id.textView11);
-        tvHole12 = (TextView)findViewById(R.id.textView12);
-        tvHole13 = (TextView)findViewById(R.id.textView13);
-        tvHole14 = (TextView)findViewById(R.id.textView14);
-        tvHole15 = (TextView)findViewById(R.id.textView15);
-        tvHole16 = (TextView)findViewById(R.id.textView16);
-        tvHole17 = (TextView)findViewById(R.id.textView17);
-        generateTvArray();
 
         //If first time go, create new stuff
         if (savedInstanceState == null) {
 
             player.StartGame(course);
-            players = new Player[]{player};
+            player2 = new Player("Num2");
+            player2.StartGame(course);
+            players = new Player[]{player,player2};
+
             newGame  = new ScoreCard(players, course);
-            generateTable();
-            tvCurrentTotal.setText(String.valueOf(players[0].getCurrentTotal()));
-            ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
-            ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE); //On recreation/orientation change, everything is red. This will force the last
-            //value of the shapes.xml to be white.
+            generateTable(players, course.getHoleCount());
+
+            //todo IMPLEMENT current score per player
+            //tvCurrentTotal.setText(String.valueOf(players[0].getCurrentTotal()));
 
         }
 
@@ -114,14 +94,17 @@ public class RuntimeGameActivity extends AppCompatActivity {
             players = new Player[]{player};
             newGame = new ScoreCard(players, course);
             newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
-            updateTable();
-            tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
-            ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
-            ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
+            generateTable(players, course.getHoleCount());
+
+            //todo implement current score per player
+            //tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
+            //((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
+            //((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
 
         }
     }
 
+    /*
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -131,6 +114,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
         newGame = new ScoreCard(players, course);
         newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
     }
+    */
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -141,84 +125,83 @@ public class RuntimeGameActivity extends AppCompatActivity {
         outState.putInt(CURRENT_HOLE,newGame.getCurrentHole());
     }
 
-    private void generateTvArray(){
-        if (tvArray == null) {
-            tvArray = new TextView[]{
-                    tvHole,
-                    tvHole1,
-                    tvHole2,
-                    tvHole3,
-                    tvHole4,
-                    tvHole5,
-                    tvHole6,
-                    tvHole7,
-                    tvHole8,
-                    tvHole9,
-                    tvHole10,
-                    tvHole11,
-                    tvHole12,
-                    tvHole13,
-                    tvHole14,
-                    tvHole15,
-                    tvHole16,
-                    tvHole17
-            };
-        }
-    }
 
+    private void generateTable(Player[] players, int courseHoleCount){
+        linearLayout.removeAllViews();
+        for (int i = 1; i <= players.length; i++){
 
-    private void generateTable() {
-        if (tvArray != null) {
-            for (int j = 0; j < course.getHoleCount(); j++) {
-                String temp = String.valueOf(newGame.getPlayerArray()[0].getScore()[j]);
-                tvArray[j].setText(temp);
+            TableLayout tableLayout = new TableLayout(this);
+            // outer for loop
+            TableRow row = new TableRow(getApplicationContext());
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= courseHoleCount; j++) {
+                TextView tv = new TextView(getApplicationContext());
+                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                tv.setBackgroundResource(R.drawable.cell_shape);
+                tv.setTextSize(30);
+                tv.setPadding(5, 5, 5, 5);
+                tv.setText(String.valueOf(players[i-1].getScore()[j-1]));//TODO add proper score.
+                row.addView(tv);
             }
-        }
+            tableLayout.addView(row);
 
-        if (tvName != null){
-                tvName.setText(newGame.getPlayerArray()[0].getName());
+
+            linearLayout.addView(tableLayout);
+
+
         }
     }
 
     private void updateTable(){
-        if (tvArray != null){
-            for (int j = 0; j < course.getHoleCount(); j++){
-                tvArray[j].setText(String.valueOf(newGame.getPlayerArray()[0].getScore()[j]));
-            }
-        }
-        if (tvName != null){
-            tvName.setText(newGame.getPlayerArray()[0].getName());
-        }
+
     }
 
     public void OnIncrementScoreClick(View v){
-        newGame.getPlayerArray()[0].IncrementCurrentScore(newGame.getCurrentHole());
-        updateTable();
+        players[0].IncrementCurrentScore(newGame.getCurrentHole()); //TODO replace 0 with current player selected
+        /*
+        TableLayout tb = (TableLayout) linearLayout.getChildAt(0);
+        TableRow tr = (TableRow) tb.getChildAt();
+        TextView tv = (TextView) tr.getChildAt(0);
+        tv.setText(String.valueOf(String.valueOf(players[0].getScore()[newGame.getCurrentHole()])));
+        */
+        generateTable(players, course.getHoleCount());
         tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
     }
     public void OnDecrementScoreClick(View v){
         newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
-        updateTable();
+        generateTable(players, course.getHoleCount());
+
         tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
 
     }
     public void OnNextHoleClick(View v){
         newGame.NextHole();
-        updateTable();
-        //Set current hole color red for ease of reading.
-        //Change an arbitary array element to white, since the change acts on the entire
-        //xml document, messing up onCreate's redraw.
-        ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
-        ((GradientDrawable)tvArray[newGame.getCurrentHole()-2].getBackground()).setColor(Color.WHITE);
+        generateTable(players, course.getHoleCount());
+
+        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) tb.getChildAt(0);
+        TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
+        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
+        TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole()-2);
+        ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+
+
     }
     public void OnPreviousHoleClick(View v){
         newGame.PreviousHole();
-        updateTable();
-        //Set current hole color red for ease of reading.
-        //Change an arbitary array element to white, since the change acts on the entire
-        //xml document, messing up onCreate's redraw.
-        ((GradientDrawable)tvArray[newGame.getCurrentHole()-1].getBackground()).setColor(Color.RED);
-        ((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
+        generateTable(players, course.getHoleCount());
+
+        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) tb.getChildAt(0);
+        TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
+        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
+        TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole());
+        ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+
+
     }
 
     private void retrieveGameData(){
