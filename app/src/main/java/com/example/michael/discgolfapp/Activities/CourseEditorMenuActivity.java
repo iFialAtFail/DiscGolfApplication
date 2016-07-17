@@ -71,7 +71,7 @@ public class CourseEditorMenuActivity extends Activity {
                                 courseStorage.DeleteCourseFromStorage(position);
 
                                 //Commit the change to persistant memory
-                                saveCourseStorage(courseStorage);
+                                courseStorage.SaveToFile(context);
                                 onCreate(null);
                             }
                         });
@@ -107,7 +107,7 @@ public class CourseEditorMenuActivity extends Activity {
 
     @Override
     protected void onDestroy(){
-        saveCourseStorage(courseStorage);
+        courseStorage.SaveToFile(context);
         super.onDestroy();
     }
 
@@ -118,56 +118,7 @@ public class CourseEditorMenuActivity extends Activity {
         finish();
     }
 
-    private void saveCourseStorage(Object myObject){
-        try {
-            // Write to disk with FileOutputStream
-            FileOutputStream fos = getApplicationContext().openFileOutput("courseList.data", Context.MODE_PRIVATE);
 
-            // Write object with ObjectOutputStream
-            ObjectOutputStream oos = new
-                    ObjectOutputStream (fos);
-
-            // Write object out to disk
-            oos.writeObject ( myObject );
-
-            oos.close();
-            fos.close();
-
-        } catch(Exception ex){
-            ex.printStackTrace();
-            Toast toast = Toast.makeText(getApplicationContext(),"File didn't save",Toast.LENGTH_LONG);
-            toast.show();
-        }
-    }
-
-    private CourseStorage retrieveCourseStorage(){
-        CourseStorage _courseStorage;
-        try {
-            // Read from disk using FileInputStream
-            FileInputStream fis = context.openFileInput("courseList.data");
-
-            // Read object using ObjectInputStream
-            ObjectInputStream ois =
-                    new ObjectInputStream (fis);
-
-            // Read an object
-            Object obj = ois.readObject();
-
-            if (obj instanceof CourseStorage)
-            {
-                _courseStorage = (CourseStorage) obj;
-                return _courseStorage;
-            }
-
-        }catch (Exception ex){
-            Toast toast = Toast.makeText(context,"Something done messed up",Toast.LENGTH_LONG);
-            toast.show();
-            ex.printStackTrace();
-
-            return null;
-        }
-        return null;
-    }
 
     private void setupCourseListView(){
         if (courseStorage != null && courseStorage.getStoredCoursesCount() > 0){
@@ -177,7 +128,7 @@ public class CourseEditorMenuActivity extends Activity {
     }
 
     private void setupCourseStorage() {
-        courseStorage = retrieveCourseStorage();
+        courseStorage = CourseStorage.LoadFromFile(context);
         if (courseStorage == null){
             courseStorage = new CourseStorage();
             Toast toast = Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG);

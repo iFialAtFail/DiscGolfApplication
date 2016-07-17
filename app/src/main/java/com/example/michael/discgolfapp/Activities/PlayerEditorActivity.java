@@ -73,7 +73,7 @@ public class PlayerEditorActivity extends Activity {
                                 playerStorage.DeletePlayerFromStorage(position);
 
                                 //Commit the change to persistant memory
-                                savePlayerStorage(playerStorage);
+                                playerStorage.SaveToFile(context);
                                 onCreate(null);
                             }
                         });
@@ -107,7 +107,7 @@ public class PlayerEditorActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        savePlayerStorage(playerStorage);
+        playerStorage.SaveToFile(context);
         super.onDestroy();
     }
 
@@ -128,58 +128,6 @@ public class PlayerEditorActivity extends Activity {
 
     //region Private helper methods
 
-    private void savePlayerStorage(Object myObject){
-        try {
-            // Write to disk with FileOutputStream
-            FileOutputStream fos = getApplicationContext().openFileOutput("playerList.data", Context.MODE_PRIVATE);
-
-            // Write object with ObjectOutputStream
-            ObjectOutputStream oos = new
-                    ObjectOutputStream (fos);
-
-            // Write object out to disk
-            oos.writeObject ( myObject );
-
-            oos.close();
-            fos.close();
-
-        } catch(Exception ex){
-            ex.printStackTrace();
-            Toast toast = Toast.makeText(getApplicationContext(),"File didn't save",Toast.LENGTH_LONG);
-            toast.show();
-        }
-    }
-
-    private PlayerStorage retrievePlayerStorage(){
-        PlayerStorage _playerStorage;
-        try {
-            // Read from disk using FileInputStream
-            FileInputStream fis = context.openFileInput("playerList.data");
-
-            // Read object using ObjectInputStream
-            ObjectInputStream ois =
-                    new ObjectInputStream (fis);
-
-            // Read an object
-            Object obj = ois.readObject();
-
-            if (obj instanceof PlayerStorage)
-            {
-                // Cast object to a Vector
-                _playerStorage = (PlayerStorage) obj;
-                return _playerStorage;
-                // Do something with vector....
-            }
-        }catch (Exception ex){
-            Toast toast = Toast.makeText(context,"Something done messed up",Toast.LENGTH_LONG);
-            toast.show();
-            ex.printStackTrace();
-
-            return null;
-        }
-        return null;
-    }
-
     private void setupPlayerListView() {
         if (playerStorage != null && playerStorage.getStoredPlayersCount() > 0) {
             adapter = new PlayerDataAdapter(context, playerStorage.getPlayerStorageListArray());
@@ -191,7 +139,7 @@ public class PlayerEditorActivity extends Activity {
     }
 
     private void setupPlayerStorage() {
-        playerStorage = retrievePlayerStorage();
+        playerStorage = PlayerStorage.LoadPlayerStorage(context);
         if (playerStorage == null){
             playerStorage = new PlayerStorage();
             Toast toast = Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG);

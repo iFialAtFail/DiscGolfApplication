@@ -50,7 +50,7 @@ public class AddPlayerMenuActivity extends Activity {
                 if ( validName(name) ){
                     Player p = new Player(name);
                     playerStorage.AddPlayerToStorage(p);
-                    savePlayerStorage(playerStorage);
+                    playerStorage.SaveToFile(getApplicationContext());
 
                     gotoPriorActivity();
 
@@ -60,14 +60,9 @@ public class AddPlayerMenuActivity extends Activity {
                     Toast toast = Toast.makeText(getApplicationContext(),"Invalid input or duplicate user. Please try again.", Toast.LENGTH_LONG);
                     toast.show();
                 }
-
-
-
             }
         });
     }
-
-
 
     //endregion
 
@@ -95,26 +90,18 @@ public class AddPlayerMenuActivity extends Activity {
         return true;
     }
 
-    private void savePlayerStorage(Object myObject){
-        try {
-
-            // Write to disk with FileOutputStream
-            FileOutputStream fos = getApplicationContext().openFileOutput("playerList.data", Context.MODE_PRIVATE);
-
-            // Write object with ObjectOutputStream
-            ObjectOutputStream oos = new
-                    ObjectOutputStream (fos);
-
-            // Write object out to disk
-            oos.writeObject ( myObject );
-
-            oos.close();
-            fos.close();
-
-        } catch(Exception ex){
-            ex.printStackTrace();
-            Toast toast = Toast.makeText(getApplicationContext(),"File didn't save",Toast.LENGTH_LONG);
-            toast.show();//TODO Throw proper exception
+    private void gotoPriorActivity(){
+        Bundle b = this.getIntent().getExtras();
+        if (b.getInt("PlayerKey")== 3){ //if coming from player picker...
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("Course",course);
+            Intent intent = new Intent(getApplicationContext(),PlayerPickerActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        else{ //or if coming from player editor...
+            Intent intent = new Intent(getApplicationContext(),PlayerEditorActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -124,23 +111,6 @@ public class AddPlayerMenuActivity extends Activity {
             playerStorage = (PlayerStorage) b.getSerializable("PlayerStorage");
         }
     }
-    private void gotoPriorActivity(){
-        Bundle b = this.getIntent().getExtras();
-        if (b.getInt("PlayerKey")== 3){
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("Course",course);
-            Intent intent = new Intent(getApplicationContext(),PlayerPickerActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
-        else{
-            Intent intent = new Intent(getApplicationContext(),PlayerEditorActivity.class);
-            startActivity(intent);
-        }
-
-
-    }
-
     private void tryRestoreCourseObject(){
         Bundle bundle = this.getIntent().getExtras();
         if (bundle != null){

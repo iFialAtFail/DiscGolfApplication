@@ -1,11 +1,16 @@
 package com.example.michael.discgolfapp.Activities;
 
+
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -18,23 +23,18 @@ import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class RuntimeGameActivity extends AppCompatActivity {
 
     Course course;
-    Player player;
-    Player player2;
     Player[] players;
     ScoreCard newGame;
     int currentPlayerSelected = 0;
 
-    private final String PLAYER_SCORE = "Player Score";
-    private final String PLAYER_NAME = "Player Name";
+    private final String PLAYER_SCORES = "Player Score";
+    private final String PLAYER_NAMES = "Player Name";
     private final String CURRENT_HOLE = "Current Hole";
 
 
@@ -48,36 +48,38 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
     List<TableLayout> tableDiscGolf;
     LinearLayout linearLayout;
+    HorizontalScrollView horizontalScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTheme(R.style.NoActionBarTheme);
         setContentView(R.layout.runtime_game_layout);
+
+        //region Setup References
 
         btnIncrementScore = (Button)findViewById(R.id.btnIncrementScore);
         btnDecrementScore = (Button)findViewById(R.id.btnDecrementScore);
         btnNextHole = (Button)findViewById(R.id.btnNextHole);
         btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
 
-        tvName = (TextView) findViewById(R.id.tvName);
+
         tvCurrentTotal = (TextView) findViewById(R.id.tvCurrentTotal);
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        horizontalScrollView = (HorizontalScrollView) findViewById(R.id.hScrollView);
 
         tableDiscGolf = new ArrayList<TableLayout>();
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        //endregion
 
-
+        //retrieve Player/Course data
+        //and setup references
         retrieveGameData();
 
 
 
         //If first time go, create new stuff
         if (savedInstanceState == null) {
-
-            player.StartGame(course);
-            player2 = new Player("Num2");
-            player2.StartGame(course);
-            players = new Player[]{player,player2};
-
+            initPlayers(players);
             newGame  = new ScoreCard(players, course);
             generateTable(players, course.getHoleCount());
 
@@ -89,12 +91,10 @@ public class RuntimeGameActivity extends AppCompatActivity {
         //If on recreation, pull out the saved state information and reset the object
         //to the previous state.
         if (savedInstanceState != null) {
-            player.StartGame(course);
-            player.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
-            players = new Player[]{player};
-            newGame = new ScoreCard(players, course);
-            newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
+            players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
+            newGame = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
             generateTable(players, course.getHoleCount());
+
 
             //todo implement current score per player
             //tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
@@ -102,27 +102,34 @@ public class RuntimeGameActivity extends AppCompatActivity {
             //((GradientDrawable)tvArray[newGame.getCurrentHole()].getBackground()).setColor(Color.WHITE);
 
         }
+
+        //initially set block to color red
+
+        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) tb.getChildAt(0);
+        TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
+        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
+        TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole());
+        ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+
     }
 
-    /*
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        player.StartGame(course);
-        player.setScore(savedInstanceState.getIntArray(PLAYER_SCORE));
-        players = new Player[]{player};
-        newGame = new ScoreCard(players, course);
-        newGame.setCurrentHole(savedInstanceState.getInt(CURRENT_HOLE));
+        players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
+        newGame = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
     }
-    */
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString(PLAYER_NAME, player.getName());
-        outState.putIntArray(PLAYER_SCORE, player.getScore());
-        outState.putInt(CURRENT_HOLE,newGame.getCurrentHole());
+        outState.putSerializable("RestorePlayers",players);
+        outState.putSerializable("RestoreScoreCard",newGame);
+
     }
 
 
@@ -143,7 +150,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
                 tv.setBackgroundResource(R.drawable.cell_shape);
                 tv.setTextSize(30);
                 tv.setPadding(5, 5, 5, 5);
-                tv.setText(String.valueOf(players[i-1].getScore()[j-1]));//TODO add proper score.
+                tv.setText(String.valueOf(players[i-1].getScore()[j-1]));// (-1) because j = 1 and not 0.
                 row.addView(tv);
             }
             tableLayout.addView(row);
@@ -155,24 +162,49 @@ public class RuntimeGameActivity extends AppCompatActivity {
         }
     }
 
-    private void updateTable(){
-
-    }
 
     public void OnIncrementScoreClick(View v){
         players[0].IncrementCurrentScore(newGame.getCurrentHole()); //TODO replace 0 with current player selected
-        /*
-        TableLayout tb = (TableLayout) linearLayout.getChildAt(0);
-        TableRow tr = (TableRow) tb.getChildAt();
-        TextView tv = (TextView) tr.getChildAt(0);
-        tv.setText(String.valueOf(String.valueOf(players[0].getScore()[newGame.getCurrentHole()])));
-        */
         generateTable(players, course.getHoleCount());
+
+        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) tb.getChildAt(0);
+
+        TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
+        tv.setBackgroundResource(R.drawable.cell_shape_red);
+       ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
+
+        if (newGame.getCurrentHole()-2 < 0) {
+            TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole());
+            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+        }
+        else {
+            TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole() - 2);
+            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+        }
+
         tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
     }
     public void OnDecrementScoreClick(View v){
         newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
         generateTable(players, course.getHoleCount());
+
+        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) tb.getChildAt(0);
+
+        TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
+        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
+
+        if (newGame.getCurrentHole()-2 < 0) {
+            TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole());
+            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+        }
+        else {
+            TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole() - 2);
+            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+        }
+
+
 
         tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
 
@@ -188,6 +220,8 @@ public class RuntimeGameActivity extends AppCompatActivity {
         TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole()-2);
         ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
 
+        tv.getParent().requestChildFocus(tv,tv);
+
 
     }
     public void OnPreviousHoleClick(View v){
@@ -201,20 +235,35 @@ public class RuntimeGameActivity extends AppCompatActivity {
         TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole());
         ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
 
+        tv.getParent().requestChildFocus(tv,tv);
 
     }
 
     private void retrieveGameData(){
         Bundle b = this.getIntent().getExtras();
         if (b != null){
-            player = (Player) b.getSerializable("Player");
+            players = toPlayerArray((ArrayList<Player>) b.getSerializable("Players"));
             course = (Course) b.getSerializable("Course");
 
-            if (course != null && player != null){
+            if (course != null && players != null){
                 Toast.makeText(this,"SUCCESS!",Toast.LENGTH_LONG).show();
-                player.StartGame(course);
             }
         }
     }
+
+    private Player[] toPlayerArray(ArrayList<Player> list){
+        Player[] ret = new Player[list.size()];
+        for(int i = 0;i < ret.length;i++)
+            ret[i] = list.get(i);
+        return ret;
+    }
+
+    private void initPlayers(Player[] players){
+        for (Player player : players){
+            player.StartGame(course);
+        }
+    }
+
+
 
 }

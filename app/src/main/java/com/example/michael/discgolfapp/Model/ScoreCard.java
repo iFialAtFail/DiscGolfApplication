@@ -1,9 +1,11 @@
 package com.example.michael.discgolfapp.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Michael on 5/20/2016.
  */
-public class ScoreCard {
+public class ScoreCard implements Serializable {
 
     //region Private Fields
 

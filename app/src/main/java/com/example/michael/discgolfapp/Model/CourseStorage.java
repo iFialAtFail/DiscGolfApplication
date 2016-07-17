@@ -1,5 +1,11 @@
 package com.example.michael.discgolfapp.Model;
 
+import android.content.Context;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +19,7 @@ public class CourseStorage implements Serializable {
     //region Private Fields
 
     private static final long serialVersionUID = 2L;
+    private static final String COURSE_STORAGE_FILE = "courseList.data";
     private List<Course> courseStorage;
 
     //endregion
@@ -73,7 +80,53 @@ public class CourseStorage implements Serializable {
         courseStorage.remove(course);
     }
 
+    public static CourseStorage LoadFromFile(Context context){
+        CourseStorage retrieve;
+        try {
+            // Read from disk using FileInputStream
+            FileInputStream fis = context.openFileInput(COURSE_STORAGE_FILE);
 
+            // Read object using ObjectInputStream
+            ObjectInputStream ois =
+                    new ObjectInputStream (fis);
+
+            // Read an object
+            Object obj = ois.readObject();
+
+            if (obj instanceof CourseStorage)
+            {
+                retrieve = (CourseStorage) obj;
+                return retrieve;
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean SaveToFile(Context context){
+        try {
+            // Write to disk with FileOutputStream
+            FileOutputStream fos = context.openFileOutput(COURSE_STORAGE_FILE, Context.MODE_PRIVATE);
+
+            // Write object with ObjectOutputStream
+            ObjectOutputStream oos = new
+                    ObjectOutputStream (fos);
+
+            // Write object out to disk
+            oos.writeObject ( this );
+
+            oos.close();
+            fos.close();
+
+        } catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 
     //endregion
 }

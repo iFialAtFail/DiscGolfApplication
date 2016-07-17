@@ -15,13 +15,8 @@ import android.widget.Toast;
 import com.example.michael.discgolfapp.Adapters.CourseParDataAdapter;
 import com.example.michael.discgolfapp.Model.Course;
 import com.example.michael.discgolfapp.Model.CourseStorage;
-import com.example.michael.discgolfapp.Model.PlayerStorage;
 import com.example.michael.discgolfapp.R;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,24 +102,20 @@ public class AddCourseMenuActivity extends Activity {
         btnSaveCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //All I need is the course name and an int array of the populated par's.
-                if (!Course.isValidCoursename(tvCourseName.getText().toString())){
+                String nameInput = tvCourseName.getText().toString();
+
+                if (!Course.isValidCoursename(nameInput)){
                     Toast toast = Toast.makeText(context, "Not a valid course name! Try again!",Toast.LENGTH_LONG);
                     toast.show();
                     return;
                 }
 
-                String courseName = tvCourseName.getText().toString();
                 int[] populatedPars = toIntArray(adapter.getCourseList());
 
-                Course course = new Course(courseName, populatedPars);
+                Course course = new Course(nameInput, populatedPars);
                 courseStorage.AddCourseToStorage(course);
-
-                saveCourseStorage(courseStorage);
-
+                courseStorage.SaveToFile(getApplicationContext());
                 goToPreviousActivityExplicitly();
-
-
             }
         });
     }
@@ -146,6 +137,7 @@ public class AddCourseMenuActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         holeList.addAll(toIntegerList(savedInstanceState.getIntArray(HOLE_ARRAY)));
+        tvHoleCount.setText(savedInstanceState.getString(HOLE_COUNT));
     }
 
     //endregion
@@ -211,29 +203,5 @@ public class AddCourseMenuActivity extends Activity {
             startActivity(intent);
         }
     }
-
-    private void saveCourseStorage(Object myObject){
-        try {
-            // Write to disk with FileOutputStream
-            FileOutputStream fos = getApplicationContext().openFileOutput("courseList.data", Context.MODE_PRIVATE);
-
-            // Write object with ObjectOutputStream
-            ObjectOutputStream oos = new
-                    ObjectOutputStream (fos);
-
-            // Write object out to disk
-            oos.writeObject ( myObject );
-
-            oos.close();
-            fos.close();
-
-        } catch(Exception ex){
-            ex.printStackTrace();
-            Toast toast = Toast.makeText(getApplicationContext(),"File didn't save",Toast.LENGTH_LONG);
-            toast.show();
-        }
-    }
-
-
     //endregion
 }
