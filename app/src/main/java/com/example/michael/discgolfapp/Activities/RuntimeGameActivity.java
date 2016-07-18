@@ -49,6 +49,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
     List<TableLayout> tableDiscGolf;
     LinearLayout linearLayout;
     HorizontalScrollView horizontalScrollView;
+    TableLayout staticTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +65,12 @@ public class RuntimeGameActivity extends AppCompatActivity {
         btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
 
 
-        tvCurrentTotal = (TextView) findViewById(R.id.tvCurrentTotal);
+
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         horizontalScrollView = (HorizontalScrollView) findViewById(R.id.hScrollView);
 
         tableDiscGolf = new ArrayList<TableLayout>();
+        staticTable = (TableLayout) findViewById(R.id.staticTable);
         //endregion
 
         //retrieve Player/Course data
@@ -134,7 +136,47 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
 
     private void generateTable(Player[] players, int courseHoleCount){
+
+        if (staticTable.getChildCount() < 1){
+            for (int z = 0; z < players.length + 1; z++) {
+                TableRow row = new TableRow(getApplicationContext());
+                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                if (z == 0) {
+                    TextView tv = new TextView(getApplicationContext());
+                    tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+                    tv.setBackgroundResource(R.drawable.cell_shape);
+                    tv.setTextSize(30);
+                    tv.setPadding(5, 5, 5, 5);
+                    tv.setText("Par");
+                    row.addView(tv);
+                } else {
+                    TextView tv = new TextView(getApplicationContext());
+                    tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                            TableRow.LayoutParams.WRAP_CONTENT));
+                    tv.setBackgroundResource(R.drawable.cell_shape);
+                    tv.setTextSize(30);
+                    tv.setPadding(5, 5, 5, 5);
+                    tv.setText(players[z - 1].getName());
+                    row.addView(tv);
+                }
+
+
+                staticTable.addView(row);
+            }
+
+
+
+        }
+
+
+
+
+
         linearLayout.removeAllViews();
+
+        //Generate dynamic table.
         for (int i = 1; i <= players.length; i++){
 
             TableLayout tableLayout = new TableLayout(this);
