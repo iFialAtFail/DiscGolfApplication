@@ -2,13 +2,10 @@ package com.example.michael.discgolfapp.Activities;
 
 
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -43,13 +40,13 @@ public class RuntimeGameActivity extends AppCompatActivity {
     Button btnNextHole;
     Button btnPreviousHole;
 
-    TextView tvName;
-    TextView tvCurrentTotal;
-
     List<TableLayout> tableDiscGolf;
     LinearLayout linearLayout;
     HorizontalScrollView horizontalScrollView;
-    TableLayout staticTable;
+    ScrollView nameScrollView;
+    TableLayout nameTable;
+    TableLayout parTable;
+    TableLayout parCellTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +67,10 @@ public class RuntimeGameActivity extends AppCompatActivity {
         horizontalScrollView = (HorizontalScrollView) findViewById(R.id.hScrollView);
 
         tableDiscGolf = new ArrayList<TableLayout>();
-        staticTable = (TableLayout) findViewById(R.id.staticTable);
+        nameTable = (TableLayout) findViewById(R.id.nameTable);
+        parTable = (TableLayout) findViewById(R.id.parTable);
+        parCellTable = (TableLayout) findViewById(R.id.parCellTable);
+        nameScrollView = (ScrollView) findViewById(R.id.nameScrollView);
         //endregion
 
         //retrieve Player/Course data
@@ -137,43 +137,68 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
     private void generateTable(Player[] players, int courseHoleCount){
 
-        if (staticTable.getChildCount() < 1){
-            for (int z = 0; z < players.length + 1; z++) {
-                TableRow row = new TableRow(getApplicationContext());
-                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+        //Setup Par single cell
+        if (parCellTable.getChildCount() < 1){
+            LinearLayout linearLayout = new LinearLayout(this);
+            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
+            linearLayout.setLayoutParams(params);
+
+            TextView tv = new TextView(getApplicationContext());
+            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.MATCH_PARENT));
+            tv.setBackgroundResource(R.drawable.cell_shape_light_green);
+            tv.setTextSize(30);
+            tv.setPadding(5, 5, 5, 5);
+            tv.setText("Par");
+            linearLayout.addView(tv);
+            parCellTable.addView(linearLayout);
+        }
+
+        //Setup Par Row
+        if (parTable.getChildCount() < 1){
+            LinearLayout linearLayout = new LinearLayout(this);
+            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
+            linearLayout.setLayoutParams(params);
+
+            for (int a = 0; a<course.getCurrentHolePar().length; a++){
+                TextView tv = new TextView(getApplicationContext());
+                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
-                if (z == 0) {
-                    TextView tv = new TextView(getApplicationContext());
-                    tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                            TableRow.LayoutParams.WRAP_CONTENT));
-                    tv.setBackgroundResource(R.drawable.cell_shape);
-                    tv.setTextSize(30);
-                    tv.setPadding(5, 5, 5, 5);
-                    tv.setText("Par");
-                    row.addView(tv);
-                } else {
-                    TextView tv = new TextView(getApplicationContext());
-                    tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                            TableRow.LayoutParams.WRAP_CONTENT));
-                    tv.setBackgroundResource(R.drawable.cell_shape);
-                    tv.setTextSize(30);
-                    tv.setPadding(5, 5, 5, 5);
-                    tv.setText(players[z - 1].getName());
-                    row.addView(tv);
-                }
-
-
-                staticTable.addView(row);
+                tv.setBackgroundResource(R.drawable.cell_shape_light_green);
+                tv.setTextSize(30);
+                tv.setPadding(5, 5, 5, 5);
+                tv.setText(String.valueOf(course.getCurrentHolePar()[a]));
+                linearLayout.addView(tv);
             }
+            parTable.addView(linearLayout);
+        }
 
 
+        //Setup Name Column
+        if (nameTable.getChildCount() < 1){
+            for (int z = 0; z < players.length; z++) {
+                LinearLayout linearLayout = new LinearLayout(this);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
+                linearLayout.setLayoutParams(params);
 
+                TextView tv = new TextView(getApplicationContext());
+                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.MATCH_PARENT));
+                tv.setBackgroundResource(R.drawable.cell_shape);
+                tv.setTextSize(30);
+                tv.setPadding(5, 5, 5, 5);
+                tv.setSingleLine();
+                tv.setText(players[z].getName());
+                linearLayout.addView(tv);
+
+                nameTable.addView(linearLayout);
+            }
         }
 
 
 
 
-
+        // setup score info table
         linearLayout.removeAllViews();
 
         //Generate dynamic table.
@@ -225,7 +250,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
             ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
         }
 
-        tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
+
     }
     public void OnDecrementScoreClick(View v){
         newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
@@ -248,7 +273,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
 
 
-        tvCurrentTotal.setText("Current Score: " + String.valueOf(players[0].getCurrentTotal()));
+
 
     }
     public void OnNextHoleClick(View v){
