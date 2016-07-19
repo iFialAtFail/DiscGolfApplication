@@ -20,6 +20,8 @@ import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,6 +136,20 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
     }
 
+    private TextView setupTextViewInTable(String setText, int resourceID ){
+        int textSize = 30;
+
+        TextView tv = new TextView(getApplicationContext());
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.MATCH_PARENT));
+        tv.setBackgroundResource(resourceID);
+        tv.setTextColor(Color.BLACK);
+        tv.setTextSize(textSize);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setText(setText);
+        return tv;
+    }
+
 
     private void generateTable(Player[] players, int courseHoleCount){
 
@@ -142,14 +158,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
             LinearLayout linearLayout = new LinearLayout(this);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
             linearLayout.setLayoutParams(params);
-
-            TextView tv = new TextView(getApplicationContext());
-            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
-            tv.setBackgroundResource(R.drawable.cell_shape_light_green);
-            tv.setTextSize(30);
-            tv.setPadding(5, 5, 5, 5);
-            tv.setText("Par");
+            TextView tv = setupTextViewInTable("Par",R.drawable.cell_shape_light_green);
             linearLayout.addView(tv);
             parCellTable.addView(linearLayout);
         }
@@ -168,6 +177,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
                 tv.setTextSize(30);
                 tv.setPadding(5, 5, 5, 5);
                 tv.setText(String.valueOf(course.getCurrentHolePar()[a]));
+                tv.setTextColor(Color.BLACK);
                 linearLayout.addView(tv);
             }
             parTable.addView(linearLayout);
@@ -181,14 +191,8 @@ public class RuntimeGameActivity extends AppCompatActivity {
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
                 linearLayout.setLayoutParams(params);
 
-                TextView tv = new TextView(getApplicationContext());
-                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                tv.setBackgroundResource(R.drawable.cell_shape);
-                tv.setTextSize(30);
-                tv.setPadding(5, 5, 5, 5);
+                TextView tv = setupTextViewInTable(players[z].getName(), R.drawable.cell_shape);
                 tv.setSingleLine();
-                tv.setText(players[z].getName());
                 linearLayout.addView(tv);
 
                 nameTable.addView(linearLayout);
@@ -211,13 +215,7 @@ public class RuntimeGameActivity extends AppCompatActivity {
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= courseHoleCount; j++) {
-                TextView tv = new TextView(getApplicationContext());
-                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
-                tv.setBackgroundResource(R.drawable.cell_shape);
-                tv.setTextSize(30);
-                tv.setPadding(5, 5, 5, 5);
-                tv.setText(String.valueOf(players[i-1].getScore()[j-1]));// (-1) because j = 1 and not 0.
+                TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1]), R.drawable.cell_shape);
                 row.addView(tv);
             }
             tableLayout.addView(row);
