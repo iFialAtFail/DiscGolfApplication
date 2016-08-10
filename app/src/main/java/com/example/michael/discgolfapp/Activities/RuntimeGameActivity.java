@@ -20,8 +20,6 @@ import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,19 +153,19 @@ public class RuntimeGameActivity extends AppCompatActivity {
 
         //Setup Par single cell
         if (parCellTable.getChildCount() < 1){
-            LinearLayout linearLayout = new LinearLayout(this);
+            LinearLayout _linearLayout = new LinearLayout(this);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
-            linearLayout.setLayoutParams(params);
+            _linearLayout.setLayoutParams(params);
             TextView tv = setupTextViewInTable("Par",R.drawable.cell_shape_light_green);
-            linearLayout.addView(tv);
-            parCellTable.addView(linearLayout);
+            _linearLayout.addView(tv);
+            parCellTable.addView(_linearLayout);
         }
 
         //Setup Par Row
         if (parTable.getChildCount() < 1){
-            LinearLayout linearLayout = new LinearLayout(this);
+            LinearLayout _linearLayout = new LinearLayout(this);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
-            linearLayout.setLayoutParams(params);
+            _linearLayout.setLayoutParams(params);
 
             for (int a = 0; a<course.getCurrentHolePar().length; a++){
                 TextView tv = new TextView(getApplicationContext());
@@ -178,9 +176,9 @@ public class RuntimeGameActivity extends AppCompatActivity {
                 tv.setPadding(5, 5, 5, 5);
                 tv.setText(String.valueOf(course.getCurrentHolePar()[a]));
                 tv.setTextColor(Color.BLACK);
-                linearLayout.addView(tv);
+                _linearLayout.addView(tv);
             }
-            parTable.addView(linearLayout);
+            parTable.addView(_linearLayout);
         }
 
 
