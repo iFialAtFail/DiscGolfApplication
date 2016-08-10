@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class MultiplePlayerDataAdapter extends PlayerDataAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.multi_player_listview_row, parent, false);
         Player player = (Player) getItem(position);
+
 
         ImageView thumbnail = (ImageView) rowView.findViewById(R.id.imgThumbnail);
         TextView tvNameText = (TextView) rowView.findViewById(R.id.tvPlayerName);

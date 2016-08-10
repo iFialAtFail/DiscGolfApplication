@@ -17,10 +17,16 @@
         android:text="New Player"
         android:id="@+id/btnNewPlayer"
         android:layout_gravity="center_horizontal" />
+<HorizontalScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:fillViewport="true">
 
     <ListView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lvPlayerList"
-        android:layout_gravity="center_horizontal" />
+        />
+</HorizontalScrollView>
 </LinearLayout>

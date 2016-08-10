@@ -58,7 +58,7 @@ public class PlayerDataAdapter extends BaseAdapter {
         else {
             thumbnail.setImageResource(R.mipmap.roadrunnder_blank_100x100);
         }
-
+        tvNameText.setSingleLine();
         tvNameText.setText(player.getName());
         return rowView;
     }
