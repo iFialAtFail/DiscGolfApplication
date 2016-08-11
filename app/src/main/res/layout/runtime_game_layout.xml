@@ -54,6 +54,7 @@
                 android:layout_weight="1"
                 android:id="@+id/parAndScoreDataView">
 
+
                 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -88,44 +89,6 @@
 
 
             </LinearLayout>
-            <!--
-            <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="horizontal|vertical"
-                android:id="@+id/hScrollView"
-                android:layout_weight="1"
-                android:layout_toRightOf="@id/nameRelativeLayout">
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/nameRelativeLayout">
-
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:id="@+id/parTable">
-                </TableLayout>
-
-
-
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:id="@+id/linearLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/parTable"/>
-
-            </RelativeLayout>
-                </ScrollView>
-        </HorizontalScrollView>
--->
 
         </LinearLayout>
 
