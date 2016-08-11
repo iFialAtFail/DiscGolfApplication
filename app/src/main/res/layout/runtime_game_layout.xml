@@ -95,54 +95,75 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Previous Hole"
-                android:id="@+id/btnPreviousHole"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:enabled="true"
-                android:onClick="OnPreviousHoleClick" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Last Hole"
+                    android:id="@+id/btnPreviousHole"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:onClick="OnPreviousHoleClick" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Next Hole"
+                    android:id="@+id/btnNextHole"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:onClick="OnNextHoleClick" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Score +1"
+                    android:id="@+id/btnIncrementScore"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:onClick="OnIncrementScoreClick" />
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Score -1"
+                    android:id="@+id/btnDecrementScore"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:onClick="OnDecrementScoreClick" />
+            </LinearLayout>
+
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next Hole"
-                android:id="@+id/btnNextHole"
-                android:layout_margin="10dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Select Next Player"
+                android:id="@+id/btnLastPlayer"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:enabled="true"
-                android:onClick="OnNextHoleClick" />
-
+                android:onClick="OnNxtPlayerClick" />
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Score +1"
-                android:id="@+id/btnIncrementScore"
-                android:layout_margin="10dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Select Last Player"
+                android:id="@+id/btnNextPlayer"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:enabled="true"
-                android:onClick="OnIncrementScoreClick" />
+                android:onClick="OnLastPlayerClick" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Score -1"
-                android:id="@+id/btnDecrementScore"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:enabled="true"
-                android:onClick="OnDecrementScoreClick" />
         </LinearLayout>
 
     </LinearLayout>

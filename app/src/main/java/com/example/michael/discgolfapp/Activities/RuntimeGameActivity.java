@@ -29,15 +29,24 @@ import java.util.List;
 
 public class RuntimeGameActivity extends AppCompatActivity implements IScrollViewListener, IHorizontalScrollViewListener {
 
+    //region Private Model Variables
+
     Course course;
     Player[] players;
     ScoreCard newGame;
     int currentPlayerSelected = 0;
 
+    //endregion
+
+    //region Constants
+
     private final String PLAYER_SCORES = "Player Score";
     private final String PLAYER_NAMES = "Player Name";
     private final String CURRENT_HOLE = "Current Hole";
 
+    //endregion
+
+    //region Control/View references
 
     Button btnIncrementScore;
     Button btnDecrementScore;
@@ -55,6 +64,10 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     TableLayout nameTable;
     TableLayout parTable;
     TableLayout parCellTable;
+
+    //endregion
+
+    //region Android Product Lifecycle
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,37 +146,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     }
 
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
-        newGame = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
-    }
+    //endregion
 
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putSerializable("RestorePlayers",players);
-        outState.putSerializable("RestoreScoreCard",newGame);
-
-    }
-
-    private TextView setupTextViewInTable(String setText, int resourceID ){
-        int textSize = 30;
-
-        TextView tv = new TextView(getApplicationContext());
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                TableRow.LayoutParams.MATCH_PARENT));
-        tv.setBackgroundResource(resourceID);
-        tv.setTextColor(Color.BLACK);
-        tv.setTextSize(textSize);
-        tv.setPadding(5, 5, 5, 5);
-        tv.setText(setText);
-        return tv;
-    }
 
 
     private void generateTable(Player[] players, int courseHoleCount){
@@ -214,9 +199,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             }
         }
 
-
-
-
         // setup score info table
         linearLayout.removeAllViews();
 
@@ -242,6 +224,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         }
     }
 
+    //region Button Handler Methods
 
     public void OnIncrementScoreClick(View v){
         players[0].IncrementCurrentScore(newGame.getCurrentHole()); //TODO replace 0 with current player selected
@@ -284,10 +267,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
         }
 
-
-
-
-
     }
     public void OnNextHoleClick(View v){
         newGame.NextHole();
@@ -319,6 +298,16 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     }
 
+    public void OnLastPlayerClick(View view) {
+    }
+
+    public void OnNxtPlayerClick(View view) {
+    }
+
+    //endregion
+
+    //region Private Helper Methods
+
     private void retrieveGameData(){
         Bundle b = this.getIntent().getExtras();
         if (b != null){
@@ -344,7 +333,28 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         }
     }
 
+    private TextView setupTextViewInTable(String setText, int resourceID ){
+        int textSize = 30;
 
+        TextView tv = new TextView(getApplicationContext());
+        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                TableRow.LayoutParams.MATCH_PARENT));
+        tv.setBackgroundResource(resourceID);
+        tv.setTextColor(Color.BLACK);
+        tv.setTextSize(textSize);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setText(setText);
+        return tv;
+    }
+
+
+    //endregion
+
+    //region Overridden Methods
+
+    //Custom Interface Override-- Handles the syncing of the scrollviews.
+
+    //Handle Vertical Scrollview Sync
     @Override
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
         if (scrollView == nameScrollView){
@@ -354,6 +364,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         }
     }
 
+    //Handle Horizontal Scrollview Sync
     @Override
     public void onScrollChanged(ObservableHorizontalScrollView horizontalScrollView, int x, int y, int oldx, int oldy) {
         if (horizontalScrollView == scoreHorizontalScrollView){
@@ -362,4 +373,25 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             scoreHorizontalScrollView.scrollTo(x,y);
         }
     }
+
+    //Android Product Lifecycle overrides
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
+        newGame = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable("RestorePlayers",players);
+        outState.putSerializable("RestoreScoreCard",newGame);
+
+    }
+
+    //endregion
 }
