@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/parCellTable"
                     android:layout_alignParentTop="true"></TableLayout>
-                <ScrollView
+                <com.example.michael.discgolfapp.CustomViews.ObservableScrollView
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:id="@+id/nameScrollView"
@@ -44,7 +44,7 @@
                         android:id="@+id/nameTable"
                         >
                 </TableLayout>
-                </ScrollView>
+                </com.example.michael.discgolfapp.CustomViews.ObservableScrollView>
 
             </RelativeLayout>
             <LinearLayout
@@ -72,9 +72,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="vertical|horizontal">
-                    <ScrollView
+                    <com.example.michael.discgolfapp.CustomViews.ObservableScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:id="@+id/scoreScrollView">
                         <LinearLayout
                             android:orientation="vertical"
                             android:id="@+id/linearLayout"
@@ -83,7 +84,7 @@
 
                         </LinearLayout>
 
-                    </ScrollView>
+                    </com.example.michael.discgolfapp.CustomViews.ObservableScrollView>
                 </HorizontalScrollView>
 
 

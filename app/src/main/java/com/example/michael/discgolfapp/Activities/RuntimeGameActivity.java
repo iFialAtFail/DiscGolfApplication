@@ -15,6 +15,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.michael.discgolfapp.CustomViews.ObservableScrollView;
+import com.example.michael.discgolfapp.Interfaces.IScrollViewListener;
 import com.example.michael.discgolfapp.Model.Course;
 import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.ScoreCard;
@@ -23,7 +25,7 @@ import com.example.michael.discgolfapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RuntimeGameActivity extends AppCompatActivity {
+public class RuntimeGameActivity extends AppCompatActivity implements IScrollViewListener {
 
     Course course;
     Player[] players;
@@ -43,7 +45,8 @@ public class RuntimeGameActivity extends AppCompatActivity {
     List<TableLayout> tableDiscGolf;
     LinearLayout linearLayout;
     HorizontalScrollView horizontalScrollView;
-    ScrollView nameScrollView;
+    ObservableScrollView nameScrollView;
+    ObservableScrollView scoreScrollView;
     TableLayout nameTable;
     TableLayout parTable;
     TableLayout parCellTable;
@@ -70,7 +73,10 @@ public class RuntimeGameActivity extends AppCompatActivity {
         nameTable = (TableLayout) findViewById(R.id.nameTable);
         parTable = (TableLayout) findViewById(R.id.parTable);
         parCellTable = (TableLayout) findViewById(R.id.parCellTable);
-        nameScrollView = (ScrollView) findViewById(R.id.nameScrollView);
+        nameScrollView = (ObservableScrollView) findViewById(R.id.nameScrollView);
+        nameScrollView.setScrollViewListener(this);
+        scoreScrollView = (ObservableScrollView) findViewById(R.id.scoreScrollView);
+        scoreScrollView.setScrollViewListener(this);
         //endregion
 
         //retrieve Player/Course data
@@ -328,5 +334,12 @@ public class RuntimeGameActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
+        if (scrollView == nameScrollView){
+            scoreScrollView.scrollTo(x,y);
+        } else if (scrollView == scoreScrollView){
+            nameScrollView.scrollTo(x,y);
+        }
+    }
 }
