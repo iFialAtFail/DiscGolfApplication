@@ -15,7 +15,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView;
 import com.example.michael.discgolfapp.CustomViews.ObservableScrollView;
+import com.example.michael.discgolfapp.Interfaces.IHorizontalScrollViewListener;
 import com.example.michael.discgolfapp.Interfaces.IScrollViewListener;
 import com.example.michael.discgolfapp.Model.Course;
 import com.example.michael.discgolfapp.Model.Player;
@@ -25,7 +27,7 @@ import com.example.michael.discgolfapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RuntimeGameActivity extends AppCompatActivity implements IScrollViewListener {
+public class RuntimeGameActivity extends AppCompatActivity implements IScrollViewListener, IHorizontalScrollViewListener {
 
     Course course;
     Player[] players;
@@ -44,9 +46,12 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     List<TableLayout> tableDiscGolf;
     LinearLayout linearLayout;
-    HorizontalScrollView horizontalScrollView;
+
+    ObservableHorizontalScrollView parHorizontalScrollView;
+    ObservableHorizontalScrollView scoreHorizontalScrollView;
     ObservableScrollView nameScrollView;
     ObservableScrollView scoreScrollView;
+
     TableLayout nameTable;
     TableLayout parTable;
     TableLayout parCellTable;
@@ -67,12 +72,18 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        horizontalScrollView = (HorizontalScrollView) findViewById(R.id.hScrollView);
+
 
         tableDiscGolf = new ArrayList<TableLayout>();
         nameTable = (TableLayout) findViewById(R.id.nameTable);
         parTable = (TableLayout) findViewById(R.id.parTable);
         parCellTable = (TableLayout) findViewById(R.id.parCellTable);
+
+        parHorizontalScrollView = (ObservableHorizontalScrollView) findViewById(R.id.parHorizontalScrollView);
+        parHorizontalScrollView.setHorizontalScrollViewListener(this);
+        scoreHorizontalScrollView = (ObservableHorizontalScrollView) findViewById(R.id.scoreHorizontalScrollView);
+        scoreHorizontalScrollView.setHorizontalScrollViewListener(this);
+
         nameScrollView = (ObservableScrollView) findViewById(R.id.nameScrollView);
         nameScrollView.setScrollViewListener(this);
         scoreScrollView = (ObservableScrollView) findViewById(R.id.scoreScrollView);
@@ -340,6 +351,15 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             scoreScrollView.scrollTo(x,y);
         } else if (scrollView == scoreScrollView){
             nameScrollView.scrollTo(x,y);
+        }
+    }
+
+    @Override
+    public void onScrollChanged(ObservableHorizontalScrollView horizontalScrollView, int x, int y, int oldx, int oldy) {
+        if (horizontalScrollView == scoreHorizontalScrollView){
+            parHorizontalScrollView.scrollTo(x,y);
+        } else if (horizontalScrollView == parHorizontalScrollView){
+            scoreHorizontalScrollView.scrollTo(x,y);
         }
     }
 }
