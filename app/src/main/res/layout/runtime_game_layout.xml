@@ -77,13 +77,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/scoreScrollView">
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:id="@+id/linearLayout"
+                        <TableLayout
+                            android:id="@+id/scoreTable"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                        </LinearLayout>
+                        </TableLayout>
 
                     </com.example.michael.discgolfapp.CustomViews.ObservableScrollView>
                 </com.example.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView>

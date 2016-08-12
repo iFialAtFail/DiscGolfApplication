@@ -54,13 +54,14 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     Button btnPreviousHole;
 
     List<TableLayout> tableDiscGolf;
-    LinearLayout linearLayout;
+
 
     ObservableHorizontalScrollView parHorizontalScrollView;
     ObservableHorizontalScrollView scoreHorizontalScrollView;
     ObservableScrollView nameScrollView;
     ObservableScrollView scoreScrollView;
 
+    TableLayout scoreTable;
     TableLayout nameTable;
     TableLayout parTable;
     TableLayout parCellTable;
@@ -82,12 +83,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         btnNextHole = (Button)findViewById(R.id.btnNextHole);
         btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
 
-
-
-        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
-
-
         tableDiscGolf = new ArrayList<TableLayout>();
+        scoreTable = (TableLayout) findViewById(R.id.scoreTable);
         nameTable = (TableLayout) findViewById(R.id.nameTable);
         parTable = (TableLayout) findViewById(R.id.parTable);
         parCellTable = (TableLayout) findViewById(R.id.parCellTable);
@@ -137,8 +134,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         //initially set block to color red
 
-        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
-        TableRow tr = (TableRow) tb.getChildAt(0);
+        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
         TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
         ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
         TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole());
@@ -200,7 +196,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         }
 
         // setup score info table
-        linearLayout.removeAllViews();
+        scoreTable.removeAllViews();
 
         //Generate dynamic table.
         for (int i = 1; i <= players.length; i++){
@@ -215,12 +211,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1]), R.drawable.cell_shape);
                 row.addView(tv);
             }
-            tableLayout.addView(row);
-
-
-            linearLayout.addView(tableLayout);
-
-
+            scoreTable.addView(row);
         }
     }
 
@@ -230,8 +221,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         players[0].IncrementCurrentScore(newGame.getCurrentHole()); //TODO replace 0 with current player selected
         generateTable(players, course.getHoleCount());
 
-        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
-        TableRow tr = (TableRow) tb.getChildAt(0);
+        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
 
         TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
         tv.setBackgroundResource(R.drawable.cell_shape_red);
@@ -252,8 +242,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
         generateTable(players, course.getHoleCount());
 
-        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
-        TableRow tr = (TableRow) tb.getChildAt(0);
+        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
 
         TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
         ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
@@ -272,8 +261,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         newGame.NextHole();
         generateTable(players, course.getHoleCount());
 
-        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
-        TableRow tr = (TableRow) tb.getChildAt(0);
+
+        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
         TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
         ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
         TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole()-2);
@@ -287,8 +276,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         newGame.PreviousHole();
         generateTable(players, course.getHoleCount());
 
-        TableLayout tb = (TableLayout) linearLayout.getChildAt(currentPlayerSelected);
-        TableRow tr = (TableRow) tb.getChildAt(0);
+
+        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
         TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
         ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
         TextView tv2 = (TextView) tr.getChildAt(newGame.getCurrentHole());
