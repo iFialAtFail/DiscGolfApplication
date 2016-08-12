@@ -8,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -65,8 +63,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     TableLayout scoreTable;
     TableLayout nameTable;
-    TableLayout parTable;
-    TableLayout parCellTable;
+    TableLayout headerTable;
+    TableLayout staticHeaderCellsTable;
 
     //endregion
 
@@ -89,8 +87,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         tableDiscGolf = new ArrayList<TableLayout>();
         scoreTable = (TableLayout) findViewById(R.id.scoreTable);
         nameTable = (TableLayout) findViewById(R.id.nameTable);
-        parTable = (TableLayout) findViewById(R.id.parTable);
-        parCellTable = (TableLayout) findViewById(R.id.parCellTable);
+        headerTable = (TableLayout) findViewById(R.id.parTable);
+        staticHeaderCellsTable = (TableLayout) findViewById(R.id.parCellTable);
 
         parHorizontalScrollView = (ObservableHorizontalScrollView) findViewById(R.id.parHorizontalScrollView);
         parHorizontalScrollView.setHorizontalScrollViewListener(this);
@@ -152,20 +150,43 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private void generateTable(Player[] players, int courseHoleCount){
 
-        //Setup Par single cell
-        if (parCellTable.getChildCount() < 1){
-            LinearLayout _linearLayout = new LinearLayout(this);
-            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
-            _linearLayout.setLayoutParams(params);
-            TextView tv = setupTextViewInTable("Par",R.drawable.cell_shape_light_green);
-            _linearLayout.addView(tv);
-            parCellTable.addView(_linearLayout);
+        //Setup Static cells (Par, Hole#)
+        if (staticHeaderCellsTable.getChildCount() < 1){
+            String[] textInput = {"Hole", "Par"};
+            for(int b = 0; b < 2; b++) {
+                LinearLayout _linearLayout = new LinearLayout(this);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+                _linearLayout.setLayoutParams(params);
+                TextView tv = setupTextViewInTable(textInput[b], R.drawable.cell_shape_light_green);
+                _linearLayout.addView(tv);
+                staticHeaderCellsTable.addView(_linearLayout);
+            }
         }
 
         //Setup Par Row
-        if (parTable.getChildCount() < 1){
-            LinearLayout _linearLayout = new LinearLayout(this);
+        if (headerTable.getChildCount() < 1){
+
+            //Setup Hole# row
+            LinearLayout holeNum = new LinearLayout(this);
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
+            holeNum.setLayoutParams(params);
+
+            for (int a = 0; a<course.getCurrentHolePar().length; a++){
+                TextView tv = new TextView(context);
+                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                tv.setBackgroundResource(R.drawable.cell_shape_light_green);
+                tv.setTextSize(30);
+                tv.setPadding(5, 5, 5, 5);
+                tv.setText(String.valueOf(a+1));
+                tv.setTextColor(Color.BLACK);
+                holeNum.addView(tv);
+            }
+            headerTable.addView(holeNum);
+
+            //setup par row
+            LinearLayout _linearLayout = new LinearLayout(this);
+            //TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
             _linearLayout.setLayoutParams(params);
 
             for (int a = 0; a<course.getCurrentHolePar().length; a++){
@@ -179,7 +200,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 tv.setTextColor(Color.BLACK);
                 _linearLayout.addView(tv);
             }
-            parTable.addView(_linearLayout);
+            headerTable.addView(_linearLayout);
+
+
         }
 
 
@@ -213,7 +236,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
 
         TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
-        tv.setBackgroundResource(R.drawable.cell_shape_red);
+
        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
 
         if (newGame.getCurrentHole()-2 < 0) {
