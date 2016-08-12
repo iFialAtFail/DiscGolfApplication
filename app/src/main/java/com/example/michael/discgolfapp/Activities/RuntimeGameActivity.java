@@ -194,32 +194,18 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 nameTable.addView(linearLayout);
             }
         }
+        generateScoreTable(players, courseHoleCount);
 
-        // setup score info table
-        scoreTable.removeAllViews();
 
-        //Generate dynamic table.
-        for (int i = 1; i <= players.length; i++){
-
-            TableLayout tableLayout = new TableLayout(this);
-            // outer for loop
-            TableRow row = new TableRow(getApplicationContext());
-            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
-            for (int j = 1; j <= courseHoleCount; j++) {
-                TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1]), R.drawable.cell_shape);
-                row.addView(tv);
-            }
-            scoreTable.addView(row);
-        }
     }
+
+
 
     //region Button Handler Methods
 
     public void OnIncrementScoreClick(View v){
         players[0].IncrementCurrentScore(newGame.getCurrentHole()); //TODO replace 0 with current player selected
-        generateTable(players, course.getHoleCount());
+        generateScoreTable(players, course.getHoleCount());
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
 
@@ -240,7 +226,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnDecrementScoreClick(View v){
         newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
-        generateTable(players, course.getHoleCount());
+        generateScoreTable(players, course.getHoleCount());
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
 
@@ -259,7 +245,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnNextHoleClick(View v){
         newGame.NextHole();
-        generateTable(players, course.getHoleCount());
+        generateScoreTable(players, course.getHoleCount());
 
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
@@ -274,7 +260,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnPreviousHoleClick(View v){
         newGame.PreviousHole();
-        generateTable(players, course.getHoleCount());
+        generateScoreTable(players, course.getHoleCount());
 
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
@@ -334,6 +320,27 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         tv.setPadding(5, 5, 5, 5);
         tv.setText(setText);
         return tv;
+    }
+
+    private void generateScoreTable(Player[] players, int courseHoleCount) {
+        // setup score info table
+        scoreTable.removeAllViews();
+
+        //Generate dynamic table.
+        for (int i = 1; i <= players.length; i++){
+
+            TableLayout tableLayout = new TableLayout(this);
+            // outer for loop
+            TableRow row = new TableRow(getApplicationContext());
+            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            // inner for loop
+            for (int j = 1; j <= courseHoleCount; j++) {
+                TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1]), R.drawable.cell_shape);
+                row.addView(tv);
+            }
+            scoreTable.addView(row);
+        }
     }
 
 
