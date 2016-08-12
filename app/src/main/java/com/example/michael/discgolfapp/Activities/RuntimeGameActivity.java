@@ -1,6 +1,7 @@
 package com.example.michael.discgolfapp.Activities;
 
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     Player[] players;
     ScoreCard newGame;
     int currentPlayerSelected = 0;
+    Context context;
 
     //endregion
 
@@ -75,6 +77,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         super.onCreate(savedInstanceState);
         this.setTheme(R.style.NoActionBarTheme);
         setContentView(R.layout.runtime_game_layout);
+        context = this;
 
         //region Setup References
 
@@ -166,7 +169,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             _linearLayout.setLayoutParams(params);
 
             for (int a = 0; a<course.getCurrentHolePar().length; a++){
-                TextView tv = new TextView(getApplicationContext());
+                TextView tv = new TextView(context);
                 tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
                 tv.setBackgroundResource(R.drawable.cell_shape_light_green);
@@ -225,9 +228,11 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     }
     public void OnDecrementScoreClick(View v){
+
         newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
         generateScoreTable(players, course.getHoleCount());
 
+        
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
 
         TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
@@ -311,7 +316,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     private TextView setupTextViewInTable(String setText, int resourceID ){
         int textSize = 30;
 
-        TextView tv = new TextView(getApplicationContext());
+        TextView tv = new TextView(context);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                 TableRow.LayoutParams.MATCH_PARENT));
         tv.setBackgroundResource(resourceID);
@@ -328,10 +333,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         //Generate dynamic table.
         for (int i = 1; i <= players.length; i++){
-
-            TableLayout tableLayout = new TableLayout(this);
             // outer for loop
-            TableRow row = new TableRow(getApplicationContext());
+            TableRow row = new TableRow(context);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
