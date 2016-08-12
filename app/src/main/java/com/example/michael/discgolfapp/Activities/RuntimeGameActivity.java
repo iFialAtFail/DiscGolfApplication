@@ -245,7 +245,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnNextHoleClick(View v){
         newGame.NextHole();
-        generateScoreTable(players, course.getHoleCount());
+        //generateScoreTable(players, course.getHoleCount());
 
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
@@ -260,7 +260,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnPreviousHoleClick(View v){
         newGame.PreviousHole();
-        generateScoreTable(players, course.getHoleCount());
+        //generateScoreTable(players, course.getHoleCount());
 
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
