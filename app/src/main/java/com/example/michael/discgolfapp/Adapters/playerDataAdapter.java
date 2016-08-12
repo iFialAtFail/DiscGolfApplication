@@ -20,7 +20,6 @@ public class PlayerDataAdapter extends BaseAdapter {
 
     private List<Player> playerList;
     private Context context;
-    private LayoutInflater inflater;
 
     public PlayerDataAdapter(Context context, List<Player> playerStorage) {
         playerList = playerStorage;
