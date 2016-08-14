@@ -3,10 +3,13 @@ package com.example.michael.discgolfapp.Activities;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -43,6 +46,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     private final String PLAYER_SCORES = "Player Score";
     private final String PLAYER_NAMES = "Player Name";
     private final String CURRENT_HOLE = "Current Hole";
+    private final int TEXT_WIDTH = 80;
+    private final int TEXT_SIZE = 20;
 
     //endregion
 
@@ -150,6 +155,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private void generateTable(Player[] players, int courseHoleCount){
 
+
+
+
         //Setup Static cells (Par, Hole#)
         if (staticHeaderCellsTable.getChildCount() < 1){
             String[] textInput = {"Hole", "Par"};
@@ -157,7 +165,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 LinearLayout _linearLayout = new LinearLayout(this);
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
                 _linearLayout.setLayoutParams(params);
-                TextView tv = setupTextViewInTable(textInput[b], R.drawable.cell_shape_light_green);
+                TextView tv = setupTextViewInTable(textInput[b], R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
+                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.MATCH_PARENT));
                 _linearLayout.addView(tv);
                 staticHeaderCellsTable.addView(_linearLayout);
             }
@@ -173,10 +183,12 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
             for (int a = 0; a<course.getCurrentHolePar().length; a++){
                 TextView tv = new TextView(context);
-                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                tv.setLayoutParams(new TableRow.LayoutParams(TEXT_WIDTH,
                         TableRow.LayoutParams.WRAP_CONTENT));
                 tv.setBackgroundResource(R.drawable.cell_shape_light_green);
-                tv.setTextSize(30);
+                tv.setTextSize(TEXT_SIZE);
+                tv.setGravity(Gravity.CENTER);
+                tv.setTypeface(null, Typeface.BOLD);
                 tv.setPadding(5, 5, 5, 5);
                 tv.setText(String.valueOf(a+1));
                 tv.setTextColor(Color.BLACK);
@@ -191,10 +203,10 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
             for (int a = 0; a<course.getCurrentHolePar().length; a++){
                 TextView tv = new TextView(context);
-                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                tv.setLayoutParams(new TableRow.LayoutParams(TEXT_WIDTH,
                         TableRow.LayoutParams.WRAP_CONTENT));
                 tv.setBackgroundResource(R.drawable.cell_shape_light_green);
-                tv.setTextSize(30);
+                tv.setTextSize(TEXT_SIZE);
                 tv.setPadding(5, 5, 5, 5);
                 tv.setText(String.valueOf(course.getCurrentHolePar()[a]));
                 tv.setTextColor(Color.BLACK);
@@ -213,7 +225,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
                 linearLayout.setLayoutParams(params);
 
-                TextView tv = setupTextViewInTable(players[z].getName(), R.drawable.cell_shape);
+                TextView tv = setupTextViewInTable(players[z].getName(), R.drawable.cell_shape); //This forced width but the next line should be a quick fix for it.
+                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.MATCH_PARENT));
                 tv.setSingleLine();
                 linearLayout.addView(tv);
 
@@ -337,14 +351,14 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     private TextView setupTextViewInTable(String setText, int resourceID ){
-        int textSize = 30;
+
 
         TextView tv = new TextView(context);
-        tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+        tv.setLayoutParams(new TableRow.LayoutParams(TEXT_WIDTH,
                 TableRow.LayoutParams.MATCH_PARENT));
         tv.setBackgroundResource(resourceID);
         tv.setTextColor(Color.BLACK);
-        tv.setTextSize(textSize);
+        tv.setTextSize(TEXT_SIZE);
         tv.setPadding(5, 5, 5, 5);
         tv.setText(setText);
         return tv;
