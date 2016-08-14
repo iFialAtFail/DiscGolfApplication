@@ -295,7 +295,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     //region Button Handler Methods
 
     public void OnIncrementScoreClick(View v){
-        players[0].IncrementCurrentScore(newGame.getCurrentHole()); //TODO replace 0 with current player selected
+        players[currentPlayerSelected].IncrementCurrentScore(newGame.getCurrentHole()); //TODO replace 0 with current player selected
         generateScoreTable(players, course.getHoleCount());
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
@@ -317,7 +317,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnDecrementScoreClick(View v){
 
-        newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
+        newGame.getPlayerArray()[currentPlayerSelected].DecrementCurrentScore(newGame.getCurrentHole());
         generateScoreTable(players, course.getHoleCount());
 
 
@@ -367,9 +367,15 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     public void OnLastPlayerClick(View view) {
+        if (currentPlayerSelected > 0 ){
+            currentPlayerSelected--;
+        }
     }
 
     public void OnNxtPlayerClick(View view) {
+        if (currentPlayerSelected < players.length -1){
+            currentPlayerSelected++;
+        }
     }
 
     //endregion
