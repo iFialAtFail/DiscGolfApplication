@@ -161,7 +161,23 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     //endregion
 
+    private void setupStaticHeaderCellsTable(){
+        String[] textInput = {"Hole", "Par"};
+        for(int i = 0; i < 2; i++) {
 
+            LinearLayout tableRow = new LinearLayout(this);
+            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+            tableRow.setLayoutParams(params);
+
+            TextView tv = setupTextViewInTable(textInput[i], R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
+            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.MATCH_PARENT));
+
+            tableRow.addView(tv);
+            staticHeaderCellsTable.addView(tableRow);
+        }
+
+    }
 
 
     private void generateTable(Player[] players, int courseHoleCount){
@@ -171,17 +187,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         //Setup Static cells (Par, Hole#)
         if (staticHeaderCellsTable.getChildCount() < 1){
-            String[] textInput = {"Hole", "Par"};
-            for(int b = 0; b < 2; b++) {
-                LinearLayout _linearLayout = new LinearLayout(this);
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
-                _linearLayout.setLayoutParams(params);
-                TextView tv = setupTextViewInTable(textInput[b], R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
-                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                _linearLayout.addView(tv);
-                staticHeaderCellsTable.addView(_linearLayout);
-            }
+            setupStaticHeaderCellsTable();
         }
 
         //Setup Static Header Par and Holes cells
