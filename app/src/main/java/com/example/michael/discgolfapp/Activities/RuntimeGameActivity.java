@@ -26,6 +26,8 @@ import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,11 +67,15 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     ObservableHorizontalScrollView scoreHorizontalScrollView;
     ObservableScrollView nameScrollView;
     ObservableScrollView scoreScrollView;
+    ObservableScrollView currentScoreSV;
 
     TableLayout scoreTable;
     TableLayout nameTable;
     TableLayout headerTable;
     TableLayout staticHeaderCellsTable;
+    TableLayout currentScoreTable;
+    TableLayout staticParCountTable;
+    LinearLayout currentScoreLayout;
 
     //endregion
 
@@ -94,6 +100,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         nameTable = (TableLayout) findViewById(R.id.nameTable);
         headerTable = (TableLayout) findViewById(R.id.parTable);
         staticHeaderCellsTable = (TableLayout) findViewById(R.id.parCellTable);
+        staticParCountTable = (TableLayout) findViewById(R.id.staticParCountTable);
+        currentScoreTable = (TableLayout) findViewById(R.id.currentScoreTable);
+        currentScoreLayout = (LinearLayout) findViewById(R.id.currentScoreLayout);
 
         parHorizontalScrollView = (ObservableHorizontalScrollView) findViewById(R.id.parHorizontalScrollView);
         parHorizontalScrollView.setHorizontalScrollViewListener(this);
@@ -104,6 +113,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         nameScrollView.setScrollViewListener(this);
         scoreScrollView = (ObservableScrollView) findViewById(R.id.scoreScrollView);
         scoreScrollView.setScrollViewListener(this);
+        currentScoreSV = (ObservableScrollView) findViewById(R.id.currentScoreSV);
+        currentScoreSV.setScrollViewListener(this);
         //endregion
 
         //retrieve Player/Course data
@@ -173,7 +184,32 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             }
         }
 
-        //Setup Par Row
+        //Setup Static Header Par and Holes cells
+        if (staticParCountTable.getChildCount() < 1){
+
+            TableRow tr = new TableRow(context);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+            tr.setLayoutParams(params);
+            TextView tv = setupTextViewInTable("T", R.drawable.cell_shape_light_green);
+            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,TableRow.LayoutParams.WRAP_CONTENT));
+            tv.setTypeface(null, Typeface.BOLD);
+            tv.setGravity(Gravity.CENTER);
+            tr.addView(tv);
+            staticParCountTable.addView(tr);
+
+
+            TableRow tr2 = new TableRow(context);
+            tr.setLayoutParams(params);
+            TextView tv2 = setupTextViewInTable(String.valueOf(course.getCoursePar()), R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
+            tv2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            tv2.setGravity(Gravity.CENTER);
+            tr2.addView(tv2);
+            staticParCountTable.addView(tr2);
+
+        }
+
+        //Setup Par/Hole# Rows
         if (headerTable.getChildCount() < 1){
 
             //Setup Hole# row
@@ -216,6 +252,21 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 
         }
+
+        //Setup Final Current Score Column
+        if (currentScoreTable.getChildCount() < 1){
+            for (int count = 0; count < players.length; count++){
+                LinearLayout _linearLayout = new LinearLayout(this);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT,1f);
+                _linearLayout.setLayoutParams(params);
+
+                TextView tv = setupTextViewInTable(String.valueOf(players[count].getCurrentTotal()),R.drawable.cell_shape);
+                tv.setSingleLine();
+                _linearLayout.addView(tv);
+                currentScoreTable.addView(_linearLayout);
+            }
+        }
+
 
 
         //Setup Name Column
@@ -269,7 +320,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         newGame.getPlayerArray()[0].DecrementCurrentScore(newGame.getCurrentHole());
         generateScoreTable(players, course.getHoleCount());
 
-        
+
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
 
         TextView tv = (TextView) tr.getChildAt(newGame.getCurrentHole()-1);
@@ -395,9 +446,15 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
         if (scrollView == nameScrollView){
             scoreScrollView.scrollTo(x,y);
+            currentScoreSV.scrollTo(x,y);
         } else if (scrollView == scoreScrollView){
             nameScrollView.scrollTo(x,y);
+            currentScoreSV.scrollTo(x,y);
+        } else if (scrollView == currentScoreSV){
+            scoreScrollView.scrollTo(x,y);
+            nameScrollView.scrollTo(x,y);
         }
+
     }
 
     //Handle Horizontal Scrollview Sync

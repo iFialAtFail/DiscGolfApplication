@@ -50,6 +50,14 @@ public class Course implements Serializable{
         return holes;
     }
 
+    public int getCoursePar(){
+        int totalPars = 0;
+        for (int par : holes) {
+            totalPars += par;
+        }
+        return totalPars;
+    }
+
     //endregion
 
     //region Private Helper Methods
