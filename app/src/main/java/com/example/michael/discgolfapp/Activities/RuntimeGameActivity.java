@@ -165,13 +165,14 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         String[] textInput = {"Hole", "Par"};
         for(int i = 0; i < 2; i++) {
 
-            LinearLayout tableRow = new LinearLayout(this);
+            LinearLayout tableRow = new LinearLayout(this); //Must me linear layout, since TableRow won't actually fill parent.
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
             tableRow.setLayoutParams(params);
 
-            TextView tv = setupTextViewInTable(textInput[i], R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
-            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
+            TextView tv = setupTextViewInTable(textInput[i],
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
+
 
             tableRow.addView(tv);
             staticHeaderCellsTable.addView(tableRow);
@@ -418,6 +419,19 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         TextView tv = new TextView(context);
         tv.setLayoutParams(new TableRow.LayoutParams(TEXT_WIDTH,
+                TableRow.LayoutParams.MATCH_PARENT));
+        tv.setBackgroundResource(resourceID);
+        tv.setTextColor(Color.BLACK);
+        tv.setTextSize(TEXT_SIZE);
+        tv.setPadding(5, 5, 5, 5);
+        tv.setText(setText);
+        return tv;
+    }
+
+    //Overloaded setup Text View to add ability to change layout params
+    private TextView setupTextViewInTable(String setText, int layoutWidthParam, int resourceID ){
+        TextView tv = new TextView(context);
+        tv.setLayoutParams(new TableRow.LayoutParams(layoutWidthParam,
                 TableRow.LayoutParams.MATCH_PARENT));
         tv.setBackgroundResource(resourceID);
         tv.setTextColor(Color.BLACK);
