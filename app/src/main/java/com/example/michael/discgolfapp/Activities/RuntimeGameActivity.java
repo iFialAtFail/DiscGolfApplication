@@ -35,16 +35,12 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     Course course;
     Player[] players;
     ScoreCard scoreCard;
-    //int currentPlayerSelected = 0;
     Context context;
 
     //endregion
 
     //region Constants
 
-    private final String PLAYER_SCORES = "Player Score";
-    private final String PLAYER_NAMES = "Player Name";
-    private final String CURRENT_HOLE = "Current Hole";
     private final int TEXT_WIDTH = 80;
     private final int TEXT_SIZE = 20;
 
@@ -56,6 +52,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     Button btnDecrementScore;
     Button btnNextHole;
     Button btnPreviousHole;
+
+    TextView titleCourseTextView;
 
     List<TableLayout> tableDiscGolf;
 
@@ -94,6 +92,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         btnNextHole = (Button)findViewById(R.id.btnNextHole);
         btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
 
+        titleCourseTextView = (TextView) findViewById(R.id.titleCourseTextView);
+
         tableDiscGolf = new ArrayList<TableLayout>();
         scoreTable = (TableLayout) findViewById(R.id.scoreTable);
         nameTable = (TableLayout) findViewById(R.id.nameTable);
@@ -126,6 +126,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         if (savedInstanceState == null) {
             initPlayers(players);
             scoreCard = new ScoreCard(players, course);
+            titleCourseTextView.setText(course.getName());
             generateTables(players, course.getHoleCount());
 
             //todo IMPLEMENT current score per player
@@ -138,6 +139,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         if (savedInstanceState != null) {
             players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
             scoreCard = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
+            titleCourseTextView.setText(course.getName());
             generateTables(players, course.getHoleCount());
         }
 
