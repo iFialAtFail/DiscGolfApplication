@@ -129,9 +129,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             titleCourseTextView.setText(course.getName());
             generateTables(players, course.getHoleCount());
 
-            //todo IMPLEMENT current score per player
-            //tvCurrentTotal.setText(String.valueOf(players[0].getCurrentTotal()));
-
+            
         }
 
         //If on recreation, pull out the saved state information and reset the object
