@@ -181,7 +181,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     //region Button Handler Methods
 
     public void OnIncrementScoreClick(View v){
-        players[scoreCard.getCurrentPlayerSelected()].IncrementCurrentScore(scoreCard.getCurrentHole()); //TODO replace 0 with current player selected
+        players[scoreCard.getCurrentPlayerSelected()].IncrementCurrentScore(scoreCard.getCurrentHole());
         generateScoreTable(players, course.getHoleCount());
         setupCurrentScoreColumn(players);
 
@@ -208,8 +208,13 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         generateScoreTable(players, course.getHoleCount());
         setupCurrentScoreColumn(players);
 
+        decrementScoreColorHandler();
 
 
+
+    }
+
+    private void decrementScoreColorHandler(){
         TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
 
         TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
@@ -223,7 +228,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole() - 2);
             ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
         }
-
     }
     public void OnNextHoleClick(View v){
         scoreCard.NextHole();
@@ -235,9 +239,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
 
         tv.getParent().requestChildFocus(tv,tv);
-
-
     }
+
     public void OnPreviousHoleClick(View v){
         scoreCard.PreviousHole();
 
@@ -254,12 +257,16 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     public void OnLastPlayerClick(View view) {
         if (scoreCard.getCurrentPlayerSelected() > 0 ){
             scoreCard.LastPlayer();
+            generateTables(players,course.getHoleCount());
+            makeSelectedCellRed();
         }
     }
 
     public void OnNxtPlayerClick(View view) {
         if (scoreCard.getCurrentPlayerSelected() < players.length -1){
             scoreCard.NextPlayer();
+            generateTables(players,course.getHoleCount());
+            makeSelectedCellRed();
         }
     }
 
@@ -291,6 +298,28 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             player.StartGame(course);
         }
     }
+
+    private void makeSelectedCellRed(){
+        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
+        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
+        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
+        if (scoreCard.getCurrentHole()-2 < 0) {
+            TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
+            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+        }
+        else {
+            TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole() - 2);
+            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+        }
+        tv.getParent().requestChildFocus(tv,tv); //focus to automate looking at the changing value
+
+
+    }
+
+
+
+
+
 
     private TextView setupTextViewInTable(String setText, int resourceID ){
 
