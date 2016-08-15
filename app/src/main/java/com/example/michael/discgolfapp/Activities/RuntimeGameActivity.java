@@ -165,7 +165,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         //Setup Par/Hole# Rows
         setupDynamicHeaderTable();
 
-        //Setup Final Current Score Column
+        //Setup Final Current Score Column. Needs to be called on score changes.
         setupCurrentScoreColumn(players);
 
 
@@ -185,6 +185,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 nameTable.addView(linearLayout);
             }
         }
+
+        //Generate the score table. Used to refresh the view as well.
         generateScoreTable(players, courseHoleCount);
 
 
@@ -198,6 +200,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     public void OnIncrementScoreClick(View v){
         players[currentPlayerSelected].IncrementCurrentScore(scoreCard.getCurrentHole()); //TODO replace 0 with current player selected
         generateScoreTable(players, course.getHoleCount());
+        setupCurrentScoreColumn(players);
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
 
@@ -220,6 +223,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         scoreCard.getPlayerArray()[currentPlayerSelected].DecrementCurrentScore(scoreCard.getCurrentHole());
         generateScoreTable(players, course.getHoleCount());
+        setupCurrentScoreColumn(players);
+
 
 
         TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
@@ -425,9 +430,10 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     private void setupCurrentScoreColumn(Player[] players) {
-        if (currentScoreTable.getChildCount() < 1){
+
+        currentScoreTable.removeAllViews();
             for (int count = 0; count < players.length; count++){
-                LinearLayout _linearLayout = new LinearLayout(this);
+                LinearLayout _linearLayout = new LinearLayout(context);
                 TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT,1f);
                 _linearLayout.setLayoutParams(params);
 
@@ -436,7 +442,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 _linearLayout.addView(tv);
                 currentScoreTable.addView(_linearLayout);
             }
-        }
+
     }
 
 
