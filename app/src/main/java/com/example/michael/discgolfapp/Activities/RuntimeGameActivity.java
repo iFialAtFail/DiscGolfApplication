@@ -35,7 +35,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     Course course;
     Player[] players;
     ScoreCard scoreCard;
-    int currentPlayerSelected = 0;
+    //int currentPlayerSelected = 0;
     Context context;
 
     //endregion
@@ -143,7 +143,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         //initially set block to color red
 
-        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
         TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
         ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
         TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
@@ -181,11 +181,11 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     //region Button Handler Methods
 
     public void OnIncrementScoreClick(View v){
-        players[currentPlayerSelected].IncrementCurrentScore(scoreCard.getCurrentHole()); //TODO replace 0 with current player selected
+        players[scoreCard.getCurrentPlayerSelected()].IncrementCurrentScore(scoreCard.getCurrentHole()); //TODO replace 0 with current player selected
         generateScoreTable(players, course.getHoleCount());
         setupCurrentScoreColumn(players);
 
-        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
 
         TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
 
@@ -204,13 +204,13 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnDecrementScoreClick(View v){
 
-        scoreCard.getPlayerArray()[currentPlayerSelected].DecrementCurrentScore(scoreCard.getCurrentHole());
+        scoreCard.getPlayerArray()[scoreCard.getCurrentPlayerSelected()].DecrementCurrentScore(scoreCard.getCurrentHole());
         generateScoreTable(players, course.getHoleCount());
         setupCurrentScoreColumn(players);
 
 
 
-        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
 
         TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
         ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
@@ -227,10 +227,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnNextHoleClick(View v){
         scoreCard.NextHole();
-        //generateScoreTable(players, course.getHoleCount());
 
-
-        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
         TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
         ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
         TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-2);
@@ -242,10 +240,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnPreviousHoleClick(View v){
         scoreCard.PreviousHole();
-        //generateScoreTable(players, course.getHoleCount());
 
-
-        TableRow tr = (TableRow) scoreTable.getChildAt(currentPlayerSelected);
+        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
         TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
         ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
         TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
@@ -256,14 +252,14 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     public void OnLastPlayerClick(View view) {
-        if (currentPlayerSelected > 0 ){
-            currentPlayerSelected--;
+        if (scoreCard.getCurrentPlayerSelected() > 0 ){
+            scoreCard.LastPlayer();
         }
     }
 
     public void OnNxtPlayerClick(View view) {
-        if (currentPlayerSelected < players.length -1){
-            currentPlayerSelected++;
+        if (scoreCard.getCurrentPlayerSelected() < players.length -1){
+            scoreCard.NextPlayer();
         }
     }
 

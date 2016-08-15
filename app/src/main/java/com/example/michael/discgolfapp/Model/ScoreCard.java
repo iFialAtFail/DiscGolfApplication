@@ -11,6 +11,7 @@ public class ScoreCard implements Serializable {
 
     private Player[] players;
     private int currentHole;
+    private int currentPlayerSelected;
     private Course course;
 
     //endregion
@@ -46,8 +47,12 @@ public class ScoreCard implements Serializable {
         players = value;
     }
 
-    public int gerPlayersCount(){
+    public int getPlayersCount(){
         return players.length;
+    }
+
+    public int getCurrentPlayerSelected(){
+        return currentPlayerSelected;
     }
 
     //endregion
@@ -68,6 +73,14 @@ public class ScoreCard implements Serializable {
         {
             currentHole--;
         }
+    }
+
+    public void NextPlayer(){
+        currentPlayerSelected++;
+    }
+
+    public void LastPlayer(){
+        currentPlayerSelected--;
     }
 
     //endregion
