@@ -178,16 +178,6 @@
                     android:onClick="OnDecrementScoreClick" />
             </LinearLayout>
 
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="Select Next Player"
-                android:id="@+id/btnLastPlayer"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:enabled="true"
-                android:onClick="OnNxtPlayerClick" />
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -197,6 +187,15 @@
                 android:clickable="true"
                 android:enabled="true"
                 android:onClick="OnLastPlayerClick" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Select Next Player"
+                android:id="@+id/btnLastPlayer"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:enabled="true"
+                android:onClick="OnNxtPlayerClick" />
 
         </LinearLayout>
 
