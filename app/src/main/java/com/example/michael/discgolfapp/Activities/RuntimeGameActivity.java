@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -25,8 +24,6 @@ import com.example.michael.discgolfapp.Model.Course;
 import com.example.michael.discgolfapp.Model.Player;
 import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,17 +59,19 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     List<TableLayout> tableDiscGolf;
 
-
+    //Custom Scrollviews
     ObservableHorizontalScrollView parHorizontalScrollView;
     ObservableHorizontalScrollView scoreHorizontalScrollView;
     ObservableScrollView nameScrollView;
     ObservableScrollView scoreScrollView;
     ObservableScrollView currentScoreSV;
 
+    //Static in name implies a stationary view.
+    //Dynimic in name implies a view wrapped in a custom scrollview.
     TableLayout scoreTable;
     TableLayout nameTable;
-    TableLayout headerTable;
-    TableLayout staticHeaderCellsTable;
+    TableLayout dynamicHeaderTable;
+    TableLayout staticHeaderRowsTable;
     TableLayout currentScoreTable;
     TableLayout staticParCountTable;
     LinearLayout currentScoreLayout;
@@ -98,8 +97,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         tableDiscGolf = new ArrayList<TableLayout>();
         scoreTable = (TableLayout) findViewById(R.id.scoreTable);
         nameTable = (TableLayout) findViewById(R.id.nameTable);
-        headerTable = (TableLayout) findViewById(R.id.parTable);
-        staticHeaderCellsTable = (TableLayout) findViewById(R.id.parCellTable);
+        dynamicHeaderTable = (TableLayout) findViewById(R.id.parTable);
+        staticHeaderRowsTable = (TableLayout) findViewById(R.id.parCellTable);
         staticParCountTable = (TableLayout) findViewById(R.id.staticParCountTable);
         currentScoreTable = (TableLayout) findViewById(R.id.currentScoreTable);
         currentScoreLayout = (LinearLayout) findViewById(R.id.currentScoreLayout);
@@ -161,63 +160,38 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     //endregion
 
-    private void setupStaticHeaderCellsTable(){
-        String[] textInput = {"Hole", "Par"};
-        for(int i = 0; i < 2; i++) {
+    private void setupStaticParCountTable(String[] textArray){
+        if (staticParCountTable.getChildCount() < 1){
+            for(int i = 0; i<2; i++) {
+                TableRow tr = new TableRow(context); //<-- This time Linear Layout is acting like "Wrap content". TableRow works though.
+                TableRow.LayoutParams params =
+                        new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+                tr.setLayoutParams(params);
 
-            LinearLayout tableRow = new LinearLayout(this); //Must me linear layout, since TableRow won't actually fill parent.
-            TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
-            tableRow.setLayoutParams(params);
+                TextView tv = setupTextViewInTable(textArray[i], TableRow.LayoutParams.WRAP_CONTENT, R.drawable.cell_shape_light_green);
+                if (i == 0){
+                    tv.setTypeface(null, Typeface.BOLD);
+                }
+                tv.setGravity(Gravity.CENTER);
 
-            TextView tv = setupTextViewInTable(textInput[i],
-                    TableRow.LayoutParams.MATCH_PARENT,
-                    R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
-
-
-            tableRow.addView(tv);
-            staticHeaderCellsTable.addView(tableRow);
+                tr.addView(tv);
+                staticParCountTable.addView(tr);
+            }
         }
-
     }
 
 
     private void generateTable(Player[] players, int courseHoleCount){
 
-
-
-
         //Setup Static cells (Par, Hole#)
-        if (staticHeaderCellsTable.getChildCount() < 1){
-            setupStaticHeaderCellsTable();
-        }
+        setupStaticHeaderRows();
 
         //Setup Static Header Par and Holes cells
-        if (staticParCountTable.getChildCount() < 1){
-
-            TableRow tr = new TableRow(context);
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
-            tr.setLayoutParams(params);
-            TextView tv = setupTextViewInTable("T", R.drawable.cell_shape_light_green);
-            tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,TableRow.LayoutParams.WRAP_CONTENT));
-            tv.setTypeface(null, Typeface.BOLD);
-            tv.setGravity(Gravity.CENTER);
-            tr.addView(tv);
-            staticParCountTable.addView(tr);
-
-
-            TableRow tr2 = new TableRow(context);
-            tr.setLayoutParams(params);
-            TextView tv2 = setupTextViewInTable(String.valueOf(course.getCoursePar()), R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
-            tv2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            tv2.setGravity(Gravity.CENTER);
-            tr2.addView(tv2);
-            staticParCountTable.addView(tr2);
-
-        }
+        String[] input = {"T", String.valueOf(course.getCoursePar())};
+        setupStaticParCountTable(input);
 
         //Setup Par/Hole# Rows
-        if (headerTable.getChildCount() < 1){
+        if (dynamicHeaderTable.getChildCount() < 1){
 
             //Setup Hole# row
             LinearLayout holeNum = new LinearLayout(this);
@@ -237,7 +211,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 tv.setTextColor(Color.BLACK);
                 holeNum.addView(tv);
             }
-            headerTable.addView(holeNum);
+            dynamicHeaderTable.addView(holeNum);
 
             //setup par row
             LinearLayout _linearLayout = new LinearLayout(this);
@@ -255,7 +229,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 tv.setTextColor(Color.BLACK);
                 _linearLayout.addView(tv);
             }
-            headerTable.addView(_linearLayout);
+            dynamicHeaderTable.addView(_linearLayout);
 
 
         }
@@ -457,6 +431,25 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 row.addView(tv);
             }
             scoreTable.addView(row);
+        }
+    }
+
+    private void setupStaticHeaderRows(){
+        if (staticHeaderRowsTable.getChildCount() < 1) {
+            String[] textInput = {"Hole", "Par"};
+            for (int i = 0; i < textInput.length; i++) {
+
+                LinearLayout tableRow = new LinearLayout(context); //Must me linear layout, since TableRow won't actually fill parent.
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+                tableRow.setLayoutParams(params);
+
+                TextView tv = setupTextViewInTable(textInput[i],
+                        TableRow.LayoutParams.MATCH_PARENT,//Setting only width param
+                        R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
+
+                tableRow.addView(tv);
+                staticHeaderRowsTable.addView(tableRow);
+            }
         }
     }
 
