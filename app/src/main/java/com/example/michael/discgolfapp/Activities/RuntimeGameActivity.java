@@ -170,30 +170,13 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 
         //Setup Name Column
-        if (nameTable.getChildCount() < 1){
-            for (int z = 0; z < players.length; z++) {
-                LinearLayout linearLayout = new LinearLayout(this);
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
-                linearLayout.setLayoutParams(params);
-
-                TextView tv = setupTextViewInTable(players[z].getName(), R.drawable.cell_shape); //This forced width but the next line should be a quick fix for it.
-                tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                tv.setSingleLine();
-                linearLayout.addView(tv);
-
-                nameTable.addView(linearLayout);
-            }
-        }
+        setupNameColumn(players);
 
         //Generate the score table. Used to refresh the view as well.
         generateScoreTable(players, courseHoleCount);
 
 
     }
-
-
-
 
     //region Button Handler Methods
 
@@ -445,6 +428,21 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     }
 
+    private void setupNameColumn(Player[] players) {
+        if (nameTable.getChildCount() < 1){
+            for (int z = 0; z < players.length; z++) {
+                LinearLayout linearLayout = new LinearLayout(this);
+                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
+                linearLayout.setLayoutParams(params);
+
+                TextView tv = setupTextViewInTable(players[z].getName(),TableRow.LayoutParams.MATCH_PARENT, R.drawable.cell_shape); //This forced width but the next line should be a quick fix for it.
+                tv.setSingleLine();
+                linearLayout.addView(tv);
+
+                nameTable.addView(linearLayout);
+            }
+        }
+    }
 
     //endregion
 
