@@ -4,6 +4,7 @@ package com.example.michael.discgolfapp.Activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -293,14 +294,16 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 						//Commit the change to persistant memory
 						//courseStorage.SaveToFile(context);
 						//onCreate(null); //TODO do I need this?
-						dialog.cancel();// Remove
+						Intent intent = new Intent(context,MainMenuActivity.class);
+						startActivity(intent);
 					}
 				})
 				.setNeutralButton("Save", new DialogInterface.OnClickListener(){
 					@Override
 					public void onClick(DialogInterface dialog, int which){
 						//TODO save the scorecard for later
-						dialog.cancel();//Remove
+						Intent intent = new Intent(context, MainMenuActivity.class);
+						startActivity(intent);
 					}
 				});
 		AlertDialog art = aat.create();

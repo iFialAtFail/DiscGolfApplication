@@ -52,6 +52,7 @@ public class MainMenuActivity extends Activity {
 						OnNewGameClick(view);
 						break;
 					case 1:
+						OnResumeGameClicked(view);
 						break;
 					case 2:
 						OnEditCoursesClick(view);
@@ -93,9 +94,12 @@ public class MainMenuActivity extends Activity {
         startActivity(intent);
     }
     public void OnScorecardsClick(View v){
-        Toast toast = Toast.makeText(context,"You've clicked View Scorecards, still not implemented",Toast.LENGTH_LONG);
-        toast.show();
-        //Intent intent = new Intent(context, RuntimeGameActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(context, FinishedScorecardsActivity.class);
+        startActivity(intent);
     }
+
+	public void OnResumeGameClicked(View v){
+		Intent intent = new Intent(context, UnfinishedScorecardsActivity.class);
+		startActivity(intent);
+	}
 }
