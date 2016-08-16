@@ -17,7 +17,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="180dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -144,4 +144,10 @@
                 android:background="@android:color/transparent" />
         </LinearLayout>
     </LinearLayout>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvMainMenu"
+        android:choiceMode="singleChoice"/>
 </LinearLayout>

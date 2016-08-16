@@ -5,9 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.michael.discgolfapp.Adapters.MainMenuDataAdapter;
 import com.example.michael.discgolfapp.R;
 
 /**
@@ -20,6 +26,10 @@ public class MainMenuActivity extends Activity {
     Button btnEditPlayers;
     Button btnScorecards;
     Context context;
+	ListView lvMainMenu;
+	MainMenuDataAdapter adapter;
+
+	String[] menuItems = {"New Game", "Resume Game", "Course Editor", "Player Editor", "Score Cards"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,33 @@ public class MainMenuActivity extends Activity {
         btnEditCourses = (Button) findViewById(R.id.btnCourses);
         btnEditPlayers = (Button) findViewById(R.id.btnPlayers);
         btnScorecards = (Button) findViewById(R.id.btnScorecards);
+		lvMainMenu = (ListView) findViewById(R.id.lvMainMenu);
+		adapter = new MainMenuDataAdapter(context,menuItems);
+		lvMainMenu.setAdapter(adapter);
+
+		lvMainMenu.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				switch (position){
+					case 0:
+						OnNewGameClick(view);
+						break;
+					case 1:
+						break;
+					case 2:
+						OnEditCoursesClick(view);
+						break;
+					case 3:
+						OnEditPlayersClick(view);
+						break;
+					case 4:
+						OnScorecardsClick(view);
+						break;
+				}
+			}
+		});
+
+
 
     }
 
