@@ -61,6 +61,7 @@ public class PlayerStorage implements Serializable {
     //region Public Methods
 
     public void AddPlayerToStorage(Player player){
+		//Check to avoid duplicate players
         for (Player p : playerStorage){
             if (player.getName().equals(p.getName())){
                 return;

@@ -55,6 +55,10 @@ public class ScoreCard implements Serializable {
         return currentPlayerSelected;
     }
 
+	public String getCourseName(){
+		return course.getName();
+	}
+
     //endregion
 
     //region Public Methods
