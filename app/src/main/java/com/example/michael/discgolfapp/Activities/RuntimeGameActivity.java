@@ -1,7 +1,9 @@
 package com.example.michael.discgolfapp.Activities;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -270,6 +272,43 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         }
     }
 
+	public void OnSaveFinnishGameClick(View view) {
+		//TODO Create 3 button dialog
+		AlertDialog.Builder aat = new AlertDialog.Builder(context);
+		aat.setTitle("End Game?")
+				.setMessage("If you are finished, select \"Finished\". If you want to save your game to resume later, select \"Save\"")
+				.setCancelable(true)
+				.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				})
+				.setPositiveButton("Finish", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						//Commit the change to persistant memory
+						//courseStorage.SaveToFile(context);
+						//onCreate(null); //TODO do I need this?
+						dialog.cancel();// Remove
+					}
+				})
+				.setNeutralButton("Save", new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which){
+						//TODO save the scorecard for later
+						dialog.cancel();//Remove
+					}
+				});
+		AlertDialog art = aat.create();
+
+		art.show();
+
+	}
+
     //endregion
 
     //region Private Helper Methods
@@ -519,6 +558,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         outState.putSerializable("RestoreScoreCard", scoreCard);
 
     }
+
+
 
     //endregion
 }
