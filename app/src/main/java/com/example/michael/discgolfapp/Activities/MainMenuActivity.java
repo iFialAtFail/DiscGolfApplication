@@ -37,13 +37,12 @@ public class MainMenuActivity extends Activity {
         setContentView(R.layout.main_menu);
 
         context = this;
-        btnNewGame = (Button) findViewById(R.id.btnNewGame);
-        btnEditCourses = (Button) findViewById(R.id.btnCourses);
-        btnEditPlayers = (Button) findViewById(R.id.btnPlayers);
-        btnScorecards = (Button) findViewById(R.id.btnScorecards);
+
 		lvMainMenu = (ListView) findViewById(R.id.lvMainMenu);
 		adapter = new MainMenuDataAdapter(context,menuItems);
 		lvMainMenu.setAdapter(adapter);
+		lvMainMenu.setDivider(null);
+		lvMainMenu.setDividerHeight(0);
 
 		lvMainMenu.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 			@Override
