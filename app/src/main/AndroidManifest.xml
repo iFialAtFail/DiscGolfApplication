@@ -22,6 +22,8 @@
         <activity android:name=".Activities.PlayerEditorActivity"/>
         <activity android:name=".Activities.AddPlayerMenuActivity"/>
         <activity android:name=".Activities.PlayerPickerActivity"/>
+        <activity android:name=".Activities.FinishedScorecardsActivity"/>
+        <activity android:name=".Activities.UnfinishedScorecardsActivity"/>
     </application>
 
 </manifest>

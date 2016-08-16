@@ -1,6 +1,9 @@
 package com.example.michael.discgolfapp.Model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Michael on 5/20/2016.
@@ -13,6 +16,7 @@ public class ScoreCard implements Serializable {
     private int currentHole;
     private int currentPlayerSelected;
     private Course course;
+	private String date;
 
     //endregion
 
@@ -23,6 +27,7 @@ public class ScoreCard implements Serializable {
         this.players = players;
         this.course = course;
         currentHole = 1;
+		getCurrentDate();
     }
 
     //endregion
@@ -57,6 +62,10 @@ public class ScoreCard implements Serializable {
 
 	public String getCourseName(){
 		return course.getName();
+	}
+
+	public String getDate(){
+		return date;
 	}
 
     //endregion
@@ -94,6 +103,12 @@ public class ScoreCard implements Serializable {
     private boolean isWithinCourseConstraints(int value) {
         return (value >= 1 && value <= course.getHoleCount());
     }
+
+	private void getCurrentDate(){
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+		date = dateFormat.format(calendar.getTime());
+	}
 
     //endregion
 
