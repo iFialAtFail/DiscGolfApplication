@@ -94,4 +94,37 @@ public class ScoreCardStorage implements Serializable {
 		return null;
 	}
 
+	public boolean SaveUnFinishedCardToFile(Context context){
+		try {
+			FileOutputStream fos = context.openFileOutput(SCORECARD_STORAGE_FILE_UNFINISHED, Context.MODE_PRIVATE);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(this);
+
+			oos.close();
+			fos.close();
+		} catch (Exception ex){
+			ex.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	public static ScoreCardStorage LoadUnFinishedCardStorage(Context context){
+		ScoreCardStorage cardStorage;
+		try{
+			FileInputStream fis = context.openFileInput(SCORECARD_STORAGE_FILE_UNFINISHED);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Object obj = ois.readObject();
+
+			if (obj instanceof ScoreCardStorage){
+				cardStorage = (ScoreCardStorage) obj;
+				return cardStorage;
+			}
+
+		} catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
 }
