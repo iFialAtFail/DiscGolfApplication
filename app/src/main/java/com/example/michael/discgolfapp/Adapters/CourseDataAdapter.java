@@ -20,7 +20,7 @@ public class CourseDataAdapter extends BaseAdapter {
 
     private List<Course> courseList;
     private Context context;
-    private LayoutInflater inflater;
+
 
     public CourseDataAdapter(Context context, List<Course> courseStorage) {
         courseList = courseStorage;

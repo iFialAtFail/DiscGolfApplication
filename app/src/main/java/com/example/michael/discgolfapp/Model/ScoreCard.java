@@ -64,8 +64,18 @@ public class ScoreCard implements Serializable {
 		return course.getName();
 	}
 
+	public Course getCourse(){return course;}
+
 	public String getDate(){
 		return date;
+	}
+
+	public String getPlayersNames(){
+		String concatNames = "";
+		for(Player player : players){
+			concatNames += (player.getName() + ", ");
+		}
+		return concatNames.substring(0, concatNames.length()-2);
 	}
 
     //endregion

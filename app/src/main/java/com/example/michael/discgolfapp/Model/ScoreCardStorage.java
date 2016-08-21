@@ -45,6 +45,8 @@ public class ScoreCardStorage implements Serializable {
 		return 0;
 	}
 
+
+
 	//endregion
 
 	//region Public Methods
