@@ -1,7 +1,9 @@
 package com.example.michael.discgolfapp.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -47,9 +49,48 @@ public class UnfinishedScorecardsActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Bundle b = new Bundle();
 				b.putSerializable("Unfinished Game", (ScoreCard)adapter.getItem(position));
+				b.putInt("From Resume Game Picker",2);
 				Intent intent = new Intent(context,RuntimeGameActivity.class);
 				intent.putExtras(b);
+				scoreCardStorage.DeleteScoreCardFromStorage(position);
+				scoreCardStorage.SaveUnFinishedCardListToFile(context);
 				startActivity(intent);
+			}
+		});
+
+		lvUnfinishedScoreCards.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+				AlertDialog.Builder aat = new AlertDialog.Builder(context);
+				aat.setTitle("Delete?")
+						.setMessage("Are you sure you want to delete this unfinished game?")
+						.setCancelable(true)
+						.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								dialog.cancel();
+							}
+
+						})
+						.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// TODO Auto-generated method stub
+								//Make the change
+								scoreCardStorage.DeleteScoreCardFromStorage(position);
+
+								//Commit the change to persistant memory
+								scoreCardStorage.SaveUnFinishedCardListToFile(context);
+								onCreate(null);
+							}
+						});
+				AlertDialog art = aat.create();
+
+				art.show();
+				return true;
 			}
 		});
 	}

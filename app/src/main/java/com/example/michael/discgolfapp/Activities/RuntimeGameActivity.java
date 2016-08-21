@@ -8,18 +8,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView;
 import com.example.michael.discgolfapp.CustomViews.ObservableScrollView;
@@ -311,7 +308,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 					public void onClick(DialogInterface dialog, int which){
 						//TODO save the scorecard for later
 						unFinishedCards.AddScoreCardToStorage(scoreCard);
-						unFinishedCards.SaveUnFinishedCardToFile(context);
+						unFinishedCards.SaveUnFinishedCardListToFile(context);
 						Intent intent = new Intent(context, MainMenuActivity.class);
 						startActivity(intent);
 					}
@@ -605,10 +602,19 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 	@Override
 	public void onBackPressed() {
-		if (gameStarted){
-			//TODO Save game as unfinished game;
+		Bundle b = this.getIntent().getExtras();
+
+		//If Coming from resume game picker, save game and go to main menu on back press
+		//Fixes the bug of going back to an adapter that deleted that game on going to it.
+		if (b != null && b.getInt("From Resume Game Picker") == 2){
 			unFinishedCards.AddScoreCardToStorage(scoreCard);
-			unFinishedCards.SaveUnFinishedCardToFile(context);
+			unFinishedCards.SaveUnFinishedCardListToFile(context);
+			Intent intent = new Intent(context, MainMenuActivity.class);
+			startActivity(intent);
+		}
+		if (gameStarted){
+			unFinishedCards.AddScoreCardToStorage(scoreCard);
+			unFinishedCards.SaveUnFinishedCardListToFile(context);
 			Intent intent = new Intent(context, MainMenuActivity.class);
 			startActivity(intent);
 		}

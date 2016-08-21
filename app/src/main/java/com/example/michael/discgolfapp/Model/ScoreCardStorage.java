@@ -96,7 +96,7 @@ public class ScoreCardStorage implements Serializable {
 		return null;
 	}
 
-	public boolean SaveUnFinishedCardToFile(Context context){
+	public boolean SaveUnFinishedCardListToFile(Context context){
 		try {
 			FileOutputStream fos = context.openFileOutput(SCORECARD_STORAGE_FILE_UNFINISHED, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
