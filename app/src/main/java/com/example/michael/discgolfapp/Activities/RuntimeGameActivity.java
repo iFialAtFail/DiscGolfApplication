@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -47,7 +48,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     //region Constants
 
-    private final int TEXT_WIDTH = 80;
+
+
+    private final int LAYOUT_WIDTH = 50;
     private final int TEXT_SIZE = 20;
 
     //endregion
@@ -277,7 +280,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
 	public void OnSaveFinnishGameClick(View view) {
-		//TODO Create 3 button dialog
 		AlertDialog.Builder aat = new AlertDialog.Builder(context);
 		aat.setTitle("End Game?")
 				.setMessage("If you are finished, select \"Finished\". If you want to save your game to resume later, select \"Save\"")
@@ -293,10 +295,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						//Commit the change to persistant memory
-						//courseStorage.SaveToFile(context);
-						//onCreate(null); //TODO do I need this?
 						finishedCards.AddScoreCardToStorage(scoreCard);
 						finishedCards.SaveFinishedCardToFile(context);
 						Intent intent = new Intent(context,MainMenuActivity.class);
@@ -306,7 +304,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 				.setNeutralButton("Save", new DialogInterface.OnClickListener(){
 					@Override
 					public void onClick(DialogInterface dialog, int which){
-						//TODO save the scorecard for later
 						unFinishedCards.AddScoreCardToStorage(scoreCard);
 						unFinishedCards.SaveUnFinishedCardListToFile(context);
 						Intent intent = new Intent(context, MainMenuActivity.class);
@@ -390,34 +387,15 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
 
-
-
-
-
-    private TextView setupTextViewInTable(String setText, int resourceID ){
-
-
-        TextView tv = new TextView(context);
-        tv.setLayoutParams(new TableRow.LayoutParams(TEXT_WIDTH,
-                TableRow.LayoutParams.MATCH_PARENT));
-        tv.setBackgroundResource(resourceID);
-        tv.setTextColor(Color.BLACK);
-        //tv.setTextSize(TEXT_SIZE);
-		tv.setTextAppearance(context,android.R.style.TextAppearance_Small);
-        tv.setPadding(15, 5, 15, 5);
-        tv.setText(setText);
-        return tv;
-    }
-
-    //Overloaded setup Text View to add ability to change layout params
     private TextView setupTextViewInTable(String setText, int layoutWidthParam, int resourceID ){
         TextView tv = new TextView(context);
         tv.setLayoutParams(new TableRow.LayoutParams(layoutWidthParam,
                 TableRow.LayoutParams.MATCH_PARENT, 1.0f));
         tv.setBackgroundResource(resourceID);
         tv.setTextColor(Color.BLACK);
-		tv.setTextAppearance(context,android.R.style.TextAppearance_Large);
-        //tv.setTextSize(TEXT_SIZE);
+		//tv.setTextAppearance(context,android.R.style.TextAppearance_Large);
+        tv.setTextSize(TEXT_SIZE);
+		tv.setGravity(Gravity.CENTER);
         tv.setPadding(15, 5, 15, 5);
         tv.setText(setText);
         return tv;
@@ -435,7 +413,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= courseHoleCount; j++) {
-                TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1]),getSyncedWidth(j-1), R.drawable.cell_shape);
+                TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1]),applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape);
                 row.addView(tv);
             }
             scoreTable.addView(row);
@@ -474,7 +452,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 if (i == 0){
                     tv.setTypeface(null, Typeface.BOLD);
                 }
-                tv.setGravity(Gravity.CENTER);
 
                 tr.addView(tv);
                 staticParCountTable.addView(tr);
@@ -494,7 +471,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
             for (int a = 0; a<course.getCurrentHolePar().length; a++){
 
-				TextView tv = setupTextViewInTable(String.valueOf(a+1),TableRow.LayoutParams.FILL_PARENT,R.drawable.cell_shape_light_green);
+				TextView tv = setupTextViewInTable(String.valueOf(a+1), applyLayoutWidth(LAYOUT_WIDTH),R.drawable.cell_shape_light_green);
                 tv.setGravity(Gravity.CENTER);
                 tv.setTypeface(null, Typeface.BOLD);
 
@@ -548,6 +525,10 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             }
         }
     }
+
+	private int applyLayoutWidth(int width){
+		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
+	}
 
     //endregion
 
@@ -625,40 +606,4 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 	//endregion
 
-	//region GUI Element Experimental Methods
-
-	private int getSyncedWidth(int i){
-		if (dynamicHeaderTable.getChildCount() > 1){
-			final TextView tv = ((TextView)((TableRow)dynamicHeaderTable.getChildAt(0)).getChildAt(i));
-			/*
-			final int width;
-			tv.post(new Runnable(){
-				@Override
-				public void run() {
-					 tv.getWidth();
-				}
-			});*/
-			return   tv.getWidth();
-		}
-		else{
-			return 0;
-		}
-	}
-
-
-
-
-	private void experimentWidthSync(){
-
-		if (dynamicHeaderTable.getChildCount() >1){
-			for (int i = 0; i < ((TableRow)dynamicHeaderTable.getChildAt(0)).getChildCount(); i++){
-				int masterWidth = ((TextView)((TableRow)dynamicHeaderTable.getChildAt(0)).getChildAt(i)).getLayoutParams().width;
-				TableRow.LayoutParams lp = new TableRow.LayoutParams(masterWidth, TableRow.LayoutParams.WRAP_CONTENT);
-				for (int j = 0; j < scoreTable.getChildCount(); j++)
-				((TextView)((TableRow)scoreTable.getChildAt(j)).getChildAt(i)).setLayoutParams(lp);
-			}
-		}
-	}
-
-	//endregion
 }
