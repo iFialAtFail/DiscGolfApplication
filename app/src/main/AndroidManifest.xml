@@ -24,6 +24,8 @@
         <activity android:name=".Activities.PlayerPickerActivity"/>
         <activity android:name=".Activities.FinishedScorecardsActivity"/>
         <activity android:name=".Activities.UnfinishedScorecardsActivity"/>
+        <activity android:name=".Activities.ScorecardOverview"
+                  android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

@@ -296,7 +296,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						finishedCards.AddScoreCardToStorage(scoreCard);
-						finishedCards.SaveFinishedCardToFile(context);
+						finishedCards.SaveFinishedCardsToFile(context);
 						Intent intent = new Intent(context,MainMenuActivity.class);
 						startActivity(intent);
 					}
