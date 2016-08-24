@@ -12,7 +12,9 @@
         android:id="@+id/tvMenuTitle"
         android:layout_gravity="center_horizontal"
         android:layout_margin="20dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="35sp"
+        android:gravity="center"/>
 
     <ListView
         android:layout_width="wrap_content"
