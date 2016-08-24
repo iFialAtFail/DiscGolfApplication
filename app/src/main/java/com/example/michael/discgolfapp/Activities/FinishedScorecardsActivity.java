@@ -7,6 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,7 +26,7 @@ import java.util.List;
 /**
  * Created by Michael on 8/16/2016.
  */
-public class FinishedScorecardsActivity extends Activity {
+public class FinishedScorecardsActivity extends AppCompatActivity {
 
 	Context context;
 	ListView lvFinishedScoreCards;
@@ -32,6 +36,7 @@ public class FinishedScorecardsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//this.setTheme(R.style.MenuTheme); //Must set for actionbar/menu
 		setContentView(R.layout.finished_scorecards_layout);
 		context = this;
 
@@ -44,6 +49,26 @@ public class FinishedScorecardsActivity extends Activity {
 
 		setupScoreCardListView();
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case R.id.action_settings:
+				Toast.makeText(context,"Debug",Toast.LENGTH_LONG).show();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main,menu);
+
+		return true;
 	}
 
 	private void setupScoreCardListView(){

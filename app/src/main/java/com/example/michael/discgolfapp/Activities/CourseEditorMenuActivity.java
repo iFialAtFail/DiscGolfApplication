@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,7 +28,7 @@ import java.io.ObjectOutputStream;
 /**
  * Created by Michael on 6/22/2016.
  */
-public class CourseEditorMenuActivity extends Activity {
+public class CourseEditorMenuActivity extends AppCompatActivity {
     private static final String COURSE_EDITOR_KEY = "Course Editor Key";
     private static final int COURSE_EDITOR_INTENT = 2;
 

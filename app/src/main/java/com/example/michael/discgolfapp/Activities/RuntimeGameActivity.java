@@ -90,7 +90,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTheme(R.style.NoActionBarTheme);
+        //this.setTheme(R.style.NoActionBarTheme);
         setContentView(R.layout.runtime_game_layout);
         context = this;
 

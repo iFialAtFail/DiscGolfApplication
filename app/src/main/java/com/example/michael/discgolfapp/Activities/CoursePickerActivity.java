@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,7 +26,7 @@ import java.io.ObjectOutputStream;
 /**
  * Created by Michael on 6/23/2016.
  */
-public class CoursePickerActivity extends Activity {
+public class CoursePickerActivity extends AppCompatActivity {
     private static final String COURSE_PICKER_KEY = "Course Picker Key";
     private static final int COURSE_PICKER_INTENT = 1;
 

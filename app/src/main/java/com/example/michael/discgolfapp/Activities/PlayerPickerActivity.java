@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,7 +33,7 @@ import java.util.List;
 /**
  * Created by Michael on 7/10/2016.
  */
-public class PlayerPickerActivity extends Activity {
+public class PlayerPickerActivity extends AppCompatActivity {
 
     private static final int PLAYER_PICKER_INTENT = 3;
 

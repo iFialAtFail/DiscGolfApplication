@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -19,7 +20,7 @@ import com.example.michael.discgolfapp.R;
 /**
  * Created by Michael on 6/22/2016.
  */
-public class MainMenuActivity extends Activity {
+public class MainMenuActivity extends AppCompatActivity {
 
     Button btnNewGame;
     Button btnEditCourses;

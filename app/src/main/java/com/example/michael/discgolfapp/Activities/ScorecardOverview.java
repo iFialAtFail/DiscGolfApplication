@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TableLayout;
@@ -17,7 +18,7 @@ import com.example.michael.discgolfapp.R;
 /**
  * Created by Michael on 8/22/2016.
  */
-public class ScorecardOverview extends Activity {
+public class ScorecardOverview extends AppCompatActivity {
 	Context context;
 	TableLayout tblFinalScorecard;
 	TextView tvFSCourseTitle;
