@@ -63,6 +63,10 @@ public class ScoreCardStorage implements Serializable {
 		scoreCardStorage.remove(position);
 	}
 
+	public void DeleteAll(){
+		this.scoreCardStorage.clear();
+	}
+
 	public boolean SaveFinishedCardsToFile(Context context){
 		try {
 			FileOutputStream fos = context.openFileOutput(SCORECARD_STORAGE_FILE_FINISHED, Context.MODE_PRIVATE);

@@ -36,7 +36,6 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//this.setTheme(R.style.MenuTheme); //Must set for actionbar/menu
 		setContentView(R.layout.finished_scorecards_layout);
 		context = this;
 
@@ -55,7 +54,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()){
 			case R.id.action_settings:
-				Toast.makeText(context,"Debug",Toast.LENGTH_LONG).show();
+				showDeleteAllDialog();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -88,7 +87,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
 				AlertDialog.Builder aat = new AlertDialog.Builder(context);
 				aat.setTitle("Delete?")
-						.setMessage("Are you sure you want to delete this unfinished game?")
+						.setMessage("Are you sure you want to delete this finished score card?")
 						.setCancelable(true)
 						.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
 
@@ -133,5 +132,38 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 			scoreCardStorage = new ScoreCardStorage();
 			Toast.makeText(context,"Failed to init Scorecards", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	private void showDeleteAllDialog(){
+		AlertDialog.Builder aat = new AlertDialog.Builder(context);
+		aat.setTitle("Delete?")
+				.setMessage("Are you sure you want to delete ALL finished score cards?")
+				.setCancelable(true)
+				.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+
+				})
+				.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//Make the change
+						scoreCardStorage.DeleteAll();
+
+						//Commit the change to persistant memory
+						scoreCardStorage.SaveFinishedCardsToFile(context);
+
+						//Refresh adapter view
+						adapter.notifyDataSetChanged();
+
+					}
+				});
+		AlertDialog art = aat.create();
+
+		art.show();
 	}
 }
