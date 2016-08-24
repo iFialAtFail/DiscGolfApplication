@@ -51,7 +51,7 @@ public class ScoreCardStorage implements Serializable {
 
 	//region Public Methods
 
-	public void AddScoreCardToStorage(ScoreCard card){
+	public void AddScoreCardsToStorage(ScoreCard card){
 		scoreCardStorage.add(card);
 	}
 

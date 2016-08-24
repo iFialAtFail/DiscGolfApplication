@@ -295,7 +295,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						finishedCards.AddScoreCardToStorage(scoreCard);
+						finishedCards.AddScoreCardsToStorage(scoreCard);
 						finishedCards.SaveFinishedCardsToFile(context);
 						Intent intent = new Intent(context,MainMenuActivity.class);
 						startActivity(intent);
@@ -304,7 +304,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 				.setNeutralButton("Save", new DialogInterface.OnClickListener(){
 					@Override
 					public void onClick(DialogInterface dialog, int which){
-						unFinishedCards.AddScoreCardToStorage(scoreCard);
+						unFinishedCards.AddScoreCardsToStorage(scoreCard);
 						unFinishedCards.SaveUnFinishedCardListToFile(context);
 						Intent intent = new Intent(context, MainMenuActivity.class);
 						startActivity(intent);
@@ -588,13 +588,13 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 		//If Coming from resume game picker, save game and go to main menu on back press
 		//Fixes the bug of going back to an adapter that deleted that game on going to it.
 		if (b != null && b.getInt("From Resume Game Picker") == 2){
-			unFinishedCards.AddScoreCardToStorage(scoreCard);
+			unFinishedCards.AddScoreCardsToStorage(scoreCard);
 			unFinishedCards.SaveUnFinishedCardListToFile(context);
 			Intent intent = new Intent(context, MainMenuActivity.class);
 			startActivity(intent);
 		}
 		if (gameStarted){
-			unFinishedCards.AddScoreCardToStorage(scoreCard);
+			unFinishedCards.AddScoreCardsToStorage(scoreCard);
 			unFinishedCards.SaveUnFinishedCardListToFile(context);
 			Intent intent = new Intent(context, MainMenuActivity.class);
 			startActivity(intent);
@@ -602,6 +602,15 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 		else {
 			super.onBackPressed();
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		if (gameStarted) {
+			unFinishedCards.AddScoreCardsToStorage(scoreCard);
+			unFinishedCards.SaveUnFinishedCardListToFile(context);
+		}
+		super.onDestroy();
 	}
 
 	//endregion
