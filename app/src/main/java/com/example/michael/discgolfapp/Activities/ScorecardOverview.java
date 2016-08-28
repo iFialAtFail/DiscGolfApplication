@@ -1,6 +1,5 @@
 package com.example.michael.discgolfapp.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -88,12 +87,12 @@ public class ScorecardOverview extends AppCompatActivity {
 				}
 
 				else if (i == 1 && j == scoreCard.getCourse().getHoleCount() + 1){ // Last Cell is Par Total
-					TextView tv = setupTextViewInTable(String.valueOf(scoreCard.getCourse().getCoursePar()),applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape_light_green);
+					TextView tv = setupTextViewInTable(String.valueOf(scoreCard.getCourse().getParTotal()),applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape_light_green);
 					row.addView(tv);
 				}
 
 				else if (i == 1 && j != scoreCard.getCourse().getHoleCount()+1){
-					TextView tv = setupTextViewInTable(String.valueOf(scoreCard.getCourse().getCurrentHolePar()[j-1]),applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape_light_green);
+					TextView tv = setupTextViewInTable(String.valueOf(scoreCard.getCourse().getParArray()[j-1]),applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape_light_green);
 					row.addView(tv);
 				}
 

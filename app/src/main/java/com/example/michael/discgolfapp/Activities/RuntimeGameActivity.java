@@ -167,7 +167,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         setupStaticHeaderRows();
 
         //Setup Static Header Par and Holes cells
-        String[] input = {"T", String.valueOf(course.getCoursePar())};
+        String[] input = {"T", String.valueOf(course.getParTotal())};
         setupStaticParCountTable(input);
 
         //Setup Par/Hole# Rows
@@ -469,7 +469,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             holeNum.setLayoutParams(params);
 
 
-            for (int a = 0; a<course.getCurrentHolePar().length; a++){
+            for (int a = 0; a<course.getParArray().length; a++){
 
 				TextView tv = setupTextViewInTable(String.valueOf(a+1), applyLayoutWidth(LAYOUT_WIDTH),R.drawable.cell_shape_light_green);
                 tv.setGravity(Gravity.CENTER);
@@ -483,8 +483,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             TableRow parNum = new TableRow(this);
             parNum.setLayoutParams(params);
 
-            for (int a = 0; a<course.getCurrentHolePar().length; a++){
-                TextView tv = setupTextViewInTable(String.valueOf(course.getCurrentHolePar()[a]),TableRow.LayoutParams.MATCH_PARENT,R.drawable.cell_shape_light_green);
+            for (int a = 0; a<course.getParArray().length; a++){
+                TextView tv = setupTextViewInTable(String.valueOf(course.getParArray()[a]),TableRow.LayoutParams.MATCH_PARENT,R.drawable.cell_shape_light_green);
                 tv.setGravity(Gravity.CENTER);
                 parNum.addView(tv);
             }

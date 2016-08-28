@@ -46,17 +46,22 @@ public class Course implements Serializable{
         return holes.length;
     }
 
-    public int[] getCurrentHolePar(){
+    public int[] getParArray(){
         return holes;
     }
 
-    public int getCoursePar(){
+	public void setParArray(int[] parArray) {
+		this.holes = parArray;
+	}
+
+    public int getParTotal(){
         int totalPars = 0;
         for (int par : holes) {
             totalPars += par;
         }
         return totalPars;
     }
+
 
     //endregion
 
@@ -166,5 +171,7 @@ public class Course implements Serializable{
         }
     }
 
-    //endregion
+
+
+	//endregion
 }

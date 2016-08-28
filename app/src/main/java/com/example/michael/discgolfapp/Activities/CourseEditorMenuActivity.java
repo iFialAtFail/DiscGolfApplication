@@ -83,6 +83,18 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
             }
         });
 
+		lvCourseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Bundle b = new Bundle();
+				b.putInt("Position", position);
+				b.putSerializable("CourseStorage", courseStorage);
+				Intent intent = new Intent(context, EditExistingCourseActivity.class);
+				intent.putExtras(b);
+				startActivity(intent);
+			}
+		});
+
         btnNewCourse = (Button) findViewById(R.id.btnNewCourse);
         btnNewCourse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +109,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), AddCourseMenuActivity.class);
                 intent.putExtras(extras);
 
-                startActivityForResult(intent, 2); // TODO: cleanup if works.
-                //TODO: Replace this if startactivityforresult doesn't work.
-                /*
-                startActivity(intent);
-                */
+                startActivityForResult(intent, 2);
             }
         });
     }

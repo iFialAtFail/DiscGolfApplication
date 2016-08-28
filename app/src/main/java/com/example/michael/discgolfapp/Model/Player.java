@@ -140,7 +140,7 @@ public class Player implements Serializable {
 
     private void initializeScore(){
         if (course != null) {
-            score = (int[]) course.getCurrentHolePar().clone();
+            score = (int[]) course.getParArray().clone();
         }
     }
 

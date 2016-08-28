@@ -19,6 +19,7 @@
         <activity android:name=".Activities.RuntimeGameActivity"
             android:theme="@style/NoActionBarTheme"/>
         <activity android:name=".Activities.CourseEditorMenuActivity"/>
+        <activity android:name=".Activities.EditExistingCourseActivity"/>
         <activity android:name=".Activities.CoursePickerActivity"/>
         <activity android:name=".Activities.AddCourseMenuActivity"/>
         <activity android:name=".Activities.PlayerEditorActivity"/>
