@@ -6,6 +6,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Edit Players"
         android:id="@+id/tvEditPlayersLabel"
@@ -17,16 +18,12 @@
         android:text="New Player"
         android:id="@+id/btnNewPlayer"
         android:layout_gravity="center_horizontal" />
-<HorizontalScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:fillViewport="true">
+
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lvPlayerList"
-        />
-</HorizontalScrollView>
+        android:choiceMode="singleChoice"
+        android:id="@+id/lvPlayerList"/>
+
 </LinearLayout>

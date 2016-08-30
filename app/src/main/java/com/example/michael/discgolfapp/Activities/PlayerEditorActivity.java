@@ -1,6 +1,5 @@
 package com.example.michael.discgolfapp.Activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,11 +16,6 @@ import com.example.michael.discgolfapp.Model.PlayerStorage;
 import com.example.michael.discgolfapp.R;
 import com.example.michael.discgolfapp.Adapters.PlayerDataAdapter;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 /**
  * Created by Michael on 6/23/2016.
  */
@@ -30,7 +24,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
     //region Private Fields
 
     Button btnNewPlayer;
-    ListView playerListView;
+    ListView lvPlayerList;
     PlayerStorage playerStorage;
     Context context =  this;
     PlayerDataAdapter adapter;
@@ -46,9 +40,11 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
         setupPlayerStorage();
 
-        playerListView = (ListView) findViewById(R.id.lvPlayerList);
+        lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
+
         setupPlayerListView();
-        playerListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+        lvPlayerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            final int position, long id) {
@@ -132,7 +128,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
     private void setupPlayerListView() {
         if (playerStorage != null && playerStorage.getStoredPlayersCount() > 0) {
             adapter = new PlayerDataAdapter(context, playerStorage.getPlayerStorageListArray());
-            playerListView.setAdapter(adapter);
+            lvPlayerList.setAdapter(adapter);
             String playerLength = String.valueOf(playerStorage.getStoredPlayersCount());
             Toast toast = Toast.makeText(getApplicationContext(),playerLength,Toast.LENGTH_LONG);
             toast.show();

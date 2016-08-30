@@ -47,6 +47,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
         setupCourseListView();
+
         lvCourseList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {

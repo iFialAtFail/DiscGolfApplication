@@ -5,21 +5,18 @@
         android:id="@+id/imgThumbnail"
         android:layout_width="100dp"
         android:layout_height="100dp" />
-    <HorizontalScrollView
+
+
+    <TextView
+        android:id="@+id/tvPlayerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/imgThumbnail">
+        android:layout_toRightOf="@id/imgThumbnail"
+        android:textSize="25sp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"/>
 
-        <TextView
-            android:id="@+id/tvPlayerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:textSize="25sp"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"/>
-
-    </HorizontalScrollView>
 
 
 </RelativeLayout>
