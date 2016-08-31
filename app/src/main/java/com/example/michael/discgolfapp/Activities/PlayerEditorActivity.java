@@ -83,6 +83,18 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
         });
 
+		lvPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(context, EditExistingPlayerActivity.class);
+				Bundle b = new Bundle();
+				b.putSerializable("PlayerStorage", playerStorage);
+				b.putInt("Position", position);
+				intent.putExtras(b);
+				startActivity(intent);
+			}
+		});
+
         btnNewPlayer = (Button) findViewById(R.id.btnNewPlayer);
         btnNewPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
