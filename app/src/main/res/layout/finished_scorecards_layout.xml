@@ -3,19 +3,33 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Score Card Game History"
-        android:id="@+id/tvScorecardGameHistory"
-        android:layout_gravity="center_horizontal"/>
-
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lvFinishedScoreCards"
-        android:layout_gravity="center_horizontal"
-        android:choiceMode="singleChoice"/>
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Score Card Game History"
+            android:id="@+id/tvScorecardGameHistory"
+            android:layout_gravity="center_horizontal"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lvFinishedScoreCards"
+            android:layout_gravity="center_horizontal"
+            android:choiceMode="singleChoice"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/finishedScoreCardLinearLayout"
+        android:gravity="center">
+
+
+    </RelativeLayout>
 </LinearLayout>

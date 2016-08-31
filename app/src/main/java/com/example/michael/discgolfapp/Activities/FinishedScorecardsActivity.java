@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -13,7 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
@@ -21,7 +27,9 @@ import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.Model.ScoreCardStorage;
 import com.example.michael.discgolfapp.R;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Michael on 8/16/2016.
@@ -30,6 +38,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 
 	Context context;
 	ListView lvFinishedScoreCards;
+	RelativeLayout finishedScoreCardLinearLayout;
 	ScoreCardDataAdapter adapter;
 	ScoreCardStorage scoreCardStorage;
 
@@ -39,12 +48,26 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 		setContentView(R.layout.finished_scorecards_layout);
 		context = this;
 
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Set Portrait because coming back from scorecard overview comes back landscape.
+		//todo consider changing orientation just before intent sends us back here from the overview of scorecard activity
+
 		lvFinishedScoreCards = (ListView) findViewById(R.id.lvFinishedScoreCards);
+		finishedScoreCardLinearLayout = (RelativeLayout) findViewById(R.id.finishedScoreCardLinearLayout);
 
 		initializeScoreCardStorage();
 
-		setListViewAdapter();
+		if (!setListViewAdapter()){ //If nothing to populate adapter and listview fails to be created
+			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+
+			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+			Bitmap bm5 = BitmapFactory
+					.decodeResource(context.getResources(), R.drawable.katana_500x500);
+			backgroundImage.setImageBitmap(bm5);
+
+			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+			tvNoListViewMessage.setText("Oops! No finished games here!");
+			finishedScoreCardLinearLayout.addView(messageLayout);
+		}
 
 		setupScoreCardListView();
 
@@ -93,7 +116,6 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
 								dialog.cancel();
 							}
 
@@ -102,13 +124,17 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
 								//Make the change
 								scoreCardStorage.DeleteScoreCardFromStorage(position);
 
 								//Commit the change to persistant memory
 								scoreCardStorage.SaveFinishedCardsToFile(context);
-								onCreate(null);
+
+								//Update View
+								adapter.notifyDataSetChanged();
+								if (adapter.getCount() == 0){
+									recreate();
+								}
 							}
 						});
 				AlertDialog art = aat.create();
@@ -119,11 +145,13 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 		});
 	}
 
-	private void setListViewAdapter(){
+	private boolean setListViewAdapter(){
 		if (scoreCardStorage.getCount() >= 1){
 			adapter = new ScoreCardDataAdapter(context, scoreCardStorage);
 			lvFinishedScoreCards.setAdapter(adapter);
+			return true;
 		}
+		return false;
 	}
 
 	private void initializeScoreCardStorage(){
@@ -159,6 +187,9 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 
 						//Refresh adapter view
 						adapter.notifyDataSetChanged();
+						if (adapter.getCount() == 0){
+							recreate();
+						}
 
 					}
 				});
