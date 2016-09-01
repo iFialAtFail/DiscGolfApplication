@@ -1,15 +1,19 @@
 package com.example.michael.discgolfapp.Activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
@@ -26,6 +30,7 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 	ListView lvUnfinishedScoreCards;
 	ScoreCardStorage scoreCardStorage;
 	ScoreCardDataAdapter adapter;
+	RelativeLayout unFinishedScoreCardRelativeLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +40,22 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 
 
 		lvUnfinishedScoreCards = (ListView) findViewById(R.id.lvUnfinishedScoreCards);
+		unFinishedScoreCardRelativeLayout = (RelativeLayout) findViewById(R.id.unfinishedScoreCardRelativeLayout);
 
 		initializeScoreCardStorage();
 
-		setListViewAdapter();
+		if (!onSetupListViewAdapter()){ //If adapter never got made because list is empty...
+			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+
+			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+			Bitmap bm5 = BitmapFactory
+					.decodeResource(context.getResources(), R.drawable.nuke_500x500);
+			backgroundImage.setImageBitmap(bm5);
+
+			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+			tvNoListViewMessage.setText("Oops! No games to resume yet!");
+			unFinishedScoreCardRelativeLayout.addView(messageLayout);
+		}
 
 		setupScoreCardListView();
 
@@ -85,7 +102,10 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 
 								//Commit the change to persistant memory
 								scoreCardStorage.SaveUnFinishedCardListToFile(context);
-								onCreate(null);
+								adapter.notifyDataSetChanged();
+								if (adapter.getCount() == 0){
+									recreate();
+								}
 							}
 						});
 				AlertDialog art = aat.create();
@@ -96,11 +116,13 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 		});
 	}
 
-	private void setListViewAdapter() {
+	private boolean onSetupListViewAdapter() {
 		if (scoreCardStorage.getCount() >= 1) {
 			adapter = new ScoreCardDataAdapter(context, scoreCardStorage);
 			lvUnfinishedScoreCards.setAdapter(adapter);
+			return true;
 		}
+		return false;
 	}
 
 	private void initializeScoreCardStorage(){

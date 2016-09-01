@@ -583,35 +583,32 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 	@Override
 	public void onBackPressed() {
-		Bundle b = this.getIntent().getExtras();
 
-		//If Coming from resume game picker, save game and go to main menu on back press
-		//Fixes the bug of going back to an adapter that deleted that game on going to it.
-		if (b != null && b.getInt("From Resume Game Picker") == 2){
+		if (gameStarted){ //If game started the normal way
 			unFinishedCards.AddScoreCardsToStorage(scoreCard);
 			unFinishedCards.SaveUnFinishedCardListToFile(context);
 			Intent intent = new Intent(context, MainMenuActivity.class);
 			startActivity(intent);
 		}
-		if (gameStarted){
-			unFinishedCards.AddScoreCardsToStorage(scoreCard);
-			unFinishedCards.SaveUnFinishedCardListToFile(context);
-			Intent intent = new Intent(context, MainMenuActivity.class);
-			startActivity(intent);
-		}
+
 		else {
-			super.onBackPressed();
+			Bundle b = this.getIntent().getExtras();
+
+			//If Coming from resume game picker, save game and go to main menu on back press
+			//Fixes the bug of going back to an adapter that deleted that game on going to it.
+			if (b != null && b.getInt("From Resume Game Picker") == 2) {
+				unFinishedCards.AddScoreCardsToStorage(scoreCard);
+				unFinishedCards.SaveUnFinishedCardListToFile(context);
+				Intent intent = new Intent(context, MainMenuActivity.class);
+				startActivity(intent);
+			}
 		}
+
+		super.onBackPressed();
+
 	}
 
-	@Override
-	protected void onDestroy() {
-		if (gameStarted) {
-			unFinishedCards.AddScoreCardsToStorage(scoreCard);
-			unFinishedCards.SaveUnFinishedCardListToFile(context);
-		}
-		super.onDestroy();
-	}
+
 
 	//endregion
 

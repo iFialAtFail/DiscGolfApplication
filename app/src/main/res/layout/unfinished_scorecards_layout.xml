@@ -4,19 +4,34 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Pick a game to resume playing."
-        android:id="@+id/tvScorecardGameHistory"
-        android:layout_gravity="center_horizontal"/>
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Pick a game to resume playing."
+            android:id="@+id/tvScorecardGameHistory"
+            android:layout_gravity="center_horizontal"/>
 
-    <ListView
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lvUnfinishedScoreCards"
+            android:layout_gravity="center_horizontal"
+            android:choiceMode="singleChoice"
+            android:layout_margin="15dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/lvUnfinishedScoreCards"
-        android:layout_gravity="center_horizontal"
-        android:choiceMode="singleChoice"
-        android:layout_margin="15dp"/>
+        android:id="@+id/unfinishedScoreCardRelativeLayout"
+        android:gravity="center">
+
+
+    </RelativeLayout>
+
 </LinearLayout>

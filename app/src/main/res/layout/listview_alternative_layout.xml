@@ -3,8 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    >
+             android:layout_centerVertical="true">
 
     <ImageView
         android:layout_width="match_parent"
@@ -20,8 +19,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Theres nothing here!"
         android:textColor="#000000"
-        android:textSize="30sp"
-        android:padding="20dp"
+        android:textSize="20sp"
+        android:padding="40dp"
         android:gravity="center"
         android:id="@+id/tvNoListViewMessage"
         android:layout_gravity="center"/>
