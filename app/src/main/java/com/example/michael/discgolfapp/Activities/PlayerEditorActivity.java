@@ -71,7 +71,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
                                 //Commit the change to persistant memory
                                 playerStorage.SaveToFile(context);
-                                onCreate(null);
+								adapter.notifyDataSetChanged();
                             }
                         });
                 AlertDialog art = aat.create();

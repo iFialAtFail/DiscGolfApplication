@@ -5,14 +5,19 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Adapters.CourseDataAdapter;
@@ -34,6 +39,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
     Button btnNewCourse;
     ListView lvCourseList;
+	RelativeLayout courseEditorRelativeLayout;
     CourseStorage courseStorage;
     Context context = this;
     CourseDataAdapter adapter;
@@ -46,7 +52,21 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
         setupCourseStorage();
 
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
-        setupCourseListView();
+		courseEditorRelativeLayout = (RelativeLayout) findViewById(R.id.courseEditorRelativeLayout);
+
+        if (!setupCourseListView()){//If nothing to populate adapter and listview fails to be created
+			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+
+			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+			Bitmap bm5 = BitmapFactory
+					.decodeResource(context.getResources(), R.drawable.roadrunner_500x500);
+			backgroundImage.setImageBitmap(bm5);
+
+			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+			tvNoListViewMessage.setText("Oops! No courses here!\nPlease add a course.");
+			courseEditorRelativeLayout.addView(messageLayout);
+
+		}
 
         lvCourseList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -74,7 +94,11 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
                                 //Commit the change to persistant memory
                                 courseStorage.SaveToFile(context);
-                                onCreate(null);
+                                adapter.notifyDataSetChanged();
+
+								if (adapter.getCount() == 0){
+									recreate();
+								}
                             }
                         });
                 AlertDialog art = aat.create();
@@ -130,11 +154,13 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
 
 
-    private void setupCourseListView(){
+    private boolean setupCourseListView(){
         if (courseStorage != null && courseStorage.getStoredCoursesCount() > 0){
             adapter = new CourseDataAdapter(context, courseStorage.getCourseStorage());
             lvCourseList.setAdapter(adapter);
+			return true;
         }
+		return false;
     }
 
     private void setupCourseStorage() {
