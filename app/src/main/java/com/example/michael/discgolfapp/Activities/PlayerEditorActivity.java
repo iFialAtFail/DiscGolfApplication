@@ -4,12 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Model.PlayerStorage;
@@ -25,6 +30,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
     Button btnNewPlayer;
     ListView lvPlayerList;
+	RelativeLayout playerEditorRelativelayout;
     PlayerStorage playerStorage;
     Context context =  this;
     PlayerDataAdapter adapter;
@@ -41,8 +47,20 @@ public class PlayerEditorActivity extends AppCompatActivity {
         setupPlayerStorage();
 
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
+		playerEditorRelativelayout = (RelativeLayout) findViewById(R.id.playerEditorRelativeLayout);
 
-        setupPlayerListView();
+        if (!setupPlayerListView()){
+			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+
+			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+			Bitmap bm5 = BitmapFactory
+					.decodeResource(context.getResources(), R.drawable.jade_500x500);
+			backgroundImage.setImageBitmap(bm5);
+
+			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+			tvNoListViewMessage.setText("Oops! No players here yet!\nPlease add some players.");
+			playerEditorRelativelayout.addView(messageLayout);
+		}
 
         lvPlayerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -72,6 +90,9 @@ public class PlayerEditorActivity extends AppCompatActivity {
                                 //Commit the change to persistant memory
                                 playerStorage.SaveToFile(context);
 								adapter.notifyDataSetChanged();
+								if (adapter.getCount()== 0){
+									recreate();
+								}
                             }
                         });
                 AlertDialog art = aat.create();
@@ -112,14 +133,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    @Override
-    protected void onDestroy() {
-        playerStorage.SaveToFile(context);
-        super.onDestroy();
-    }
-
+	
     //endregion
 
     //region Overriding normal behaviours
@@ -137,14 +151,13 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
     //region Private helper methods
 
-    private void setupPlayerListView() {
+    private boolean setupPlayerListView() {
         if (playerStorage != null && playerStorage.getStoredPlayersCount() > 0) {
             adapter = new PlayerDataAdapter(context, playerStorage.getPlayerStorageListArray());
             lvPlayerList.setAdapter(adapter);
-            String playerLength = String.valueOf(playerStorage.getStoredPlayersCount());
-            Toast toast = Toast.makeText(getApplicationContext(),playerLength,Toast.LENGTH_LONG);
-            toast.show();
+            return true;
         }
+		return false;
     }
 
     private void setupPlayerStorage() {
