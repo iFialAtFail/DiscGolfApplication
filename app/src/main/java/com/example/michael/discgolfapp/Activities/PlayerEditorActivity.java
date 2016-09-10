@@ -133,7 +133,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
             }
         });
     }
-	
+
     //endregion
 
     //region Overriding normal behaviours

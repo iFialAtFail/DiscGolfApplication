@@ -5,12 +5,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Adapters.CourseDataAdapter;
@@ -33,6 +38,7 @@ public class CoursePickerActivity extends AppCompatActivity {
     CourseDataAdapter adapter;
     CourseStorage courseStorage;
     Context context = this;
+	RelativeLayout coursePickerRelativeLayout;
     ListView lvCourseList;
     Button btnNewCourse;
     @Override
@@ -42,7 +48,19 @@ public class CoursePickerActivity extends AppCompatActivity {
         setupCourseStorage();
 
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
-        setupCourseListView();
+		coursePickerRelativeLayout = (RelativeLayout) findViewById(R.id.coursePickerRelativeLayout);
+        if (!setupCourseListView()){
+			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+
+			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+			Bitmap bm5 = BitmapFactory
+					.decodeResource(context.getResources(), R.drawable.roadrunner_500x500);
+			backgroundImage.setImageBitmap(bm5);
+
+			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+			tvNoListViewMessage.setText("Oops! No courses here!\nPlease add a course.");
+			coursePickerRelativeLayout.addView(messageLayout);
+		}
         lvCourseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -83,7 +101,10 @@ public class CoursePickerActivity extends AppCompatActivity {
 
                                 //Commit the change to persistant memory
                                 courseStorage.SaveToFile(context);
-                                onCreate(null);
+                                adapter.notifyDataSetChanged();
+								if (adapter.getCount()== 0){
+									recreate();
+								}
                             }
                         });
                 AlertDialog art = aat.create();
@@ -114,11 +135,13 @@ public class CoursePickerActivity extends AppCompatActivity {
         finish();
     }
 
-    private void setupCourseListView(){
+    private boolean setupCourseListView(){
         if (courseStorage != null && courseStorage.getStoredCoursesCount() > 0){
             adapter = new CourseDataAdapter(context, courseStorage.getCourseStorage());
             lvCourseList.setAdapter(adapter);
+			return true;
         }
+		return false;
     }
 
     private void setupCourseStorage() {
