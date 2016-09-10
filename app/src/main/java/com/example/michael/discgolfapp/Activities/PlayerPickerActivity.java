@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
@@ -12,7 +14,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +45,7 @@ public class PlayerPickerActivity extends AppCompatActivity {
     PlayerStorage playerStorage;
     Context context = this;
     ListView lvPlayerList;
+	RelativeLayout playerPickerRelativeLayout;
     ArrayList<Player> playersPlaying;
     Button btnStartGame;
 
@@ -58,8 +63,20 @@ public class PlayerPickerActivity extends AppCompatActivity {
 
         btnStartGame = (Button) findViewById(R.id.btnStartTheGame);
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
+		playerPickerRelativeLayout = (RelativeLayout) findViewById(R.id.playerPickerRelativeLayout);
 
-        setupPlayersListView();
+        if (!setupPlayersListView()){
+			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+
+			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+			Bitmap bm5 = BitmapFactory
+					.decodeResource(context.getResources(), R.drawable.jade_500x500);
+			backgroundImage.setImageBitmap(bm5);
+
+			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+			tvNoListViewMessage.setText("Oops! No players here yet!\nPlease add some players.");
+			playerPickerRelativeLayout.addView(messageLayout);
+		}
         lvPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -97,7 +114,10 @@ public class PlayerPickerActivity extends AppCompatActivity {
 
                                 //Commit the change to persistant memory
                                 playerStorage.SaveToFile(context);
-                                onCreate(null);
+								adapter.notifyDataSetChanged();
+								if (adapter.getCount() == 0){
+									recreate();
+								}
                             }
                         });
                 AlertDialog art = aat.create();
@@ -151,12 +171,14 @@ public class PlayerPickerActivity extends AppCompatActivity {
 
     //region Private Helper Methods
 
-    private void setupPlayersListView(){
+    private boolean setupPlayersListView(){
         if (playerStorage != null && playerStorage.getStoredPlayersCount() > 0){
             lvPlayerList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             adapter = new MultiplePlayerDataAdapter(context, playerStorage.getPlayerStorageListArray());
             lvPlayerList.setAdapter(adapter);
+			return true;
         }
+		return false;
     }
 
     private void setupPlayerStorage() {
