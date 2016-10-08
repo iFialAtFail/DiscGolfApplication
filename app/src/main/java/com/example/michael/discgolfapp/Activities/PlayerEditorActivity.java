@@ -74,7 +74,6 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
                                 dialog.cancel();
                             }
 
@@ -83,7 +82,6 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
                                 //Make the change
                                 playerStorage.DeletePlayerFromStorage(position);
 

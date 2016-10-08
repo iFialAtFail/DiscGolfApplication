@@ -79,7 +79,6 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
                                 dialog.cancel();
                             }
 
@@ -88,7 +87,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
+
                                 //Make the change
                                 courseStorage.DeleteCourseFromStorage(position);
 

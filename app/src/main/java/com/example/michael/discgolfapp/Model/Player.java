@@ -25,7 +25,6 @@ public class Player implements Serializable {
 
         if (course == null)
         {
-            //TODO Throw Java exception
             throw new NullPointerException();
         }
 

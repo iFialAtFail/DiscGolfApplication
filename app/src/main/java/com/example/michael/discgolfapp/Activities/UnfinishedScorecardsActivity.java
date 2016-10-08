@@ -87,7 +87,6 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
 								dialog.cancel();
 							}
 
@@ -96,7 +95,7 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// TODO Auto-generated method stub
+
 								//Make the change
 								scoreCardStorage.DeleteScoreCardFromStorage(position);
 
