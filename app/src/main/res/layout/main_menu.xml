@@ -4,17 +4,29 @@
     android:layout_height="match_parent"
     android:background="@color/switch_thumb_normal_material_light">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/app_name"
-        android:id="@+id/tvMenuTitle"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:textStyle="bold"
-        android:textSize="35sp"
-        android:gravity="center"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/main_menu_fat"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/app_name"
+            android:id="@+id/tvMenuTitle"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:textStyle="bold"
+            android:textSize="35sp"
+            android:gravity="center"/>
+
+    </RelativeLayout>
 
     <ListView
         android:layout_width="wrap_content"

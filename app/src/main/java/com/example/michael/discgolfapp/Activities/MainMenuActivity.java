@@ -42,8 +42,8 @@ public class MainMenuActivity extends AppCompatActivity {
 		lvMainMenu = (ListView) findViewById(R.id.lvMainMenu);
 		adapter = new MainMenuDataAdapter(context,menuItems);
 		lvMainMenu.setAdapter(adapter);
-		lvMainMenu.setDivider(null);
-		lvMainMenu.setDividerHeight(0);
+		lvMainMenu.setDivider(null); //Removes separating lines between the menu items.
+		lvMainMenu.setDividerHeight(0);//^^^Same
 
 		lvMainMenu.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 			@Override
