@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DiscGolfApp.iml" filepath="$PROJECT_DIR$/DiscGolfApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DiscGolfApplication.iml" filepath="$PROJECT_DIR$/DiscGolfApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
