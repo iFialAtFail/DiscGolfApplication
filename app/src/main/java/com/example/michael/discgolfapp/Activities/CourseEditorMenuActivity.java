@@ -24,6 +24,8 @@ import com.example.michael.discgolfapp.Adapters.CourseDataAdapter;
 import com.example.michael.discgolfapp.Model.Course;
 import com.example.michael.discgolfapp.Model.CourseStorage;
 import com.example.michael.discgolfapp.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -48,6 +50,12 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_editor_layout);
+
+		AdView adView = (AdView) findViewById(R.id.adViewCE);
+		AdRequest request = new AdRequest.Builder()
+				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+				.build();
+		adView.loadAd(request);
 
         setupCourseStorage();
 
