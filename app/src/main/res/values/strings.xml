@@ -9,4 +9,7 @@
     <string name="course_name_display">Course Name: </string>
     <string name="create_new_player">Create New Player</string>
     <string name="action_settings">Delete All Entries</string>
+    <string name="banner_add_unit_id">ca-app-pub-8285085024937633</string>
+    <string name="banner_test_add_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
 </resources>

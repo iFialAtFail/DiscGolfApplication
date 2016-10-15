@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Adapters.MainMenuDataAdapter;
 import com.example.michael.discgolfapp.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 /**
  * Created by Michael on 6/22/2016.
@@ -29,6 +32,7 @@ public class MainMenuActivity extends AppCompatActivity {
     Context context;
 	ListView lvMainMenu;
 	MainMenuDataAdapter adapter;
+	final String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504";
 
 	String[] menuItems = {"New Game", "Resume Game", "Course Editor", "Player Editor", "Score Cards"};
 
@@ -36,8 +40,16 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+		context = this;
+		MobileAds.initialize(context,ADMOB_APP_ID);
 
-        context = this;
+		AdView adView = (AdView) findViewById(R.id.adView);
+		AdRequest request = new AdRequest.Builder()
+				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+				.build();
+		adView.loadAd(request);
+
+
 
 		lvMainMenu = (ListView) findViewById(R.id.lvMainMenu);
 		adapter = new MainMenuDataAdapter(context,menuItems);
