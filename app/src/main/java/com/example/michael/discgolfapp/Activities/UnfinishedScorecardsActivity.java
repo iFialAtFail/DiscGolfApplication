@@ -40,7 +40,7 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 		setContentView(R.layout.unfinished_scorecards_layout);
 		context = this;
 
-		AdView adView = (AdView) findViewById(R.id.adView);
+		AdView adView = (AdView) findViewById(R.id.adViewUFSC);
 		AdRequest request = new AdRequest.Builder()
 				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
 				.build();
