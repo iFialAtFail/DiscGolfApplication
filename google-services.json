@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "667256662817",
+    "firebase_url": "https://mikes-disc-golf-tracker.firebaseio.com",
+    "project_id": "mikes-disc-golf-tracker",
+    "storage_bucket": "mikes-disc-golf-tracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667256662817:android:0be25a94aa994cb3",
+        "android_client_info": {
+          "package_name": "com.manleysoftware.michael.discgolfapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667256662817-eelabc9emup57bd272lp4rdi5k0ani7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

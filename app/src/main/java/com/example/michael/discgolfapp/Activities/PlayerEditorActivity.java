@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.michael.discgolfapp.Model.PlayerStorage;
 import com.example.michael.discgolfapp.R;
 import com.example.michael.discgolfapp.Adapters.PlayerDataAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * Created by Michael on 6/23/2016.
@@ -43,6 +45,12 @@ public class PlayerEditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_editor);
+
+		AdView adView = (AdView) findViewById(R.id.adViewPE);
+		AdRequest request = new AdRequest.Builder()
+				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+				.build();
+		adView.loadAd(request);
 
         setupPlayerStorage();
 

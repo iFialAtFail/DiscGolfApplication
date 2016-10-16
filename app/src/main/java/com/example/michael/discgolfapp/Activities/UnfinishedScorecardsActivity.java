@@ -20,6 +20,8 @@ import com.example.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
 import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.Model.ScoreCardStorage;
 import com.example.michael.discgolfapp.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * Created by Michael on 8/16/2016.
@@ -38,6 +40,11 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 		setContentView(R.layout.unfinished_scorecards_layout);
 		context = this;
 
+		AdView adView = (AdView) findViewById(R.id.adViewUFSC);
+		AdRequest request = new AdRequest.Builder()
+				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+				.build();
+		adView.loadAd(request);
 
 		lvUnfinishedScoreCards = (ListView) findViewById(R.id.lvUnfinishedScoreCards);
 		unFinishedScoreCardRelativeLayout = (RelativeLayout) findViewById(R.id.unfinishedScoreCardRelativeLayout);

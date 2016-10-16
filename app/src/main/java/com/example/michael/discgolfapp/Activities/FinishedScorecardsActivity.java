@@ -26,6 +26,8 @@ import com.example.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
 import com.example.michael.discgolfapp.Model.ScoreCard;
 import com.example.michael.discgolfapp.Model.ScoreCardStorage;
 import com.example.michael.discgolfapp.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +49,12 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.finished_scorecards_layout);
 		context = this;
+
+		AdView adView = (AdView) findViewById(R.id.adViewFinishedSC);
+		AdRequest request = new AdRequest.Builder()
+				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+				.build();
+		adView.loadAd(request);
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Set Portrait because coming back from scorecard overview comes back landscape.
 		//todo consider changing orientation just before intent sends us back here from the overview of scorecard activity
