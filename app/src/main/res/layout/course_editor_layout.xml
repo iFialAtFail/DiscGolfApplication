@@ -23,14 +23,34 @@
         android:orientation="vertical"
         android:id="@+id/courseEditorTopLayout"
         android:layout_above="@id/adViewCE">
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Edit Courses"
-            android:id="@+id/tvEditCoursesLable"
-            android:layout_gravity="center_horizontal" />
+            android:layout_margin="10dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/mdgt_darker"
+                android:id="@+id/titleThumb1"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/mdgt_darker"
+                android:id="@+id/titleThumb2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/titleThumb1"
+                android:layout_toLeftOf="@id/titleThumb2"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Edit Courses"
+                android:id="@+id/tvEditCoursesLable"
+                android:layout_centerVertical="true"
+                android:gravity="center"/>
+        </RelativeLayout>
 
         <Button
             android:layout_width="wrap_content"

@@ -38,6 +38,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Pick a game to resume playing."
                 android:id="@+id/tvScorecardGameHistory"
+                android:layout_centerVertical="true"
                 android:gravity="center"/>
         </RelativeLayout>
 
