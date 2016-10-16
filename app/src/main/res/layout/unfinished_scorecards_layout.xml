@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:id="@+id/resumeGameTopLayout">
+        android:id="@+id/resumeGameTopLayout"
+        android:layout_above="@+id/unfinishedScoreCardRelativeLayout">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,11 +31,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/resumeGameTopLayout"
-        android:layout_above="@id/adView"
+        android:layout_height="wrap_content"
+
         android:id="@+id/unfinishedScoreCardRelativeLayout"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_above="@+id/adViewUFSC">
 
 
     </RelativeLayout>

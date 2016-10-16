@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/playerPickerRelativeLayout"
+        android:layout_above="@+id/btnStartTheGame"
+        >
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:id="@+id/parentLinearLayout">
+        android:id="@+id/parentLinearLayout"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/playerPickerRelativeLayout"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,34 +56,26 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:id="@+id/lvPlayerList"
             android:layout_gravity="center_horizontal"
             android:choiceMode="multipleChoice"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/btnNewPlayerFromPicker"
-            android:layout_above="@+id/btnStartTheGame"/>
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:id="@+id/playerPickerRelativeLayout"
-        android:layout_above="@+id/btnStartTheGame"
-        android:layout_below="@id/parentLinearLayout">
+            />
 
     </RelativeLayout>
+
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Game!"
         android:id="@+id/btnStartTheGame"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:onClick="onNewGameClicked"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="false"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+
 </RelativeLayout>
