@@ -23,16 +23,35 @@
         android:layout_above="@id/playerPickerRelativeLayout"
         >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Please choose your players."
-            android:id="@+id/tvChoosePlayersLable"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp" />
-
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:id="@+id/playerPickerSubHeader">
+            <ImageView
+                android:layout_alignParentLeft="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/mdgt_darker"
+                android:id="@+id/titleThumb1"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/mdgt_darker"
+                android:id="@+id/titleThumb2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/titleThumb1"
+                android:layout_toLeftOf="@id/titleThumb2"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Please choose your players."
+                android:id="@+id/tvChoosePlayersLable"
+                android:layout_centerVertical="true"
+                android:gravity="center"/>
+        </RelativeLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +59,7 @@
             android:text="or"
             android:id="@+id/textView22"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/tvChoosePlayersLable"
+            android:layout_below="@+id/playerPickerSubHeader"
             android:layout_marginTop="5dp" />
 
         <Button
