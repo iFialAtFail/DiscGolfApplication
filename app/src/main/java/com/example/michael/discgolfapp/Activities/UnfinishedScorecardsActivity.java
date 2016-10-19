@@ -135,7 +135,6 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 		scoreCardStorage = ScoreCardStorage.LoadUnFinishedCardStorage(context);
 		if (scoreCardStorage == null){
 			scoreCardStorage = new ScoreCardStorage();
-			Toast.makeText(context,"Failed to init scorecards",Toast.LENGTH_LONG).show();
 		}
 	}
 }

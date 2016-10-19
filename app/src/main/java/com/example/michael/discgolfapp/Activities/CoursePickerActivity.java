@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Adapters.CourseDataAdapter;
 import com.example.michael.discgolfapp.Model.Course;
@@ -146,8 +145,6 @@ public class CoursePickerActivity extends AppCompatActivity {
         courseStorage = CourseStorage.LoadFromFile(context);
         if (courseStorage == null){
             courseStorage = new CourseStorage();
-            Toast toast = Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG);
-            toast.show();
         }
     }
 }

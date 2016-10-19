@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
 import com.example.michael.discgolfapp.Model.ScoreCard;
@@ -166,7 +165,6 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 		scoreCardStorage = ScoreCardStorage.LoadFinishedCardStorage(context);
 		if (scoreCardStorage == null){
 			scoreCardStorage = new ScoreCardStorage();
-			Toast.makeText(context,"Failed to init Scorecards", Toast.LENGTH_SHORT).show();
 		}
 	}
 

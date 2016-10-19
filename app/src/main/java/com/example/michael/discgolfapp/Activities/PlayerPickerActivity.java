@@ -183,8 +183,6 @@ public class PlayerPickerActivity extends AppCompatActivity {
         playerStorage = PlayerStorage.LoadPlayerStorage(context);
         if (playerStorage == null){
             playerStorage = new PlayerStorage();
-            Toast toast = Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG);
-            toast.show();
         }
     }
 

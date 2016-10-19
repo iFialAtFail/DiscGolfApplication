@@ -338,10 +338,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 				course = (Course) b.getSerializable("Course");
 			}
 
-
-            //if (course != null && players != null){
-            //    Toast.makeText(this,"SUCCESS!",Toast.LENGTH_LONG).show();
-            //}
         }
 
 		unFinishedCards = ScoreCardStorage.LoadUnFinishedCardStorage(context);

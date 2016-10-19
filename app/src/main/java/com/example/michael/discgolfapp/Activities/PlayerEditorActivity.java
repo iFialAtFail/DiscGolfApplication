@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.michael.discgolfapp.Model.PlayerStorage;
 import com.example.michael.discgolfapp.R;
@@ -170,8 +169,6 @@ public class PlayerEditorActivity extends AppCompatActivity {
         playerStorage = PlayerStorage.LoadPlayerStorage(context);
         if (playerStorage == null){
             playerStorage = new PlayerStorage();
-            Toast toast = Toast.makeText(getApplicationContext(),"File Not Found",Toast.LENGTH_LONG);
-            toast.show();
         }
     }
 
