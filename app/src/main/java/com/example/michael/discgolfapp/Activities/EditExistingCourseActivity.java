@@ -31,6 +31,8 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 	private static final String HOLE_ARRAY = "Hole Array";
 	private static final String HOLE_COUNT = "Hole Count";
 	private static final String COURSE_NAME = "Course Name";
+	private static final String COURSE_OBJECT = "Course Object";
+	private static final String COURSE_STORAGE = "Course Storage";
 
 	//endregion
 
@@ -64,15 +66,17 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		tvHoleCount = (TextView) findViewById(R.id.tvHoleCount);
 		tvCourseName = (EditText) findViewById(R.id.tvCourseName);
 
-		//Setup course storage then get coure from it.
-		tryRestoreCourseStorageObj();
-		setupCourseFromStorage();
+
 
 		//disable the auto Keyboard
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		//if First time go set everything to course to edit
-		if (savedInstanceState == null && courseToEdit != null){
+		if (savedInstanceState == null){
+
+			//Setup course storage then get coure from it.
+			tryRestoreCourseStorageObj();
+			setupCourseFromPreviousActivity();
 			holeList = toIntegerList(courseToEdit.getParArray());
 			tvHoleCount.setText(String.valueOf(courseToEdit.getHoleCount()));
 			tvCourseName.setText(courseToEdit.getName());
@@ -82,6 +86,8 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		//OnCreate again for any reason.
 		//Set to the last known edited value from the view's.
 		else{
+			courseStorage = (CourseStorage) savedInstanceState.getSerializable(COURSE_STORAGE);
+			courseToEdit = (Course) savedInstanceState.getSerializable(COURSE_OBJECT);
 			holeList = toIntegerList(savedInstanceState.getIntArray(HOLE_ARRAY));
 			tvHoleCount.setText(String.valueOf(savedInstanceState.getString(HOLE_COUNT)));
 			tvCourseName.setText(savedInstanceState.getString(COURSE_NAME));
@@ -139,17 +145,11 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
+		outState.putSerializable(COURSE_STORAGE, courseStorage);
+		outState.putSerializable(COURSE_OBJECT, courseToEdit);
 		outState.putIntArray(HOLE_ARRAY, toIntArray(holeList));
 		outState.putString(HOLE_COUNT, tvHoleCount.getText().toString());
 		outState.putString(COURSE_NAME, tvCourseName.getText().toString());
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		holeList = toIntegerList(courseToEdit.getParArray());
-		tvHoleCount.setText(String.valueOf(courseToEdit.getHoleCount()));
-		tvCourseName.setText(savedInstanceState.getString(COURSE_NAME));
 	}
 
 	//endregion
@@ -196,7 +196,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		}
 	}
 
-	private void  setupCourseFromStorage() {
+	private void setupCourseFromPreviousActivity() {
 		Bundle b = this.getIntent().getExtras();
 		if (b == null) {
 			return;
