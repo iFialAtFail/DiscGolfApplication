@@ -77,17 +77,7 @@ public class AddPlayerMenuActivity extends AppCompatActivity {
                 }
             }
         }
-
-        char[] charArray = nameInput.toCharArray();
-
-        for(char letter : charArray)
-        {
-            if (Character.isLetterOrDigit(letter) || letter == ' ')
-            {
-                //Let it keep iterating through the characters.
-            }
-            else { return false; }
-        }
+        
         return true;
     }
 
