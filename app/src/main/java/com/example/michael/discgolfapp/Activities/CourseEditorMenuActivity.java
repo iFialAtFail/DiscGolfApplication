@@ -59,6 +59,8 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
         setupCourseStorage();
 
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
+
+        //Used to add a view if the listview is not there.
 		courseEditorRelativeLayout = (RelativeLayout) findViewById(R.id.courseEditorRelativeLayout);
 
         if (!setupCourseListView()){//If nothing to populate adapter and listview fails to be created
@@ -102,6 +104,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
                                 courseStorage.SaveToFile(context);
                                 adapter.notifyDataSetChanged();
 
+                                //If listview is empty, recreate to show disc/empty view.
 								if (adapter.getCount() == 0){
 									recreate();
 								}
