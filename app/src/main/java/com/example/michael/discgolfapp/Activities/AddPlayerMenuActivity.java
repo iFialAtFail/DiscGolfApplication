@@ -25,8 +25,11 @@ public class AddPlayerMenuActivity extends AppCompatActivity {
 
     //region Private Fields
 
+    //UI References
     private EditText etName;
     private Button btnSavePlayer;
+
+    //Model References
     private PlayerStorage playerStorage;
     private Course course;
 
@@ -39,11 +42,14 @@ public class AddPlayerMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_player_menu_layout);
 
+        //Setup Model
         tryRestorePlayerStorageObj(); //using serializable and bundle
         tryRestoreCourseObject();
 
         etName = (EditText) findViewById(R.id.etName);
         btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
+
+        //Button Handlers
         btnSavePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
