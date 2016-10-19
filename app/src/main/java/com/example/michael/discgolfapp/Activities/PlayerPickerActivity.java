@@ -199,4 +199,10 @@ public class PlayerPickerActivity extends AppCompatActivity {
     }
 
     //endregion
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(context,CoursePickerActivity.class);
+        startActivity(intent);
+    }
 }
