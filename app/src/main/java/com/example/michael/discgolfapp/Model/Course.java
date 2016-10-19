@@ -86,6 +86,7 @@ public class Course implements Serializable{
 
     public static boolean isValidCoursename(String nameInput)
     {
+        nameInput = nameInput.trim();
         if (nameInput.isEmpty()){
             return false;
         }
