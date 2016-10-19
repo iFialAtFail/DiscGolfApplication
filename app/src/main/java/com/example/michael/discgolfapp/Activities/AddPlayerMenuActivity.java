@@ -77,7 +77,7 @@ public class AddPlayerMenuActivity extends AppCompatActivity {
                 }
             }
         }
-        
+
         return true;
     }
 

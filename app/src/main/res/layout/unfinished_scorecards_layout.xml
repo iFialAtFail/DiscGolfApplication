@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:id="@+id/resumeGameTopLayout"
-        android:layout_above="@+id/unfinishedScoreCardRelativeLayout">
+        android:layout_above="@+id/adViewUFSC">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,23 +45,25 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/lvUnfinishedScoreCards"
             android:layout_gravity="center_horizontal"
             android:choiceMode="singleChoice"
             android:layout_margin="15dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:id="@+id/unfinishedScoreCardRelativeLayout"
+            android:gravity="center"
+            android:layout_above="@+id/adViewUFSC">
+
+
+        </RelativeLayout>
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
-        android:id="@+id/unfinishedScoreCardRelativeLayout"
-        android:gravity="center"
-        android:layout_above="@+id/adViewUFSC">
-
-
-    </RelativeLayout>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adViewUFSC"
