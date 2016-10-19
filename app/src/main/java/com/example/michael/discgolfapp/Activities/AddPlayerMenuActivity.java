@@ -48,7 +48,7 @@ public class AddPlayerMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = etName.getText().toString();
-                if ( validName(name) ){
+                if ( Player.isValidPlayerName(name) && isUniqueName(name)){
                     Player p = new Player(name);
                     playerStorage.AddPlayerToStorage(p);
                     playerStorage.SaveToFile(getApplicationContext());
@@ -69,7 +69,7 @@ public class AddPlayerMenuActivity extends AppCompatActivity {
 
     //region Private Helper Methods
 
-    private boolean validName(String nameInput){
+    private boolean isUniqueName(String nameInput){
         if (playerStorage.getStoredPlayersCount() > 0) {
             for (Player player : playerStorage.getPlayerStorageListArray()) {
                 if (nameInput.equals(player.getName())) {

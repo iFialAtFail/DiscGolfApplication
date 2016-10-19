@@ -122,8 +122,14 @@ public class Player implements Serializable {
 
     //region Private Helper Methods
 
-    private boolean isValidPlayerName(String nameInput)
+    public static boolean isValidPlayerName(String nameInput)
     {
+        nameInput = nameInput.trim();
+
+        if (nameInput.isEmpty()){
+            return false;
+        }
+
         char[] charArray = nameInput.toCharArray();
 
         for(char letter : charArray)
