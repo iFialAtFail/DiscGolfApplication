@@ -104,7 +104,7 @@ public class AddCourseMenuActivity extends Activity {
             public void onClick(View v) {
                 String nameInput = tvCourseName.getText().toString();
 
-                if (!Course.isValidCoursename(nameInput)){
+                if (!Course.isValidCoursename(nameInput) || !isUniqueObject(nameInput)){
                     Toast toast = Toast.makeText(context, "Not a valid course name! Try again!",Toast.LENGTH_LONG);
                     toast.show();
                     return;
@@ -143,6 +143,15 @@ public class AddCourseMenuActivity extends Activity {
     //endregion
 
     //region Private Helper Methods
+
+    private boolean isUniqueObject(String name){
+        for (Course c : courseStorage.getCourseStorage()){
+            if (c.getName().equals(name)){
+                return false;
+            }
+        }
+        return true;
+    }
 
     private int[] toIntArray(List<Integer> list){
         int[] ret = new int[list.size()];
