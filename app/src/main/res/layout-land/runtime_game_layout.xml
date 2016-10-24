@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/parCellTable"
                     android:layout_alignParentTop="true"></TableLayout>
-                <com.example.michael.discgolfapp.CustomViews.ObservableScrollView
+                <com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:id="@+id/nameScrollView"
@@ -77,7 +77,7 @@
                         android:id="@+id/nameTable"
                         >
                 </TableLayout>
-                </com.example.michael.discgolfapp.CustomViews.ObservableScrollView>
+                </com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView>
 
             </RelativeLayout>
             <RelativeLayout
@@ -93,11 +93,11 @@
                     android:id="@+id/parAndScoreDataView"
                     >
 
-                    <com.example.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:scrollbars="horizontal"
-                        android:id="@+id/parHorizontalScrollView">
+                    <com.manleysoftware.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                                                                       android:layout_width="match_parent"
+                                                                                                       android:layout_height="wrap_content"
+                                                                                                       android:scrollbars="horizontal"
+                                                                                                       android:id="@+id/parHorizontalScrollView">
 
                         <TableLayout
                             android:layout_width="fill_parent"
@@ -106,13 +106,13 @@
                             android:stretchColumns="*"
                             android:id="@+id/parTable">
                         </TableLayout>
-                    </com.example.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView>
-                    <com.example.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView
+                    </com.manleysoftware.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView>
+                    <com.manleysoftware.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scrollbars="vertical|horizontal"
                         android:id="@+id/scoreHorizontalScrollView">
-                        <com.example.michael.discgolfapp.CustomViews.ObservableScrollView
+                        <com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/scoreScrollView">
@@ -123,8 +123,8 @@
 
                             </TableLayout>
 
-                        </com.example.michael.discgolfapp.CustomViews.ObservableScrollView>
-                    </com.example.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView>
+                        </com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView>
+                    </com.manleysoftware.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView>
 
                 </LinearLayout>
 
@@ -142,7 +142,7 @@
 
                     </TableLayout>
 
-                    <com.example.michael.discgolfapp.CustomViews.ObservableScrollView
+                    <com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/currentScoreSV">
@@ -152,7 +152,7 @@
 
                             android:id="@+id/currentScoreTable">
                         </TableLayout>
-                    </com.example.michael.discgolfapp.CustomViews.ObservableScrollView>
+                    </com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView>
 
 
                 </LinearLayout>
