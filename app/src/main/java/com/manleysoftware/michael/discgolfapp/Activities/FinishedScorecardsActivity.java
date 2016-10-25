@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
+import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.Model.ScoreCard;
 import com.manleysoftware.michael.discgolfapp.Model.ScoreCardStorage;
 import com.manleysoftware.michael.discgolfapp.R;
@@ -43,11 +44,14 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 		setContentView(R.layout.finished_scorecards_layout);
 		context = this;
 
-		AdView adView = (AdView) findViewById(R.id.adViewFinishedSC);
-		AdRequest request = new AdRequest.Builder()
-				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-				.build();
-		adView.loadAd(request);
+		if (BuildConfig.FLAVOR == "free") {
+			AdView adView = (AdView) findViewById(R.id.adViewFinishedSC);
+			AdRequest request = new AdRequest.Builder()
+					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+					.build();
+			adView.loadAd(request);
+		}
+
 
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Set Portrait because coming back from scorecard overview comes back landscape.
 		//todo consider changing orientation just before intent sends us back here from the overview of scorecard activity

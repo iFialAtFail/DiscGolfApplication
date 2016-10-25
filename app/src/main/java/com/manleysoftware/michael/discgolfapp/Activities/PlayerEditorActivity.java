@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.Model.PlayerStorage;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.Adapters.PlayerDataAdapter;
@@ -45,11 +46,14 @@ public class PlayerEditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_editor);
 
-		AdView adView = (AdView) findViewById(R.id.adViewPE);
-		AdRequest request = new AdRequest.Builder()
-				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-				.build();
-		adView.loadAd(request);
+        if (BuildConfig.FLAVOR == "free") {
+            AdView adView = (AdView) findViewById(R.id.adViewPE);
+            AdRequest request = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+            adView.loadAd(request);
+        }
+
 
         setupPlayerStorage();
 

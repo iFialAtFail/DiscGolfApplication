@@ -1,0 +1,104 @@
+{
+  "project_info": {
+    "project_number": "599810892375",
+    "firebase_url": "https://mikes-disc-golf-tracker-32cd6.firebaseio.com",
+    "project_id": "mikes-disc-golf-tracker-32cd6",
+    "storage_bucket": "mikes-disc-golf-tracker-32cd6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599810892375:android:c8fddf0247f44ab7",
+        "android_client_info": {
+          "package_name": "com.example.michael.discgolfapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599810892375-9mbqsv17h4l4e5v4n8n69fc32ipdpkng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1pG1OgXLN589HH99FGLexocm16MkCU_c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599810892375:android:ac85e4d7b35dc846",
+        "android_client_info": {
+          "package_name": "com.manleysoftware.michael.discgolfapp.free"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599810892375-9mbqsv17h4l4e5v4n8n69fc32ipdpkng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1pG1OgXLN589HH99FGLexocm16MkCU_c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599810892375:android:83ae4ff2eaaf8d21",
+        "android_client_info": {
+          "package_name": "com.manleysoftware.michael.discgolfapp.premium"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "599810892375-9mbqsv17h4l4e5v4n8n69fc32ipdpkng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1pG1OgXLN589HH99FGLexocm16MkCU_c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

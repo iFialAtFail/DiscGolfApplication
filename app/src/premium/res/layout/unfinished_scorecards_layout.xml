@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:id="@+id/resumeGameTopLayout">
+        android:id="@+id/resumeGameTopLayout"
+        android:layout_above="@+id/adViewUFSC">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,10 +56,24 @@
             android:layout_height="wrap_content"
 
             android:id="@+id/unfinishedScoreCardRelativeLayout"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_above="@+id/adViewUFSC">
 
 
         </RelativeLayout>
     </LinearLayout>
+
+
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewUFSC"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_test_add_unit_id">
+    </com.google.android.gms.ads.AdView>
 
 </RelativeLayout>

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
+import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.Model.ScoreCard;
 import com.manleysoftware.michael.discgolfapp.Model.ScoreCardStorage;
 import com.manleysoftware.michael.discgolfapp.R;
@@ -39,11 +40,15 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 		setContentView(R.layout.unfinished_scorecards_layout);
 		context = this;
 
-		AdView adView = (AdView) findViewById(R.id.adViewUFSC);
-		AdRequest request = new AdRequest.Builder()
-				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-				.build();
-		adView.loadAd(request);
+		if (BuildConfig.FLAVOR == "free") {
+			// add some ads or restrict functionallity
+			AdView adView = (AdView) findViewById(R.id.adViewUFSC);
+			AdRequest request = new AdRequest.Builder()
+					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+					.build();
+			adView.loadAd(request);
+		}
+
 
 		lvUnfinishedScoreCards = (ListView) findViewById(R.id.lvUnfinishedScoreCards);
 		unFinishedScoreCardRelativeLayout = (RelativeLayout) findViewById(R.id.unfinishedScoreCardRelativeLayout);

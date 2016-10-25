@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.Adapters.CourseDataAdapter;
+import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.Model.CourseStorage;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;
@@ -41,11 +42,14 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_editor_layout);
 
-		AdView adView = (AdView) findViewById(R.id.adViewCE);
-		AdRequest request = new AdRequest.Builder()
-				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-				.build();
-		adView.loadAd(request);
+        if (BuildConfig.FLAVOR == "free") {
+            AdView adView = (AdView) findViewById(R.id.adViewCE);
+            AdRequest request = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+            adView.loadAd(request);
+        }
+
 
         setupCourseStorage();
 

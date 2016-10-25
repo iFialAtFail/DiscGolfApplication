@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 
 import com.manleysoftware.michael.discgolfapp.Adapters.MainMenuDataAdapter;
+import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -37,13 +38,17 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
 		context = this;
-		MobileAds.initialize(context,ADMOB_APP_ID);
 
-		AdView adView = (AdView) findViewById(R.id.adView);
-		AdRequest request = new AdRequest.Builder()
-				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-				.build();
-		adView.loadAd(request);
+		if (BuildConfig.FLAVOR == "free") {
+			MobileAds.initialize(context,ADMOB_APP_ID);
+
+			AdView adView = (AdView) findViewById(R.id.adView);
+			AdRequest request = new AdRequest.Builder()
+					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+					.build();
+			adView.loadAd(request);
+		}
+
 
 
 

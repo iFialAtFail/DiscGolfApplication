@@ -41,8 +41,17 @@
         android:layout_height="wrap_content"
         android:id="@+id/lvMainMenu"
         android:choiceMode="singleChoice"
-        android:layout_below="@+id/middleView">
+        android:layout_below="@+id/middleView"
+        android:layout_above="@+id/adView"/>
 
-    </ListView>
-
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_test_add_unit_id">
+    </com.google.android.gms.ads.AdView>
 </RelativeLayout>
