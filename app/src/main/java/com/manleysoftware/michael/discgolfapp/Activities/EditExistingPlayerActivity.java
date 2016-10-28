@@ -56,7 +56,7 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 
 		if (savedInstanceState == null){
 			etPlayerName.setText(playerToEdit.getName());
-		} else if (savedInstanceState != null){
+		} else {
 			etPlayerName.setText(savedInstanceState.getString(PLAYER_NAME));
 		}
 
