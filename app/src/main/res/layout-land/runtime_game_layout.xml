@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/parCellTable"
-                    android:layout_alignParentTop="true"></TableLayout>
+                    android:layout_alignParentTop="true"/>
                 <com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
