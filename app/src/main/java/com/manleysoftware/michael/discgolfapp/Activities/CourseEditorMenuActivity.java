@@ -42,7 +42,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_editor_layout);
 
-        if (BuildConfig.FLAVOR == "free") {
+        if (BuildConfig.FLAVOR.equals("free")) {
             AdView adView = (AdView) findViewById(R.id.adViewCE);
             AdRequest request = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)

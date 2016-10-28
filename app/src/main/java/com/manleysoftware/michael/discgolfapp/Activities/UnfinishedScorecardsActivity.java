@@ -40,7 +40,7 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 		setContentView(R.layout.unfinished_scorecards_layout);
 		context = this;
 
-		if (BuildConfig.FLAVOR == "free") {
+		if (BuildConfig.FLAVOR.equals("free")) {
 			// add some ads or restrict functionallity
 			AdView adView = (AdView) findViewById(R.id.adViewUFSC);
 			AdRequest request = new AdRequest.Builder()

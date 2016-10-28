@@ -39,7 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.main_menu);
 		context = this;
 
-		if (BuildConfig.FLAVOR == "free") {
+		if (BuildConfig.FLAVOR.equals("free")) {
 			MobileAds.initialize(context,ADMOB_APP_ID);
 
 			AdView adView = (AdView) findViewById(R.id.adView);

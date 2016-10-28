@@ -46,7 +46,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_editor);
 
-        if (BuildConfig.FLAVOR == "free") {
+        if (BuildConfig.FLAVOR.equals("free")) {
             AdView adView = (AdView) findViewById(R.id.adViewPE);
             AdRequest request = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)

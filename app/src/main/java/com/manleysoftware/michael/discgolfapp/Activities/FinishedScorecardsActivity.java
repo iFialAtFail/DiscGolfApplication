@@ -44,7 +44,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 		setContentView(R.layout.finished_scorecards_layout);
 		context = this;
 
-		if (BuildConfig.FLAVOR == "free") {
+		if (BuildConfig.FLAVOR.equals("free")) {
 			AdView adView = (AdView) findViewById(R.id.adViewFinishedSC);
 			AdRequest request = new AdRequest.Builder()
 					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
