@@ -165,8 +165,8 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 
 	private List<Integer> toIntegerList(int[] array){
 		List<Integer> ret = new ArrayList<>();
-		for(int i = 0; i < array.length; i++){
-			ret.add(array[i]);
+		for (int anArray : array) {
+			ret.add(anArray);
 		}
 		return ret;
 	}

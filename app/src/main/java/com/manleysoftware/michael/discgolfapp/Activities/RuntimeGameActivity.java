@@ -420,19 +420,19 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     private void setupStaticHeaderRows(){
         if (staticHeaderRowsTable.getChildCount() < 1) {
             String[] textInput = {"Hole", "Par"};
-            for (int i = 0; i < textInput.length; i++) {
+			for (String aTextInput : textInput) {
 
-                LinearLayout tableRow = new LinearLayout(context); //Must me linear layout, since TableRow won't actually fill parent.
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
-                tableRow.setLayoutParams(params);
+				LinearLayout tableRow = new LinearLayout(context); //Must me linear layout, since TableRow won't actually fill parent.
+				TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+				tableRow.setLayoutParams(params);
 
-                TextView tv = setupTextViewInTable(textInput[i],
-                        TableRow.LayoutParams.MATCH_PARENT,//Setting only width param
-                        R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
+				TextView tv = setupTextViewInTable(aTextInput,
+						TableRow.LayoutParams.MATCH_PARENT,//Setting only width param
+						R.drawable.cell_shape_light_green); //This forced width but the next line should be a quick fix for it.
 
-                tableRow.addView(tv);
-                staticHeaderRowsTable.addView(tableRow);
-            }
+				tableRow.addView(tv);
+				staticHeaderRowsTable.addView(tableRow);
+			}
         }
     }
 
@@ -493,32 +493,32 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     private void setupCurrentScoreColumn(Player[] players) {
 
         currentScoreTable.removeAllViews();
-            for (int count = 0; count < players.length; count++){
-                LinearLayout _linearLayout = new LinearLayout(context);
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT,1f);
-                _linearLayout.setLayoutParams(params);
+		for (Player player : players) {
+			LinearLayout _linearLayout = new LinearLayout(context);
+			TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+			_linearLayout.setLayoutParams(params);
 
-                TextView tv = setupTextViewInTable(String.valueOf(players[count].getCurrentTotal()),TableRow.LayoutParams.WRAP_CONTENT, R.drawable.cell_shape);
-                tv.setSingleLine();
-                _linearLayout.addView(tv);
-                currentScoreTable.addView(_linearLayout);
-            }
+			TextView tv = setupTextViewInTable(String.valueOf(player.getCurrentTotal()), TableRow.LayoutParams.WRAP_CONTENT, R.drawable.cell_shape);
+			tv.setSingleLine();
+			_linearLayout.addView(tv);
+			currentScoreTable.addView(_linearLayout);
+		}
 
     }
 
     private void setupNameColumn(Player[] players) {
         if (nameTable.getChildCount() < 1){
-            for (int z = 0; z < players.length; z++) {
-                LinearLayout linearLayout = new LinearLayout(this);
-                TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT,1f);
-                linearLayout.setLayoutParams(params);
+			for (Player player : players) {
+				LinearLayout linearLayout = new LinearLayout(this);
+				TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
+				linearLayout.setLayoutParams(params);
 
-                TextView tv = setupTextViewInTable(players[z].getName(),TableRow.LayoutParams.MATCH_PARENT, R.drawable.cell_shape); //This forced width but the next line should be a quick fix for it.
-                tv.setSingleLine();
-                linearLayout.addView(tv);
+				TextView tv = setupTextViewInTable(player.getName(), TableRow.LayoutParams.MATCH_PARENT, R.drawable.cell_shape); //This forced width but the next line should be a quick fix for it.
+				tv.setSingleLine();
+				linearLayout.addView(tv);
 
-                nameTable.addView(linearLayout);
-            }
+				nameTable.addView(linearLayout);
+			}
         }
     }
 

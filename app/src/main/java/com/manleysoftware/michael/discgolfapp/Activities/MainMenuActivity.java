@@ -94,26 +94,26 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void OnNewGameClick(View v){
+    private void OnNewGameClick(View v){
         Intent intent = new Intent(this,CoursePickerActivity.class);
         startActivity(intent);
     }
 
-    public void OnEditCoursesClick(View v){
+    private void OnEditCoursesClick(View v){
         Intent intent = new Intent(context,CourseEditorMenuActivity.class);
         startActivity(intent);
     }
 
-    public void OnEditPlayersClick(View v){
+    private void OnEditPlayersClick(View v){
         Intent intent = new Intent(context,PlayerEditorActivity.class);
         startActivity(intent);
     }
-    public void OnScorecardsClick(View v){
+    private void OnScorecardsClick(View v){
         Intent intent = new Intent(context, FinishedScorecardsActivity.class);
         startActivity(intent);
     }
 
-	public void OnResumeGameClicked(View v){
+	private void OnResumeGameClicked(View v){
 		Intent intent = new Intent(context, UnfinishedScorecardsActivity.class);
 		startActivity(intent);
 	}
