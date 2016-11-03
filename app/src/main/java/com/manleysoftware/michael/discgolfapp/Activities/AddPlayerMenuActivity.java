@@ -22,9 +22,8 @@ public class AddPlayerMenuActivity extends AppCompatActivity {
 
     //UI References
     private EditText etName;
-    private Button btnSavePlayer;
 
-    //Model References
+	//Model References
     private PlayerStorage playerStorage;
     private Course course;
 
@@ -42,7 +41,7 @@ public class AddPlayerMenuActivity extends AppCompatActivity {
         tryRestoreCourseObject();
 
         etName = (EditText) findViewById(R.id.etName);
-        btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
+		Button btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
 
         //Button Handlers
         btnSavePlayer.setOnClickListener(new View.OnClickListener() {

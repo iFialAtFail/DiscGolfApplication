@@ -42,11 +42,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 	private CourseStorage courseStorage;
 	private Course courseToEdit;
 	private List<Integer> holeList;
-	private ListView lvHoleOptions;
 	private CourseParDataAdapter adapter;
-	private Button btnIncrementHoleCount;
-	private Button btnDecrementHoleCount;
-	private Button btnSaveCourse;
 	private TextView tvHoleCount;
 	private TextView tvCourseName;
 	private Context context;
@@ -59,10 +55,10 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		setContentView(R.layout.add_course_menu_layout);
 		context = this;
 
-		lvHoleOptions = (ListView) findViewById(R.id.lvHoleOptions);
-		btnIncrementHoleCount = (Button) findViewById(R.id.btnIncrementHoleCount);
-		btnDecrementHoleCount = (Button) findViewById(R.id.btnDecrementHoleCnt);
-		btnSaveCourse = (Button) findViewById(R.id.btnSaveCourse);
+		ListView lvHoleOptions = (ListView) findViewById(R.id.lvHoleOptions);
+		Button btnIncrementHoleCount = (Button) findViewById(R.id.btnIncrementHoleCount);
+		Button btnDecrementHoleCount = (Button) findViewById(R.id.btnDecrementHoleCnt);
+		Button btnSaveCourse = (Button) findViewById(R.id.btnSaveCourse);
 		tvHoleCount = (TextView) findViewById(R.id.tvHoleCount);
 		tvCourseName = (EditText) findViewById(R.id.tvCourseName);
 

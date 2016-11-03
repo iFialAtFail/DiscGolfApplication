@@ -30,10 +30,8 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
     //region Private Fields
 
-    private Button btnNewPlayer;
-    private ListView lvPlayerList;
-	private RelativeLayout playerEditorRelativelayout;
-    private PlayerStorage playerStorage;
+	private ListView lvPlayerList;
+	private PlayerStorage playerStorage;
     private Context context =  this;
     private PlayerDataAdapter adapter;
 
@@ -59,7 +57,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
         setupPlayerStorage();
 
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
-		playerEditorRelativelayout = (RelativeLayout) findViewById(R.id.playerEditorRelativeLayout);
+		RelativeLayout playerEditorRelativelayout = (RelativeLayout) findViewById(R.id.playerEditorRelativeLayout);
 
         if (!setupPlayerListView()){
 			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
@@ -126,7 +124,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
 			}
 		});
 
-        btnNewPlayer = (Button) findViewById(R.id.btnNewPlayer);
+		Button btnNewPlayer = (Button) findViewById(R.id.btnNewPlayer);
         btnNewPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

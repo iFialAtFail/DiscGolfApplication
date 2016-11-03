@@ -31,17 +31,16 @@ public class CoursePickerActivity extends AppCompatActivity {
     private CourseDataAdapter adapter;
     private CourseStorage courseStorage;
     private Context context = this;
-	private RelativeLayout coursePickerRelativeLayout;
-    private ListView lvCourseList;
-    private Button btnNewCourse;
-    @Override
+	private ListView lvCourseList;
+
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_picker_layout);
         setupCourseStorage();
 
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
-		coursePickerRelativeLayout = (RelativeLayout) findViewById(R.id.coursePickerRelativeLayout);
+		RelativeLayout coursePickerRelativeLayout = (RelativeLayout) findViewById(R.id.coursePickerRelativeLayout);
         if (!setupCourseListView()){
 			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
 
@@ -104,7 +103,7 @@ public class CoursePickerActivity extends AppCompatActivity {
                 return true;
             }
         });
-        btnNewCourse = (Button) findViewById(R.id.btnNewCourse);
+		Button btnNewCourse = (Button) findViewById(R.id.btnNewCourse);
         btnNewCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

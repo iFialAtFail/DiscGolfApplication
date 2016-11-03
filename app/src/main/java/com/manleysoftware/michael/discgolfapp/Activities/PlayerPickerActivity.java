@@ -37,11 +37,9 @@ public class PlayerPickerActivity extends AppCompatActivity {
     private PlayerStorage playerStorage;
     private Context context = this;
     private ListView lvPlayerList;
-	private RelativeLayout playerPickerRelativeLayout;
-    private ArrayList<Player> playersPlaying;
 
 
-    private Course selectedCourse;
+	private Course selectedCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class PlayerPickerActivity extends AppCompatActivity {
         tryCourseRetrieval();
 
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
-		playerPickerRelativeLayout = (RelativeLayout) findViewById(R.id.playerPickerRelativeLayout);
+		RelativeLayout playerPickerRelativeLayout = (RelativeLayout) findViewById(R.id.playerPickerRelativeLayout);
 
         if (!setupPlayersListView()){
 			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
@@ -120,7 +118,7 @@ public class PlayerPickerActivity extends AppCompatActivity {
     //region Button Handling
 
     public void onNewGameClicked(View v){
-        playersPlaying = new ArrayList<>();
+		ArrayList<Player> playersPlaying = new ArrayList<>();
 
         SparseBooleanArray sparseBooleanArray = lvPlayerList.getCheckedItemPositions();
 

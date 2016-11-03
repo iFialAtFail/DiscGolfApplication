@@ -32,7 +32,6 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 	private ListView lvUnfinishedScoreCards;
 	private ScoreCardStorage scoreCardStorage;
 	private ScoreCardDataAdapter adapter;
-	private RelativeLayout unFinishedScoreCardRelativeLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 
 
 		lvUnfinishedScoreCards = (ListView) findViewById(R.id.lvUnfinishedScoreCards);
-		unFinishedScoreCardRelativeLayout = (RelativeLayout) findViewById(R.id.unfinishedScoreCardRelativeLayout);
+		RelativeLayout unFinishedScoreCardRelativeLayout = (RelativeLayout) findViewById(R.id.unfinishedScoreCardRelativeLayout);
 
 		initializeScoreCardStorage();
 

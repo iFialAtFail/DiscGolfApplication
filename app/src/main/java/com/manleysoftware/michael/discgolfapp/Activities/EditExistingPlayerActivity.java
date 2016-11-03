@@ -30,7 +30,6 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 	private PlayerStorage playerStorage;
 	private Player playerToEdit;
 	private EditText etPlayerName;
-	private Button btnSavePlayer;
 	private Context context;
 
 
@@ -46,7 +45,7 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 		context = this;
 
 		etPlayerName = (EditText) findViewById(R.id.etName);
-		btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
+		Button btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
 
 		setupPlayerStorage();
 		setupPlayerToEdit();

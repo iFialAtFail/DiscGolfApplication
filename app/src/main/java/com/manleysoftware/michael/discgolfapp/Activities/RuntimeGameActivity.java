@@ -51,22 +51,12 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 
     private final int LAYOUT_WIDTH = 50;
-    private final int TEXT_SIZE = 20;
 
-    //endregion
+	//endregion
 
     //region Control/View references
 
-    private Button btnIncrementScore;
-    private Button btnDecrementScore;
-    private Button btnNextHole;
-    private Button btnPreviousHole;
-
-    private TextView titleCourseTextView;
-
-    private List<TableLayout> tableDiscGolf;
-
-    //Custom Scrollviews
+	//Custom Scrollviews
     private ObservableHorizontalScrollView parHorizontalScrollView;
     private ObservableHorizontalScrollView scoreHorizontalScrollView;
     private ObservableScrollView nameScrollView;
@@ -81,9 +71,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     private TableLayout staticHeaderRowsTable;
     private TableLayout currentScoreTable;
     private TableLayout staticParCountTable;
-    private LinearLayout currentScoreLayout;
 
-    //endregion
+	//endregion
 
     //region Android Product Lifecycle
 
@@ -96,21 +85,21 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         //region Setup View References
 
-        btnIncrementScore = (Button)findViewById(R.id.btnIncrementScore);
-        btnDecrementScore = (Button)findViewById(R.id.btnDecrementScore);
-        btnNextHole = (Button)findViewById(R.id.btnNextHole);
-        btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
+		Button btnIncrementScore = (Button) findViewById(R.id.btnIncrementScore);
+		Button btnDecrementScore = (Button) findViewById(R.id.btnDecrementScore);
+		Button btnNextHole = (Button) findViewById(R.id.btnNextHole);
+		Button btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
 
-        titleCourseTextView = (TextView) findViewById(R.id.titleCourseTextView);
+		TextView titleCourseTextView = (TextView) findViewById(R.id.titleCourseTextView);
 
-        tableDiscGolf = new ArrayList<TableLayout>();
+		List<TableLayout> tableDiscGolf = new ArrayList<TableLayout>();
         scoreTable = (TableLayout) findViewById(R.id.scoreTable);
         nameTable = (TableLayout) findViewById(R.id.nameTable);
         dynamicHeaderTable = (TableLayout) findViewById(R.id.parTable);
         staticHeaderRowsTable = (TableLayout) findViewById(R.id.parCellTable);
         staticParCountTable = (TableLayout) findViewById(R.id.staticParCountTable);
         currentScoreTable = (TableLayout) findViewById(R.id.currentScoreTable);
-        currentScoreLayout = (LinearLayout) findViewById(R.id.currentScoreLayout);
+		LinearLayout currentScoreLayout = (LinearLayout) findViewById(R.id.currentScoreLayout);
 
         parHorizontalScrollView = (ObservableHorizontalScrollView) findViewById(R.id.parHorizontalScrollView);
         parHorizontalScrollView.setHorizontalScrollViewListener(this);
@@ -390,7 +379,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         tv.setBackgroundResource(resourceID);
         tv.setTextColor(Color.BLACK);
 		//tv.setTextAppearance(context,android.R.style.TextAppearance_Large);
-        tv.setTextSize(TEXT_SIZE);
+		int TEXT_SIZE = 20;
+		tv.setTextSize(TEXT_SIZE);
 		tv.setGravity(Gravity.CENTER);
         tv.setPadding(15, 5, 15, 5);
         tv.setText(setText);

@@ -20,12 +20,7 @@ import com.manleysoftware.michael.discgolfapp.R;
 public class ScorecardOverview extends AppCompatActivity {
 	private Context context;
 	private TableLayout tblFinalScorecard;
-	private TextView tvFSCourseTitle;
 	private ScoreCard scoreCard;
-
-	private final int FIRST_COLUMN_WIDTH = 80;
-	private final int LAYOUT_WIDTH = 50;
-	private final int TEXT_SIZE = 20;
 
 
 	@Override
@@ -35,7 +30,7 @@ public class ScorecardOverview extends AppCompatActivity {
 		context = this;
 
 		tblFinalScorecard = (TableLayout) findViewById(R.id.tblFinalScorecard);
-		tvFSCourseTitle = (TextView) findViewById(R.id.tvFSCourseTitle);
+		TextView tvFSCourseTitle = (TextView) findViewById(R.id.tvFSCourseTitle);
 
 		initScoreCardData();
 
@@ -66,6 +61,8 @@ public class ScorecardOverview extends AppCompatActivity {
 			// inner for loop
 			for (int j = 0; j < scoreCard.getCourse().getHoleCount() + 2; j++) { // Plus 2 for Name and Total Columns
 
+				int LAYOUT_WIDTH = 50;
+				int FIRST_COLUMN_WIDTH = 80;
 				if (i == 0 && j == 0){ //First Cell is Hole
 					TextView tv = setupTextViewInTable("Hole",applyLayoutWidth(FIRST_COLUMN_WIDTH), R.drawable.cell_shape_light_green);
 					row.addView(tv);
@@ -124,6 +121,7 @@ public class ScorecardOverview extends AppCompatActivity {
 		tv.setBackgroundResource(resourceID);
 		tv.setTextColor(Color.BLACK);
 		//tv.setTextAppearance(context,android.R.style.TextAppearance_Large);
+		int TEXT_SIZE = 20;
 		tv.setTextSize(TEXT_SIZE);
 		tv.setGravity(Gravity.CENTER);
 		tv.setPadding(15, 5, 15, 5);

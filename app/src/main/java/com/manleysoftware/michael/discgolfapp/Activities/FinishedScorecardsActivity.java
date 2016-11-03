@@ -34,7 +34,6 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 
 	private Context context;
 	private ListView lvFinishedScoreCards;
-	private RelativeLayout finishedScoreCardLinearLayout;
 	private ScoreCardDataAdapter adapter;
 	private ScoreCardStorage scoreCardStorage;
 
@@ -58,7 +57,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 		//todo consider changing orientation just before intent sends us back here from the overview of scorecard activity
 
 		lvFinishedScoreCards = (ListView) findViewById(R.id.lvFinishedScoreCards);
-		finishedScoreCardLinearLayout = (RelativeLayout) findViewById(R.id.finishedScoreCardLinearLayout);
+		RelativeLayout finishedScoreCardLinearLayout = (RelativeLayout) findViewById(R.id.finishedScoreCardLinearLayout);
 
 		initializeScoreCardStorage();
 

@@ -30,10 +30,8 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
     private static final String COURSE_EDITOR_KEY = "Course Editor Key";
     private static final int COURSE_EDITOR_INTENT = 2;
 
-    private Button btnNewCourse;
-    private ListView lvCourseList;
-	private RelativeLayout courseEditorRelativeLayout;
-    private CourseStorage courseStorage;
+	private ListView lvCourseList;
+	private CourseStorage courseStorage;
     private Context context = this;
     private CourseDataAdapter adapter;
 
@@ -57,7 +55,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
 
         //Used to add a view if the listview is not there.
-		courseEditorRelativeLayout = (RelativeLayout) findViewById(R.id.courseEditorRelativeLayout);
+		RelativeLayout courseEditorRelativeLayout = (RelativeLayout) findViewById(R.id.courseEditorRelativeLayout);
 
         if (!setupCourseListView()){//If nothing to populate adapter and listview fails to be created
 			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
@@ -125,7 +123,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 			}
 		});
 
-        btnNewCourse = (Button) findViewById(R.id.btnNewCourse);
+		Button btnNewCourse = (Button) findViewById(R.id.btnNewCourse);
         btnNewCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

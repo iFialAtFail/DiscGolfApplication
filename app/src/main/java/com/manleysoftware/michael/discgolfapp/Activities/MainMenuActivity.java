@@ -27,9 +27,6 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button btnEditPlayers;
     private Button btnScorecards;
     private Context context;
-	private ListView lvMainMenu;
-	private MainMenuDataAdapter adapter;
-	private final String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504";
 
 	private String[] menuItems = {"New Game", "Resume Game", "Course Editor", "Player Editor", "Score Cards"};
 
@@ -40,7 +37,8 @@ public class MainMenuActivity extends AppCompatActivity {
 		context = this;
 
 		if (BuildConfig.FLAVOR.equals("free")) {
-			MobileAds.initialize(context,ADMOB_APP_ID);
+			String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504";
+			MobileAds.initialize(context, ADMOB_APP_ID);
 
 			AdView adView = (AdView) findViewById(R.id.adView);
 			AdRequest request = new AdRequest.Builder()
@@ -51,10 +49,8 @@ public class MainMenuActivity extends AppCompatActivity {
 		}
 
 
-
-
-		lvMainMenu = (ListView) findViewById(R.id.lvMainMenu);
-		adapter = new MainMenuDataAdapter(context,menuItems);
+		ListView lvMainMenu = (ListView) findViewById(R.id.lvMainMenu);
+		MainMenuDataAdapter adapter = new MainMenuDataAdapter(context, menuItems);
 		lvMainMenu.setAdapter(adapter);
 		lvMainMenu.setDivider(null); //Removes separating lines between the menu items.
 		lvMainMenu.setDividerHeight(0);//^^^Same
