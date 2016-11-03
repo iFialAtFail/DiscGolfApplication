@@ -28,12 +28,12 @@ public class CoursePickerActivity extends AppCompatActivity {
     private static final String COURSE_PICKER_KEY = "Course Picker Key";
     private static final int COURSE_PICKER_INTENT = 1;
 
-    CourseDataAdapter adapter;
-    CourseStorage courseStorage;
-    Context context = this;
-	RelativeLayout coursePickerRelativeLayout;
-    ListView lvCourseList;
-    Button btnNewCourse;
+    private CourseDataAdapter adapter;
+    private CourseStorage courseStorage;
+    private Context context = this;
+	private RelativeLayout coursePickerRelativeLayout;
+    private ListView lvCourseList;
+    private Button btnNewCourse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

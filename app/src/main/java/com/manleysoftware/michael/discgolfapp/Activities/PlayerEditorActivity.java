@@ -30,12 +30,12 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
     //region Private Fields
 
-    Button btnNewPlayer;
-    ListView lvPlayerList;
-	RelativeLayout playerEditorRelativelayout;
-    PlayerStorage playerStorage;
-    Context context =  this;
-    PlayerDataAdapter adapter;
+    private Button btnNewPlayer;
+    private ListView lvPlayerList;
+	private RelativeLayout playerEditorRelativelayout;
+    private PlayerStorage playerStorage;
+    private Context context =  this;
+    private PlayerDataAdapter adapter;
 
     //endregion
 
@@ -51,7 +51,8 @@ public class PlayerEditorActivity extends AppCompatActivity {
             AdRequest request = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                     .build();
-            adView.loadAd(request);
+			if (adView != null)
+	            adView.loadAd(request);
         }
 
 

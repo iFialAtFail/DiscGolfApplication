@@ -30,12 +30,12 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
     private static final String COURSE_EDITOR_KEY = "Course Editor Key";
     private static final int COURSE_EDITOR_INTENT = 2;
 
-    Button btnNewCourse;
-    ListView lvCourseList;
-	RelativeLayout courseEditorRelativeLayout;
-    CourseStorage courseStorage;
-    Context context = this;
-    CourseDataAdapter adapter;
+    private Button btnNewCourse;
+    private ListView lvCourseList;
+	private RelativeLayout courseEditorRelativeLayout;
+    private CourseStorage courseStorage;
+    private Context context = this;
+    private CourseDataAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,8 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
             AdRequest request = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                     .build();
-            adView.loadAd(request);
+			if (adView != null)
+	            adView.loadAd(request);
         }
 
 

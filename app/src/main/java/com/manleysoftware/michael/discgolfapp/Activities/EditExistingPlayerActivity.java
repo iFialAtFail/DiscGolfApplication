@@ -31,7 +31,7 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 	private Player playerToEdit;
 	private EditText etPlayerName;
 	private Button btnSavePlayer;
-	Context context;
+	private Context context;
 
 
 	//endregion

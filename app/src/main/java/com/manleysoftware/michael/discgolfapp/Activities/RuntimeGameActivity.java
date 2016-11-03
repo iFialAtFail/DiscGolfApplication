@@ -36,12 +36,12 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     //region Private Model Variables
 
-    Course course;
-    Player[] players;
-    ScoreCard scoreCard;
-	ScoreCardStorage finishedCards;
-	ScoreCardStorage unFinishedCards;
-    Context context;
+    private Course course;
+    private Player[] players;
+    private ScoreCard scoreCard;
+	private ScoreCardStorage finishedCards;
+	private ScoreCardStorage unFinishedCards;
+    private Context context;
 	private Boolean gameStarted = false;
 
     //endregion
@@ -57,31 +57,31 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     //region Control/View references
 
-    Button btnIncrementScore;
-    Button btnDecrementScore;
-    Button btnNextHole;
-    Button btnPreviousHole;
+    private Button btnIncrementScore;
+    private Button btnDecrementScore;
+    private Button btnNextHole;
+    private Button btnPreviousHole;
 
-    TextView titleCourseTextView;
+    private TextView titleCourseTextView;
 
-    List<TableLayout> tableDiscGolf;
+    private List<TableLayout> tableDiscGolf;
 
     //Custom Scrollviews
-    ObservableHorizontalScrollView parHorizontalScrollView;
-    ObservableHorizontalScrollView scoreHorizontalScrollView;
-    ObservableScrollView nameScrollView;
-    ObservableScrollView scoreScrollView;
-    ObservableScrollView currentScoreSV;
+    private ObservableHorizontalScrollView parHorizontalScrollView;
+    private ObservableHorizontalScrollView scoreHorizontalScrollView;
+    private ObservableScrollView nameScrollView;
+    private ObservableScrollView scoreScrollView;
+    private ObservableScrollView currentScoreSV;
 
     //Static in name implies a stationary view.
     //Dynimic in name implies a view wrapped in a custom scrollview.
-    TableLayout scoreTable;
-    TableLayout nameTable;
-    TableLayout dynamicHeaderTable;
-    TableLayout staticHeaderRowsTable;
-    TableLayout currentScoreTable;
-    TableLayout staticParCountTable;
-    LinearLayout currentScoreLayout;
+    private TableLayout scoreTable;
+    private TableLayout nameTable;
+    private TableLayout dynamicHeaderTable;
+    private TableLayout staticHeaderRowsTable;
+    private TableLayout currentScoreTable;
+    private TableLayout staticParCountTable;
+    private LinearLayout currentScoreLayout;
 
     //endregion
 

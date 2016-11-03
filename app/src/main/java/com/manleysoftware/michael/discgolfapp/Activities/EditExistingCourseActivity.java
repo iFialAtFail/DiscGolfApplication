@@ -39,17 +39,17 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 
 	//region Private Fields
 
-	CourseStorage courseStorage;
-	Course courseToEdit;
-	List<Integer> holeList;
-	ListView lvHoleOptions;
-	CourseParDataAdapter adapter;
-	Button btnIncrementHoleCount;
-	Button btnDecrementHoleCount;
-	Button btnSaveCourse;
-	TextView tvHoleCount;
-	TextView tvCourseName;
-	Context context;
+	private CourseStorage courseStorage;
+	private Course courseToEdit;
+	private List<Integer> holeList;
+	private ListView lvHoleOptions;
+	private CourseParDataAdapter adapter;
+	private Button btnIncrementHoleCount;
+	private Button btnDecrementHoleCount;
+	private Button btnSaveCourse;
+	private TextView tvHoleCount;
+	private TextView tvCourseName;
+	private Context context;
 
 	//endregion
 

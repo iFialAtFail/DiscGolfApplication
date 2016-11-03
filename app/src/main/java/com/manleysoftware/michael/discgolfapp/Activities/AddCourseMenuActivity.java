@@ -36,18 +36,18 @@ public class AddCourseMenuActivity extends Activity {
     //region Private Fields
 
     //Model References
-    CourseStorage courseStorage;
+	private CourseStorage courseStorage;
 
     //UI References
-    List<Integer> holeParsList;
-    ListView lvHoleOptions;
-    CourseParDataAdapter adapter;
-    Button btnIncrementHoleCount;
-    Button btnDecrementHoleCount;
-    Button btnSaveCourse;
-    TextView tvHoleCount;
-    TextView tvCourseName;
-    Context context = this;
+    private List<Integer> holeParsList;
+    private ListView lvHoleOptions;
+    private CourseParDataAdapter adapter;
+    private Button btnIncrementHoleCount;
+    private Button btnDecrementHoleCount;
+    private Button btnSaveCourse;
+    private TextView tvHoleCount;
+    private TextView tvCourseName;
+    private Context context = this;
 
     //endregion
 

@@ -34,16 +34,15 @@ public class PlayerPickerActivity extends AppCompatActivity {
 
     private static final int PLAYER_PICKER_INTENT = 3;
 
-    MultiplePlayerDataAdapter adapter;
-    PlayerStorage playerStorage;
-    Context context = this;
-    ListView lvPlayerList;
-	RelativeLayout playerPickerRelativeLayout;
-    ArrayList<Player> playersPlaying;
-    Button btnStartGame;
+    private MultiplePlayerDataAdapter adapter;
+    private PlayerStorage playerStorage;
+    private Context context = this;
+    private ListView lvPlayerList;
+	private RelativeLayout playerPickerRelativeLayout;
+    private ArrayList<Player> playersPlaying;
 
 
-    Course selectedCourse;
+    private Course selectedCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,6 @@ public class PlayerPickerActivity extends AppCompatActivity {
         setupPlayerStorage();
         tryCourseRetrieval();
 
-        btnStartGame = (Button) findViewById(R.id.btnStartTheGame);
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
 		playerPickerRelativeLayout = (RelativeLayout) findViewById(R.id.playerPickerRelativeLayout);
 

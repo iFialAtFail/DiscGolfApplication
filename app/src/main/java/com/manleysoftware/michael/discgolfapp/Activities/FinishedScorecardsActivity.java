@@ -32,11 +32,11 @@ import com.google.android.gms.ads.AdView;
  */
 public class FinishedScorecardsActivity extends AppCompatActivity {
 
-	Context context;
-	ListView lvFinishedScoreCards;
-	RelativeLayout finishedScoreCardLinearLayout;
-	ScoreCardDataAdapter adapter;
-	ScoreCardStorage scoreCardStorage;
+	private Context context;
+	private ListView lvFinishedScoreCards;
+	private RelativeLayout finishedScoreCardLinearLayout;
+	private ScoreCardDataAdapter adapter;
+	private ScoreCardStorage scoreCardStorage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,8 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 			AdRequest request = new AdRequest.Builder()
 					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
 					.build();
-			adView.loadAd(request);
+			if (adView != null)
+				adView.loadAd(request);
 		}
 
 

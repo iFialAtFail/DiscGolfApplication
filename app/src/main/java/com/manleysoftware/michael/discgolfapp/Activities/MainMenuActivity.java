@@ -22,16 +22,16 @@ import com.google.android.gms.ads.MobileAds;
  */
 public class MainMenuActivity extends AppCompatActivity {
 
-    Button btnNewGame;
-    Button btnEditCourses;
-    Button btnEditPlayers;
-    Button btnScorecards;
-    Context context;
-	ListView lvMainMenu;
-	MainMenuDataAdapter adapter;
-	final String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504";
+    private Button btnNewGame;
+    private Button btnEditCourses;
+    private Button btnEditPlayers;
+    private Button btnScorecards;
+    private Context context;
+	private ListView lvMainMenu;
+	private MainMenuDataAdapter adapter;
+	private final String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504";
 
-	String[] menuItems = {"New Game", "Resume Game", "Course Editor", "Player Editor", "Score Cards"};
+	private String[] menuItems = {"New Game", "Resume Game", "Course Editor", "Player Editor", "Score Cards"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,8 @@ public class MainMenuActivity extends AppCompatActivity {
 			AdRequest request = new AdRequest.Builder()
 					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
 					.build();
-			adView.loadAd(request);
+			if (adView != null)
+				adView.loadAd(request);
 		}
 
 

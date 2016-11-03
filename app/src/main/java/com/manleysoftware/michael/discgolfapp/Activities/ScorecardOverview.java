@@ -18,10 +18,10 @@ import com.manleysoftware.michael.discgolfapp.R;
  * Created by Michael on 8/22/2016.
  */
 public class ScorecardOverview extends AppCompatActivity {
-	Context context;
-	TableLayout tblFinalScorecard;
-	TextView tvFSCourseTitle;
-	ScoreCard scoreCard;
+	private Context context;
+	private TableLayout tblFinalScorecard;
+	private TextView tvFSCourseTitle;
+	private ScoreCard scoreCard;
 
 	private final int FIRST_COLUMN_WIDTH = 80;
 	private final int LAYOUT_WIDTH = 50;
