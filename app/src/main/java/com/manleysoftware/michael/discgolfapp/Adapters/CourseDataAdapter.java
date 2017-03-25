@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class CourseDataAdapter extends BaseAdapter {
 
-    private List<Course> courseList;
-    private Context context;
+    private final List<Course> courseList;
+    private final Context context;
 
 
     public CourseDataAdapter(Context context, List<Course> courseStorage) {

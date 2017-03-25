@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class PlayerDataAdapter extends BaseAdapter {
 
-    private List<Player> playerList;
-    private Context context;
+    private final List<Player> playerList;
+    private final Context context;
 
     public PlayerDataAdapter(Context context, List<Player> playerStorage) {
         playerList = playerStorage;

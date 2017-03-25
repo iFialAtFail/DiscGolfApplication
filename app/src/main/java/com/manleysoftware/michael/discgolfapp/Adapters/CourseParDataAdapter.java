@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class CourseParDataAdapter extends BaseAdapter {
 
-    private Context context;
+    private final Context context;
     private LayoutInflater inflater;
-    private List<Integer> course;
+    private final List<Integer> course;
 
     public CourseParDataAdapter(Context context, List<Integer> course) {
         this.context = context;

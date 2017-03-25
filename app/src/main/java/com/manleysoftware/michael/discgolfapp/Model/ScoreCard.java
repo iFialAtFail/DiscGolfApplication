@@ -14,7 +14,7 @@ public class ScoreCard implements Serializable {
     private Player[] players;
     private int currentHole;
     private int currentPlayerSelected;
-    private Course course;
+    private final Course course;
 	private String date;
 
     //endregion

@@ -32,7 +32,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
 	private ListView lvPlayerList;
 	private PlayerStorage playerStorage;
-    private Context context =  this;
+    private final Context context =  this;
     private PlayerDataAdapter adapter;
 
     //endregion

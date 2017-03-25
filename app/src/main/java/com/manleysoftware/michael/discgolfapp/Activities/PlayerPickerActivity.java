@@ -35,7 +35,7 @@ public class PlayerPickerActivity extends AppCompatActivity {
 
     private MultiplePlayerDataAdapter adapter;
     private PlayerStorage playerStorage;
-    private Context context = this;
+    private final Context context = this;
     private ListView lvPlayerList;
 
 

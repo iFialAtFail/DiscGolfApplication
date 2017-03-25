@@ -43,7 +43,7 @@ public class AddCourseMenuActivity extends Activity {
 	private CourseParDataAdapter adapter;
 	private TextView tvHoleCount;
     private TextView tvCourseName;
-    private Context context = this;
+    private final Context context = this;
 
     //endregion
 

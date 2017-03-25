@@ -20,7 +20,7 @@ public class ScoreCardStorage implements Serializable {
 	private static final long serialVersionUID = 3L;
 	private static final String SCORECARD_STORAGE_FILE_FINISHED = "finishedScorecards.data";
 	private static final String SCORECARD_STORAGE_FILE_UNFINISHED = "UnfinishedScorecards.data";
-	private List<ScoreCard> scoreCardStorage;
+	private final List<ScoreCard> scoreCardStorage;
 
 	//endregion
 

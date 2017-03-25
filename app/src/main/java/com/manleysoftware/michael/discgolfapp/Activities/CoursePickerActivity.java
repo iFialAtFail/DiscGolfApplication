@@ -30,7 +30,7 @@ public class CoursePickerActivity extends AppCompatActivity {
 
     private CourseDataAdapter adapter;
     private CourseStorage courseStorage;
-    private Context context = this;
+    private final Context context = this;
 	private ListView lvCourseList;
 
 	@Override

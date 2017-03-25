@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Michael on 7/14/2016.
  */
 public class MultiplePlayerDataAdapter extends PlayerDataAdapter {
-    private Context context;
+    private final Context context;
     public MultiplePlayerDataAdapter(Context context, List<Player> playerStorage) {
         super(context, playerStorage);
         this.context = context;

@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class ScoreCardDataAdapter extends BaseAdapter{
 
-	private List<ScoreCard> scoreCardList;
-	private Context context;
+	private final List<ScoreCard> scoreCardList;
+	private final Context context;
 
 	public ScoreCardDataAdapter(Context context, ScoreCardStorage scoreCardStorage){
 		this.context = context;

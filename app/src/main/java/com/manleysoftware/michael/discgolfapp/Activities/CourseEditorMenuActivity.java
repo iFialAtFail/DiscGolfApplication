@@ -32,7 +32,7 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
 	private ListView lvCourseList;
 	private CourseStorage courseStorage;
-    private Context context = this;
+    private final Context context = this;
     private CourseDataAdapter adapter;
 
     @Override

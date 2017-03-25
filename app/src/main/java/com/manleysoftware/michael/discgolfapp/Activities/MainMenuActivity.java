@@ -28,7 +28,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button btnScorecards;
     private Context context;
 
-	private String[] menuItems = {"New Game", "Resume Game", "Course Editor", "Player Editor", "Score Cards"};
+	private final String[] menuItems = {"New Game", "Resume Game", "Course Editor", "Player Editor", "Score Cards"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

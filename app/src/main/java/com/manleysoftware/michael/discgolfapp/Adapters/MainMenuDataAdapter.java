@@ -17,8 +17,8 @@ import com.manleysoftware.michael.discgolfapp.R;
  */
 public class MainMenuDataAdapter extends BaseAdapter {
 
-	private Context context;
-	private String[] menuLabels;
+	private final Context context;
+	private final String[] menuLabels;
 
 	public MainMenuDataAdapter(Context context, String[] menuLabels){
 		this.context = context;
