@@ -164,12 +164,7 @@ public class Course implements Serializable{
 
     @Override
     public boolean equals(Object o) {
-        if ((o instanceof Course) && (((Course) o).getName().equals(this.getName()))){
-            return true;
-        }
-        else{
-            return false;
-        }
+		return (o instanceof Course) && (((Course) o).getName().equals(this.getName()));
     }
 
 

@@ -451,7 +451,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 			dynamicHeaderTable.setStretchAllColumns(true);
 			//Setup Hole# row
             TableRow holeNum = new TableRow(this);
-            TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1.0f);
+            TableLayout.LayoutParams params = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT, 1.0f);
             holeNum.setLayoutParams(params);
 
 

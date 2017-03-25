@@ -172,11 +172,7 @@ public class Player implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if ((o instanceof Player) && (((Player) o).getName().equals(this.getName()))) {
-            return true;
-        } else {
-            return false;
-        }
+		return (o instanceof Player) && (((Player) o).getName().equals(this.getName()));
     }
 
 
