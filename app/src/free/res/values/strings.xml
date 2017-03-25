@@ -1,15 +1,10 @@
 <resources>
     <string name="app_name">Mike\'s Disc Golf Tracker (Free)</string>
-    <string name="menu_new_game_lable">New Game</string>
-    <string name="menu_course_lable">Course Editor</string>
-    <string name="menu_player_lable">Player Editor</string>
-    <string name="menu_scorecard_lable">Scorecards</string>
     <string name="course_editor_new_course_label">New Course</string>
     <string name="create_new_course">Create New Course</string>
     <string name="course_name_display">Course Name: </string>
     <string name="create_new_player">Create New Player</string>
     <string name="action_settings">Delete All Entries</string>
-    <string name="banner_add_unit_id">ca-app-pub-8285085024937633</string>
     <string name="banner_test_add_unit_id">ca-app-pub-3940256099942544/6300978111</string>
 
 </resources>

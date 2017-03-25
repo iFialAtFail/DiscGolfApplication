@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:orientation="vertical"
-        android:id="@+id/playerEditorTopLayout"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/adViewPE">
         <RelativeLayout
@@ -46,7 +45,6 @@
                 android:layout_toLeftOf="@id/titleThumb2"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Edit Players"
-                android:id="@+id/tvEditPlayersLabel"
                 android:layout_centerVertical="true"
                 android:gravity="center"/>
         </RelativeLayout>

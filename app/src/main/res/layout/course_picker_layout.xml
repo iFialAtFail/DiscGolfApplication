@@ -30,7 +30,6 @@
                 android:layout_toLeftOf="@id/titleThumb2"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Please choose your course."
-                android:id="@+id/tvChooseCoursesLable"
                 android:layout_centerVertical="true"
                 android:gravity="center"/>
         </RelativeLayout>
@@ -39,7 +38,6 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="or"
-            android:id="@+id/textView22"
             android:layout_gravity="center_horizontal" />
 
         <Button

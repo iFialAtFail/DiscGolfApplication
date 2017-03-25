@@ -17,7 +17,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:id="@+id/parentLinearLayout"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/btnStartTheGame">
         <RelativeLayout
@@ -25,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center"
-            android:id="@+id/playerPickerSubHeader">
+            >
             <ImageView
                 android:layout_alignParentLeft="true"
                 android:layout_width="50dp"
@@ -45,7 +44,6 @@
                 android:layout_toLeftOf="@id/titleThumb2"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Please choose your players."
-                android:id="@+id/tvChoosePlayersLable"
                 android:layout_centerVertical="true"
                 android:gravity="center"/>
         </RelativeLayout>
@@ -54,14 +52,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="or"
-            android:id="@+id/textView22"
             android:layout_marginTop="5dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/create_new_player"
-            android:id="@+id/btnNewPlayerFromPicker"
             android:layout_gravity="center_horizontal"
             android:layout_margin="5dp"
             android:onClick="onNewPlayerClicked"/>

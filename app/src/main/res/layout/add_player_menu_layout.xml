@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="*Alpha-Numeric Text Only"
-            android:id="@+id/textView24" />
+            />
     </FrameLayout>
 
     <RelativeLayout

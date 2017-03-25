@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:id="@+id/courseEditorTopLayout"
         android:layout_above="@id/adViewCE">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,7 +46,6 @@
                 android:layout_toLeftOf="@id/titleThumb2"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Edit Courses"
-                android:id="@+id/tvEditCoursesLable"
                 android:layout_centerVertical="true"
                 android:gravity="center"/>
         </RelativeLayout>

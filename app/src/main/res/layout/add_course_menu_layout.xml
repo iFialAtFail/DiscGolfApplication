@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/course_name_display"
-            android:id="@+id/displayCourseName" />
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Number of holes"
-        android:id="@+id/textView21" />
+        />
 
     <RelativeLayout
         android:orientation="horizontal"

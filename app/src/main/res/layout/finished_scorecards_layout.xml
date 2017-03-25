@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:id="@+id/topPanel"
         android:layout_above="@id/adViewFinishedSC">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,7 +46,6 @@
                 android:layout_toLeftOf="@id/titleThumb2"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Score Card Game History"
-                android:id="@+id/tvScorecardGameHistory"
                 android:layout_centerVertical="true"
                 android:gravity="center"/>
         </RelativeLayout>

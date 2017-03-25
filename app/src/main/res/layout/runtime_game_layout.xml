@@ -34,7 +34,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/nameRelativeLayout"
                 android:layout_weight="3">
 
                 <TableLayout
@@ -66,7 +65,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/currentScoreLayout"
-                    android:id="@+id/parAndScoreDataView"
                     >
 
                     <com.manleysoftware.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -213,7 +211,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:text="Select Last Player"
-                        android:id="@+id/btnNextPlayer"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:enabled="true"
@@ -222,7 +219,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:text="Select Next Player"
-                        android:id="@+id/btnLastPlayer"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:enabled="true"
