@@ -85,21 +85,14 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         //region Setup View References
 
-		Button btnIncrementScore = (Button) findViewById(R.id.btnIncrementScore);
-		Button btnDecrementScore = (Button) findViewById(R.id.btnDecrementScore);
-		Button btnNextHole = (Button) findViewById(R.id.btnNextHole);
-		Button btnPreviousHole = (Button) findViewById(R.id.btnPreviousHole);
-
 		TextView titleCourseTextView = (TextView) findViewById(R.id.titleCourseTextView);
 
-		List<TableLayout> tableDiscGolf = new ArrayList<TableLayout>();
         scoreTable = (TableLayout) findViewById(R.id.scoreTable);
         nameTable = (TableLayout) findViewById(R.id.nameTable);
         dynamicHeaderTable = (TableLayout) findViewById(R.id.parTable);
         staticHeaderRowsTable = (TableLayout) findViewById(R.id.parCellTable);
         staticParCountTable = (TableLayout) findViewById(R.id.staticParCountTable);
         currentScoreTable = (TableLayout) findViewById(R.id.currentScoreTable);
-		LinearLayout currentScoreLayout = (LinearLayout) findViewById(R.id.currentScoreLayout);
 
         parHorizontalScrollView = (ObservableHorizontalScrollView) findViewById(R.id.parHorizontalScrollView);
         parHorizontalScrollView.setHorizontalScrollViewListener(this);
