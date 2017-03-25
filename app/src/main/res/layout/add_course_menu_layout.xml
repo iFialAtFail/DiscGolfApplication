@@ -56,8 +56,7 @@
             android:id="@+id/btnIncrementHoleCount"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/btnDecrementHoleCnt"
-            android:layout_toStartOf="@+id/btnDecrementHoleCnt"
-            android:onClick="OnIncrementHoleClick" />
+            android:layout_toStartOf="@+id/btnDecrementHoleCnt"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -66,8 +65,7 @@
             android:id="@+id/btnDecrementHoleCnt"
             android:layout_alignBottom="@+id/btnIncrementHoleCount"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:onClick="OnNextHoleClick" />
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
     <LinearLayout
