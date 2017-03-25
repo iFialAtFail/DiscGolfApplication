@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentTop="true">
-    <RelativeLayout
-        android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/playerPickerRelativeLayout"
-        android:layout_above="@+id/btnStartTheGame"
-        >
+        android:text="Start Game!"
+        android:id="@+id/btnStartTheGame"
+        android:onClick="onNewGameClicked"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
-    </RelativeLayout>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:id="@+id/parentLinearLayout"
         android:layout_alignParentTop="true"
-        android:layout_above="@id/playerPickerRelativeLayout"
-        >
-
+        android:layout_above="@+id/btnStartTheGame">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,27 +71,16 @@
             android:onClick="onNewPlayerClicked"/>
 
         <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/lvPlayerList"
-            android:layout_gravity="center_horizontal"
-            android:choiceMode="multipleChoice"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/btnNewPlayerFromPicker"
+            android:choiceMode="multipleChoice"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/playerPickerRelativeLayout"
             />
-
-    </RelativeLayout>
-
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Game!"
-        android:id="@+id/btnStartTheGame"
-        android:onClick="onNewGameClicked"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
-
+    </LinearLayout>
 
 </RelativeLayout>
