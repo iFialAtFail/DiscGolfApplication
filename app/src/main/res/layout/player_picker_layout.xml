@@ -55,8 +55,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="or"
             android:id="@+id/textView22"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/playerPickerSubHeader"
             android:layout_marginTop="5dp" />
 
         <Button
@@ -65,8 +63,6 @@
             android:text="@string/create_new_player"
             android:id="@+id/btnNewPlayerFromPicker"
             android:layout_gravity="center_horizontal"
-            android:layout_below="@+id/textView22"
-            android:layout_centerHorizontal="true"
             android:layout_margin="5dp"
             android:onClick="onNewPlayerClicked"/>
 

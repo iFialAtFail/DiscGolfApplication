@@ -56,7 +56,7 @@
 
             android:id="@+id/unfinishedScoreCardRelativeLayout"
             android:gravity="center"
-            android:layout_above="@+id/adViewUFSC">
+            >
 
 
         </RelativeLayout>

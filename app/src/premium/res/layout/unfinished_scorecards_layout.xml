@@ -55,8 +55,7 @@
             android:layout_height="wrap_content"
 
             android:id="@+id/unfinishedScoreCardRelativeLayout"
-            android:gravity="center"
-            android:layout_above="@+id/adViewUFSC">
+            android:gravity="center">
 
 
         </RelativeLayout>
