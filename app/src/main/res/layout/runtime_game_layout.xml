@@ -142,49 +142,6 @@
             android:layout_height="match_parent"
             android:layout_weight="2">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="75dp">
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="Last Hole"
-                    android:id="@+id/btnPreviousHole"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:enabled="true"
-                    android:onClick="OnPreviousHoleClick" />
-
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="Next Hole"
-                    android:id="@+id/btnNextHole"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:enabled="true"
-                    android:onClick="OnNextHoleClick" />
-
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="Score +1"
-                    android:id="@+id/btnIncrementScore"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:enabled="true"
-                    android:onClick="OnIncrementScoreClick" />
-
-                <Button
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="Score -1"
-                    android:id="@+id/btnDecrementScore"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:enabled="true"
-                    android:onClick="OnDecrementScoreClick" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -194,35 +151,109 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:layout_weight="1">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Score"
+                            android:layout_gravity="center_horizontal"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="+1"
+                                android:id="@+id/btnIncrementScore"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:enabled="true"
+                                android:onClick="OnIncrementScoreClick" />
+
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="-1"
+                                android:id="@+id/btnDecrementScore"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:enabled="true"
+                                android:onClick="OnDecrementScoreClick" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="Save/Finish \nGame"
-                        android:onClick="OnSaveFinnishGameClick"/>
+                        android:onClick="OnSaveFinnishGameClick"
+                        android:layout_weight="1"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1">
                     <Button
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:text="Select Last Player"
-                        android:layout_weight="1"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:text="\u21D1"
+                        android:textSize="40sp"
+                        android:layout_gravity="center"
                         android:clickable="true"
                         android:enabled="true"
-                        android:onClick="OnLastPlayerClick" />
+                        android:onClick="OnLastPlayerClick"
+                        android:textStyle="normal|bold"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <Button
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:text="\u21D0"
+                            android:textSize="40sp"
+                            android:textAlignment="center"
+                            android:id="@+id/btnPreviousHole"
+                            android:clickable="true"
+                            android:enabled="true"
+                            android:onClick="OnPreviousHoleClick"
+                            android:textStyle="normal|bold"/>
+
+                        <Button
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentEnd="true"
+                            android:text="\u21D2"
+                            android:textSize="40sp"
+                            android:id="@+id/btnNextHole"
+                            android:clickable="true"
+                            android:enabled="true"
+                            android:onClick="OnNextHoleClick"
+                            android:textStyle="normal|bold"/>
+                    </RelativeLayout>
                     <Button
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:text="Select Next Player"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:text="\u21D3"
+                        android:textAlignment="center"
+                        android:textSize="40sp"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
                         android:clickable="true"
                         android:enabled="true"
-                        android:onClick="OnNxtPlayerClick" />
+                        android:onClick="OnNxtPlayerClick"
+                        android:textStyle="normal|bold"/>
+
                 </LinearLayout>
 
 
