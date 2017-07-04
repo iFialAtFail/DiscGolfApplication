@@ -77,6 +77,9 @@ public class CourseParDataAdapter extends BaseAdapter {
         btnIncrementParValue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+				if (course.get(position) == 10){
+					return;
+				}
                 course.set(position,(course.get(position)+1));
                 notifyDataSetChanged();
             }

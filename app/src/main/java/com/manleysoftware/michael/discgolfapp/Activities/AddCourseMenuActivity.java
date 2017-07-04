@@ -31,6 +31,8 @@ public class AddCourseMenuActivity extends Activity {
     private static final int COURSE_EDITOR_INTENT = 2;
     private static final String COURSE_PICKER_KEY = "Course Picker Key";
     private static final int COURSE_PICKER_INTENT = 1;
+	private static final int maxHoleCount = 64;
+
     //endregion
 
     //region Private Fields
@@ -169,7 +171,10 @@ public class AddCourseMenuActivity extends Activity {
 
     private void incrementViewHoleCount() {
         int currentHole = Integer.parseInt(tvHoleCount.getText().toString());
-        currentHole++;
+        if (currentHole >= maxHoleCount){
+			return;
+		}
+		currentHole++;
         tvHoleCount.setText(String.valueOf(currentHole));
         holeParsList.add(3);
         adapter.notifyDataSetChanged();

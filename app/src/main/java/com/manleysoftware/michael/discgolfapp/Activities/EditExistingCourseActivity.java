@@ -33,6 +33,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 	private static final String COURSE_NAME = "Course Name";
 	private static final String COURSE_OBJECT = "Course Object";
 	private static final String COURSE_STORAGE = "Course Storage";
+	private static final int maxHoleCount = 64;
 
 	//endregion
 
@@ -169,6 +170,9 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 
 	private void incrementViewHoleCount() {
 		int currentHole = Integer.parseInt(tvHoleCount.getText().toString());
+		if (currentHole >= maxHoleCount){
+			return;
+		}
 		currentHole++;
 		tvHoleCount.setText(String.valueOf(currentHole));
 		holeList.add(3);

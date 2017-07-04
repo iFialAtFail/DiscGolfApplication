@@ -15,6 +15,8 @@ public class Player implements Serializable {
     private Course course = null;
     private int[] score;
 
+	private static final int maxScoreAllowable = 20;
+
     //endregion
 
     //region Constructors
@@ -90,7 +92,10 @@ public class Player implements Serializable {
         }
 
         if (currentHole >= 1 && currentHole <= 18) {
-            score[currentHole - 1]++;
+            if (score[currentHole - 1] <= maxScoreAllowable){
+				return;
+			}
+			score[currentHole - 1]++;
         }
 
     }
