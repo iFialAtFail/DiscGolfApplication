@@ -92,7 +92,7 @@ public class Player implements Serializable {
         }
 
         if (currentHole >= 1 && currentHole <= 18) {
-            if (score[currentHole - 1] <= maxScoreAllowable){
+            if (score[currentHole - 1] >= maxScoreAllowable){
 				return;
 			}
 			score[currentHole - 1]++;

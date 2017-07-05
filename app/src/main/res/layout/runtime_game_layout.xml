@@ -206,7 +206,7 @@
                     <Button
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:text="\u21D1"
+                        android:background="@drawable/uparrow"
                         android:textSize="40sp"
                         android:layout_gravity="center"
                         android:clickable="true"
@@ -220,7 +220,7 @@
                         <Button
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:text="\u21D0"
+                            android:background="@drawable/leftarrow"
                             android:textSize="40sp"
                             android:textAlignment="center"
                             android:id="@+id/btnPreviousHole"
@@ -233,7 +233,7 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_alignParentEnd="true"
-                            android:text="\u21D2"
+                            android:background="@drawable/rightarrow"
                             android:textSize="40sp"
                             android:id="@+id/btnNextHole"
                             android:clickable="true"
@@ -244,7 +244,7 @@
                     <Button
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:text="\u21D3"
+                        android:background="@drawable/downarrow"
                         android:textAlignment="center"
                         android:textSize="40sp"
                         android:layout_gravity="center"
