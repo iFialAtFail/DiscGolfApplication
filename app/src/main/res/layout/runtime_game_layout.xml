@@ -13,7 +13,9 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -163,10 +165,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Score"
+                            android:textSize="20sp"
                             android:layout_gravity="center_horizontal"/>
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
                             <Button
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -181,6 +184,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:text="-1"
+                                android:gravity="center"
                                 android:id="@+id/btnDecrementScore"
                                 android:layout_weight="1"
                                 android:clickable="true"
@@ -198,63 +202,76 @@
                         android:layout_weight="1"/>
                 </LinearLayout>
 
-                <LinearLayout
+                <com.manleysoftware.michael.discgolfapp.CustomViews.SquareLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_gravity="center"
                     android:layout_weight="1">
-                    <Button
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/uparrow"
-                        android:textSize="40sp"
-                        android:layout_gravity="center"
-                        android:clickable="true"
-                        android:enabled="true"
-                        android:onClick="OnLastPlayerClick"
-                        android:textStyle="normal|bold"/>
-                    <RelativeLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
-                        <Button
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:background="@drawable/leftarrow"
-                            android:textSize="40sp"
-                            android:textAlignment="center"
+                        <com.manleysoftware.michael.discgolfapp.CustomViews.SquareImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/uparrow"
+                            android:scaleType="centerCrop"
+                            android:layout_gravity="center"
+                            android:clickable="true"
+                            android:enabled="true"
+                            android:onClick="OnLastPlayerClick"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+                        <com.manleysoftware.michael.discgolfapp.CustomViews.SquareImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/leftarrow"
                             android:id="@+id/btnPreviousHole"
                             android:clickable="true"
                             android:enabled="true"
                             android:onClick="OnPreviousHoleClick"
-                            android:textStyle="normal|bold"/>
-
-                        <Button
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_alignParentEnd="true"
-                            android:background="@drawable/rightarrow"
-                            android:textSize="40sp"
+                            android:scaleType="centerCrop"/>
+                        <com.manleysoftware.michael.discgolfapp.CustomViews.SquareImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"/>
+                        <!-- Needed this empty element to ensure equally spaced view. -->
+                        <com.manleysoftware.michael.discgolfapp.CustomViews.SquareImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/rightarrow"
                             android:id="@+id/btnNextHole"
                             android:clickable="true"
                             android:enabled="true"
                             android:onClick="OnNextHoleClick"
-                            android:textStyle="normal|bold"/>
-                    </RelativeLayout>
-                    <Button
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/downarrow"
-                        android:textAlignment="center"
-                        android:textSize="40sp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:clickable="true"
-                        android:enabled="true"
-                        android:onClick="OnNxtPlayerClick"
-                        android:textStyle="normal|bold"/>
+                            android:scaleType="centerCrop"/>
+                    </LinearLayout>
 
-                </LinearLayout>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+                        <com.manleysoftware.michael.discgolfapp.CustomViews.SquareImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/downarrow"
+                            android:layout_gravity="top|center"
+                            android:clickable="true"
+                            android:enabled="true"
+                            android:onClick="OnNxtPlayerClick"
+                            android:scaleType="centerCrop"/>
+                    </FrameLayout>
+
+
+                </com.manleysoftware.michael.discgolfapp.CustomViews.SquareLinearLayout>
 
 
             </LinearLayout>
