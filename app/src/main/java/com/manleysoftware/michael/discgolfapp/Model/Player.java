@@ -81,6 +81,10 @@ public class Player implements Serializable {
         }
     }
 
+    public int getCurrentParDifference(int par){
+        return getCurrentTotal() - par;
+    }
+
     //endregion
 
     //region Public Methods
