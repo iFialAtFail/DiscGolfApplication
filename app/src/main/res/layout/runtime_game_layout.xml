@@ -19,12 +19,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Placeholder Text"
             android:textAlignment="center"
             android:textStyle="bold"
             android:textSize="30sp"
             android:id="@+id/titleCourseTextView"
             android:layout_marginBottom="15dp"/>
-
 
         <LinearLayout
             android:orientation="horizontal"
@@ -212,15 +212,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <com.manleysoftware.michael.discgolfapp.CustomViews.SquareImageView
+                            android:id="@+id/squareImageView"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:src="@drawable/uparrow"
-                            android:scaleType="centerCrop"
                             android:layout_gravity="center"
                             android:clickable="true"
                             android:enabled="true"
-                            android:onClick="OnLastPlayerClick"/>
+                            android:onClick="OnLastPlayerClick"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/uparrow"
+                            android:background="?attr/selectableItemBackgroundBorderless"/>
                     </FrameLayout>
 
                     <LinearLayout
@@ -233,6 +236,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/leftarrow"
+                            android:background="?attr/selectableItemBackgroundBorderless"
                             android:id="@+id/btnPreviousHole"
                             android:clickable="true"
                             android:enabled="true"
@@ -248,6 +252,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/rightarrow"
+                            android:background="?attr/selectableItemBackgroundBorderless"
                             android:id="@+id/btnNextHole"
                             android:clickable="true"
                             android:enabled="true"
@@ -263,6 +268,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/downarrow"
+                            android:background="?attr/selectableItemBackgroundBorderless"
                             android:layout_gravity="top|center"
                             android:clickable="true"
                             android:enabled="true"
