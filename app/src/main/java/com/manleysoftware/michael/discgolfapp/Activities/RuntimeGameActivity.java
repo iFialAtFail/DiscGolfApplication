@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.manleysoftware.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView;
 import com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView;
@@ -47,6 +48,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     //Variable to store the last red selected cell
     private TextView lastTVBackgroundChanged;
+
+    //Cache the scoreTotal TextViews
+    private TextView[] scoreTotalTextViews;
 
     //endregion
 
@@ -110,6 +114,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         scoreScrollView.setScrollViewListener(this);
         currentScoreSV = (ObservableScrollView) findViewById(R.id.currentScoreSV);
         currentScoreSV.setScrollViewListener(this);
+
+
         //endregion
 
 		//retrieve Player/Course data
@@ -131,11 +137,12 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
             scoreCard = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
         }
+        scoreTotalTextViews = new TextView[players.length];
 
         titleCourseTextView.setText(course.getName());
         generateTables(players, course.getHoleCount());
-
         updateSelectedCell();
+
 
     }
 
@@ -171,18 +178,19 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     public void OnIncrementScoreClick(View v){
 		gameStarted = true;
         players[scoreCard.getCurrentPlayerSelected()].IncrementCurrentScore(scoreCard.getCurrentHole());
-        generateScoreTable(players, course.getHoleCount());
-        setupCurrentScoreColumn(players);
+//        generateScoreTable(players, course.getHoleCount());
+//        setupCurrentScoreColumn(players);
 
+        updateScoreTable();
         updateSelectedCell();
     }
 
     public void OnDecrementScoreClick(View v){
 		gameStarted = true;
         scoreCard.getPlayerArray()[scoreCard.getCurrentPlayerSelected()].DecrementCurrentScore(scoreCard.getCurrentHole());
-        generateScoreTable(players, course.getHoleCount());
-        setupCurrentScoreColumn(players);
-
+//        generateScoreTable(players, course.getHoleCount());
+//        setupCurrentScoreColumn(players);
+        updateScoreTable();
         updateSelectedCell();
 
     }
@@ -301,6 +309,20 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         tv.getParent().requestChildFocus(tv,tv);
     }
 
+    private void updateScoreTable(){
+        //data model has been updated to reflect the current player and hole that just got incremented/decremented
+        //use that data to then get the approprite tv in the score and scoreTotal tv and update them
+
+        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
+        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
+
+        int score = players[scoreCard.getCurrentPlayerSelected()].getScore()[scoreCard.getCurrentHole()-1];
+        //Update the current box needing updated
+        tv.setText(score + "");
+        //Update scoreTotal
+        scoreTotalTextViews[scoreCard.getCurrentPlayerSelected()].setText(players[scoreCard.getCurrentPlayerSelected()].getCurrentParDifference(course.getParTotal()) + "");
+    }
+
     private Player[] toPlayerArray(ArrayList<Player> list){
         Player[] ret = new Player[list.size()];
         for(int i = 0;i < ret.length;i++)
@@ -341,7 +363,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= courseHoleCount; j++) {
-                TextView tv = setupTextViewInTable(players[i-1].getScore()[j-1] + "",applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape);
+                TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1] ), applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape);
                 row.addView(tv);
             }
             scoreTable.addView(row);
@@ -424,6 +446,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private void setupCurrentScoreColumn(Player[] players) {
 
+        int i = 0;
         currentScoreTable.removeAllViews();
 		for (Player player : players) {
 			LinearLayout _linearLayout = new LinearLayout(context);
@@ -432,8 +455,10 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 			TextView tv = setupTextViewInTable(player.getCurrentParDifference(course.getParTotal()) + "", TableRow.LayoutParams.WRAP_CONTENT, R.drawable.cell_shape);
 			tv.setSingleLine();
+            scoreTotalTextViews[i] = tv;
 			_linearLayout.addView(tv);
 			currentScoreTable.addView(_linearLayout);
+			i++;
 		}
 
     }
