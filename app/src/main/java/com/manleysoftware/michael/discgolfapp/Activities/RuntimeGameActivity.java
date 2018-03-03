@@ -123,8 +123,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             initPlayers(players);
             if (scoreCard == null) //If coming from new game path...
 				scoreCard = new ScoreCard(players, course);
-            titleCourseTextView.setText(course.getName());
-            generateTables(players, course.getHoleCount());
         }
 
         //If on recreation, pull out the saved state information and reset the object
@@ -132,17 +130,11 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         if (savedInstanceState != null) {
             players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
             scoreCard = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
-            titleCourseTextView.setText(course.getName());
-            generateTables(players, course.getHoleCount());
         }
 
-        //initially set block to color red
+        titleCourseTextView.setText(course.getName());
+        generateTables(players, course.getHoleCount());
 
-        //TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-        //TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-        //((GradientDrawable)tv.getBackground()).setColor(Color.RED);
-        //TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
-        //((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
         updateSelectedCell();
 
     }
@@ -155,7 +147,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         setupStaticHeaderRows();
 
         //Setup Static Header Par and Holes cells
-        String[] input = {"T", String.valueOf(course.getParTotal())};
+        String[] input = {"T", course.getParTotal()+ "" };
         setupStaticParCountTable(input);
 
         //Setup Par/Hole# Rows
@@ -182,72 +174,23 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         generateScoreTable(players, course.getHoleCount());
         setupCurrentScoreColumn(players);
 
-        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-
-        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-
-       ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
-
-        if (scoreCard.getCurrentHole()-2 < 0) {
-            TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
-            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
-        }
-        else {
-            TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole() - 2);
-            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
-        }
-
-
+        updateSelectedCell();
     }
+
     public void OnDecrementScoreClick(View v){
 		gameStarted = true;
         scoreCard.getPlayerArray()[scoreCard.getCurrentPlayerSelected()].DecrementCurrentScore(scoreCard.getCurrentHole());
         generateScoreTable(players, course.getHoleCount());
         setupCurrentScoreColumn(players);
 
-        decrementScoreColorHandler();
-
-
+        updateSelectedCell();
 
     }
 
-    private void decrementScoreColorHandler(){
-        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-
-        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
-
-        if (scoreCard.getCurrentHole()-2 < 0) {
-            TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
-            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
-        }
-        else {
-            TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole() - 2);
-            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
-        }
-    }
     public void OnNextHoleClick(View v){
         scoreCard.NextHole();
         updateSelectedCell();
     }
-
-    private void updateSelectedCell(){
-        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-
-        //Change last red color to white again.
-        if (lastTVBackgroundChanged != null) {
-            lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape);
-        }
-
-        //Reset reference to current background and change it to red.
-        lastTVBackgroundChanged = tv;
-        lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape_red);
-
-        //Set focus to current cell.
-        tv.getParent().requestChildFocus(tv,tv);
-    }
-
 
     public void OnPreviousHoleClick(View v){
         scoreCard.PreviousHole();
@@ -341,6 +284,23 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     }
 
+    private void updateSelectedCell(){
+        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
+        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
+
+        //Change last red color to white again.
+        if (lastTVBackgroundChanged != null) {
+            lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape);
+        }
+
+        //Reset reference to current background and change it to red.
+        lastTVBackgroundChanged = tv;
+        lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape_red);
+
+        //Set focus to current cell.
+        tv.getParent().requestChildFocus(tv,tv);
+    }
+
     private Player[] toPlayerArray(ArrayList<Player> list){
         Player[] ret = new Player[list.size()];
         for(int i = 0;i < ret.length;i++)
@@ -353,24 +313,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             player.StartGame(course);
         }
     }
-
-    private void makeSelectedCellRed(){
-        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
-        if (scoreCard.getCurrentHole()-2 < 0) {
-            TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
-            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
-        }
-        else {
-            TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole() - 2);
-            ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
-        }
-        tv.getParent().requestChildFocus(tv,tv); //focus to automate looking at the changing value
-
-
-    }
-
 
     private TextView setupTextViewInTable(String setText, int layoutWidthParam, int resourceID ){
         TextView tv = new TextView(context);
@@ -399,7 +341,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                     TableRow.LayoutParams.WRAP_CONTENT));
             // inner for loop
             for (int j = 1; j <= courseHoleCount; j++) {
-                TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1]),applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape);
+                TextView tv = setupTextViewInTable(players[i-1].getScore()[j-1] + "",applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape);
                 row.addView(tv);
             }
             scoreTable.addView(row);
