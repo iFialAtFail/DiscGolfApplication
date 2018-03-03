@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 	private ScoreCardStorage unFinishedCards;
     private Context context;
 	private Boolean gameStarted = false;
+
+    //Variable to store the last red selected cell
+    private TextView lastTVBackgroundChanged;
 
     //endregion
 
@@ -134,11 +138,12 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
         //initially set block to color red
 
-        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
-        TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
-        ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+        //TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
+        //TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
+        //((GradientDrawable)tv.getBackground()).setColor(Color.RED);
+        //TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
+        //((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
+        updateSelectedCell();
 
     }
 
@@ -223,42 +228,43 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
     public void OnNextHoleClick(View v){
         scoreCard.NextHole();
+        updateSelectedCell();
+    }
 
+    private void updateSelectedCell(){
         TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
         TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
-        TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-2);
-        ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
 
+        //Change last red color to white again.
+        if (lastTVBackgroundChanged != null) {
+            lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape);
+        }
+
+        //Reset reference to current background and change it to red.
+        lastTVBackgroundChanged = tv;
+        lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape_red);
+
+        //Set focus to current cell.
         tv.getParent().requestChildFocus(tv,tv);
     }
 
+
     public void OnPreviousHoleClick(View v){
         scoreCard.PreviousHole();
-
-        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-        ((GradientDrawable)tv.getBackground()).setColor(Color.RED);
-        TextView tv2 = (TextView) tr.getChildAt(scoreCard.getCurrentHole());
-        ((GradientDrawable)tv2.getBackground()).setColor(Color.WHITE);
-
-        tv.getParent().requestChildFocus(tv,tv);
-
+        updateSelectedCell();
     }
 
     public void OnLastPlayerClick(View view) {
         if (scoreCard.getCurrentPlayerSelected() > 0 ){
             scoreCard.LastPlayer();
-            generateTables(players,course.getHoleCount());
-            makeSelectedCellRed();
+            updateSelectedCell();
         }
     }
 
     public void OnNxtPlayerClick(View view) {
         if (scoreCard.getCurrentPlayerSelected() < players.length -1){
             scoreCard.NextPlayer();
-            generateTables(players,course.getHoleCount());
-            makeSelectedCellRed();
+            updateSelectedCell();
         }
     }
 
