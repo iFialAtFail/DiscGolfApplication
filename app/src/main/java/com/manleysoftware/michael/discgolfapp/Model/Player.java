@@ -95,7 +95,7 @@ public class Player implements Serializable {
             return;
         }
 
-        if (currentHole >= 1 && currentHole <= 18) {
+        if (currentHole >= 1 && currentHole <= course.getHoleCount()) {
             if (score[currentHole - 1] >= maxScoreAllowable){
 				return;
 			}
@@ -110,7 +110,7 @@ public class Player implements Serializable {
             return;
         }
 
-        if (currentHole >= 1 && currentHole <= 18) {
+        if (currentHole >= 1 && currentHole <= course.getHoleCount()) {
             if (score[currentHole - 1] > 1) {
                 score[currentHole - 1]--;
             }
