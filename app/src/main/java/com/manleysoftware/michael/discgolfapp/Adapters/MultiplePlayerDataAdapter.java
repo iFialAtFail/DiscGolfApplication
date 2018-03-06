@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,10 +17,14 @@ import java.util.List;
  * Created by Michael on 7/14/2016.
  */
 public class MultiplePlayerDataAdapter extends PlayerDataAdapter {
+
     private final Context context;
+    private boolean[] checkMarks;
+
     public MultiplePlayerDataAdapter(Context context, List<Player> playerStorage) {
         super(context, playerStorage);
         this.context = context;
+        checkMarks = new boolean[playerStorage.size()];
     }
 
     @Override
@@ -31,7 +36,7 @@ public class MultiplePlayerDataAdapter extends PlayerDataAdapter {
 
 
         ImageView thumbnail = (ImageView) rowView.findViewById(R.id.imgThumbnail);
-        TextView tvNameText = (TextView) rowView.findViewById(R.id.tvPlayerName);
+        CheckedTextView tvNameText = (CheckedTextView) rowView.findViewById(R.id.tvPlayerName);
 
         if (position % 2 == 0) {
             thumbnail.setImageResource(R.mipmap.buzz_blank_100x100);
@@ -40,7 +45,12 @@ public class MultiplePlayerDataAdapter extends PlayerDataAdapter {
             thumbnail.setImageResource(R.mipmap.roadrunnder_blank_100x100);
         }
 
+        tvNameText.setChecked(checkMarks[position]);
         tvNameText.setText(player.getName());
         return rowView;
+    }
+
+    public void SetCheckmarkLocation(boolean check, int arrayPosition){
+        checkMarks[arrayPosition] = check;
     }
 }

@@ -53,7 +53,7 @@ public class PlayerPickerActivity extends AppCompatActivity {
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
 		RelativeLayout playerPickerRelativeLayout = (RelativeLayout) findViewById(R.id.playerPickerRelativeLayout);
 
-        if (!setupPlayersListView()){
+        if (!setupPlayersListView()){ //if we don't have any players or deserialization didn't work...
 			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
 
 			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
@@ -70,7 +70,7 @@ public class PlayerPickerActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CheckedTextView check = (CheckedTextView)view.findViewById(R.id.tvPlayerName);
                 check.toggle();
-
+                adapter.SetCheckmarkLocation(check.isChecked(),position);
             }
         });
 
