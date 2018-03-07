@@ -50,9 +50,6 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 		setupPlayerStorage();
 		setupPlayerToEdit();
 
-		//disable auto keyboard
-		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
 		if (savedInstanceState == null){
 			etPlayerName.setText(playerToEdit.getName());
 		} else {

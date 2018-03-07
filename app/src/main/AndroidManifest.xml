@@ -22,11 +22,15 @@
             android:theme="@style/NoActionBarTheme"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.CourseEditorMenuActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.EditExistingCourseActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.EditExistingPlayerActivity"/>
+        <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.EditExistingPlayerActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.CoursePickerActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.AddCourseMenuActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.PlayerEditorActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.AddPlayerMenuActivity"/>
+        <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.AddPlayerMenuActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.PlayerPickerActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.FinishedScorecardsActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.UnfinishedScorecardsActivity"/>
