@@ -6,10 +6,10 @@
     <string name="create_new_player">Create New Player</string>
     <string name="action_settings">Delete All Entries</string>
     <string name="banner_test_add_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="admobID">ca-app-pub-8285085024937633~8121121504</string>
-    <string name="courseEditorBannerAd">ca-app-pub-8285085024937633/9796867502</string>
-    <string name="finishedSCBannerAd">ca-app-pub-8285085024937633/3750333904</string>
-    <string name="mainMenuBottomAd">ca-app-pub-8285085024937633/9597854708</string>
-    <string name="playerEditorBannerAd">ca-app-pub-8285085024937633/2273600700</string>
-    <string name="unfinishedSCBannerAd">ca-app-pub-8285085024937633/5227067101</string>
+    <string name="admobID">ca-app-pub-3693522296743727~1588497542</string>
+    <string name="courseEditorBannerAd">ca-app-pub-3693522296743727/8616940325</string>
+    <string name="finishedSCBannerAd">ca-app-pub-3693522296743727/3129697979</string>
+    <string name="mainMenuBottomAd">ca-app-pub-3693522296743727/3568681671</string>
+    <string name="playerEditorBannerAd">ca-app-pub-3693522296743727/8573596342</string>
+    <string name="unfinishedSCBannerAd">ca-app-pub-3693522296743727/1859960283</string>
 </resources>
