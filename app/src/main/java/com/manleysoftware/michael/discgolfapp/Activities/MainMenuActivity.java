@@ -37,13 +37,13 @@ public class MainMenuActivity extends AppCompatActivity {
 		context = this;
 
 		if (BuildConfig.FLAVOR.equals("free")) {
-			String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504";
-			MobileAds.initialize(context, ADMOB_APP_ID);
+			//String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504"; //Test admob app id
+			MobileAds.initialize(context, getResources().getString(R.string.admobID));
 
 			AdView adView = (AdView) findViewById(R.id.adView);
-			AdRequest request = new AdRequest.Builder()
-					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-					.build();
+			AdRequest request = new AdRequest.Builder().build();
+//					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//					.build();
 			if (adView != null)
 				adView.loadAd(request);
 		}

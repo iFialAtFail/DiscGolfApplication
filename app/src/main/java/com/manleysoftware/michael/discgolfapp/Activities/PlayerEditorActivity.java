@@ -46,9 +46,9 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
         if (BuildConfig.FLAVOR.equals("free")) {
             AdView adView = (AdView) findViewById(R.id.adViewPE);
-            AdRequest request = new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .build();
+            AdRequest request = new AdRequest.Builder().build();
+//                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+//                    .build();
 			if (adView != null)
 	            adView.loadAd(request);
         }
