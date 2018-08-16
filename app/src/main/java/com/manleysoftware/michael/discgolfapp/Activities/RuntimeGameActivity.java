@@ -59,7 +59,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 
     private final int LAYOUT_WIDTH = 50;
-    private final int TOTAL_COLUMN_WIDTH = 175;
+    private final int TOTAL_COLUMN_WIDTH = 60;
 
 	//endregion
 
@@ -395,10 +395,10 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             for(int i = 0; i<2; i++) {
                 TableRow tr = new TableRow(context); //<-- This time Linear Layout is acting like "Wrap content". TableRow works though.
                 TableRow.LayoutParams params =
-                        new TableRow.LayoutParams(TOTAL_COLUMN_WIDTH, TableRow.LayoutParams.MATCH_PARENT, 1f);
+                        new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
                 tr.setLayoutParams(params);
 
-                TextView tv = setupTextViewInTable(textArray[i], TableRow.LayoutParams.WRAP_CONTENT, R.drawable.cell_shape_light_green);
+                TextView tv = setupTextViewInTable(textArray[i], applyLayoutWidth(TOTAL_COLUMN_WIDTH), R.drawable.cell_shape_light_green);
                 if (i == 0){
                     tv.setTypeface(null, Typeface.BOLD);
                 }
@@ -450,10 +450,10 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         currentScoreTable.removeAllViews();
 		for (Player player : players) {
 			LinearLayout _linearLayout = new LinearLayout(context);
-			TableRow.LayoutParams params = new TableRow.LayoutParams(TOTAL_COLUMN_WIDTH, TableRow.LayoutParams.MATCH_PARENT, 1f);
+			TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
 			_linearLayout.setLayoutParams(params);
 
-			TextView tv = setupTextViewInTable(player.getCurrentParDifference(course.getParTotal()) + "", TableRow.LayoutParams.WRAP_CONTENT, R.drawable.cell_shape);
+			TextView tv = setupTextViewInTable(player.getCurrentParDifference(course.getParTotal()) + "", applyLayoutWidth(TOTAL_COLUMN_WIDTH), R.drawable.cell_shape);
 			tv.setSingleLine();
             scoreTotalTextViews[i] = tv;
 			_linearLayout.addView(tv);
