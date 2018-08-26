@@ -91,7 +91,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void OnNewGameClick(View v){
-        Intent intent = new Intent(this,CoursePickerActivity.class);
+        Intent intent = new Intent(this,NewGameActivity.class);
         startActivity(intent);
     }
 

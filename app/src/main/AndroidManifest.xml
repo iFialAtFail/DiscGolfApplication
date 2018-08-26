@@ -36,6 +36,7 @@
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.UnfinishedScorecardsActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.Activities.ScorecardOverview"
                   android:screenOrientation="landscape"/>
+        <activity android:name=".Activities.NewGameActivity" />
     </application>
 
 </manifest>
