@@ -1,6 +1,7 @@
 package com.manleysoftware.michael.discgolfapp.Model;
 
 import java.io.Serializable;
+import java.util.Collections;
 
 /**
  * Created by Michael on 5/22/2016.
@@ -56,7 +57,7 @@ public class Player implements Serializable {
         if (gameStarted) {
             return score;
         }
-        return null;
+        return new int[0];
     }
 
     public void setScore(int[] value){
@@ -184,6 +185,12 @@ public class Player implements Serializable {
 		return (o instanceof Player) && (((Player) o).getName().equals(this.getName()));
     }
 
+    public int getScoreForHole(int selectedHole) {
+        if (selectedHole > getScore().length){
+            throw new IndexOutOfBoundsException("Selected hole is out of bounds of players scores");
+        }
+        return getScore()[selectedHole];
+    }
 
 
     //endregion

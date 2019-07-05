@@ -7,19 +7,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.manleysoftware.michael.discgolfapp.CustomViews.ObservableHorizontalScrollView;
 import com.manleysoftware.michael.discgolfapp.CustomViews.ObservableScrollView;
@@ -28,21 +24,22 @@ import com.manleysoftware.michael.discgolfapp.Interfaces.IScrollViewListener;
 import com.manleysoftware.michael.discgolfapp.Model.Course;
 import com.manleysoftware.michael.discgolfapp.Model.Player;
 import com.manleysoftware.michael.discgolfapp.Model.ScoreCard;
-import com.manleysoftware.michael.discgolfapp.Model.ScoreCardStorage;
+import com.manleysoftware.michael.discgolfapp.Model.ScorecardRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RuntimeGameActivity extends AppCompatActivity implements IScrollViewListener, IHorizontalScrollViewListener {
+    public static final String RESTORE_PLAYERS_KEY = "RestorePlayers";
+    public static final String RESTORE_SCORE_CARD_KEY = "RestoreScoreCard";
 
     //region Private Model Variables
 
     private Course course;
     private Player[] players;
     private ScoreCard scoreCard;
-	private ScoreCardStorage finishedCards;
-	private ScoreCardStorage unFinishedCards;
+	private ScorecardRepository finishedCards;
+	private ScorecardRepository unFinishedCards;
     private Context context;
 	private Boolean gameStarted = false;
 
@@ -81,6 +78,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     private TableLayout currentScoreTable;
     private TableLayout staticParCountTable;
 
+    private TextView titleCourseTextView;
+
 	//endregion
 
     //region Android Product Lifecycle
@@ -92,9 +91,36 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         setContentView(R.layout.runtime_game_layout);
         context = this;
 
-        //region Setup View References
 
-		TextView titleCourseTextView = (TextView) findViewById(R.id.titleCourseTextView);
+        initializeViewElements();
+
+
+		//retrieve Player/Course/scorecard data
+        retrieveGameData();
+
+        initializeScorecardRepositorys();
+
+
+        //If first time go, create new stuff
+        if (savedInstanceState == null) {
+            initPlayers(players);
+            if (scoreCard == null) //If coming from new game path...
+				scoreCard = new ScoreCard(players, course);
+        }else {
+            players = (Player[])savedInstanceState.getSerializable(RESTORE_PLAYERS_KEY);
+            scoreCard = (ScoreCard) savedInstanceState.getSerializable(RESTORE_SCORE_CARD_KEY);
+        }
+
+        scoreTotalTextViews = new TextView[players.length];
+        titleCourseTextView.setText(course.getName());
+        generateTables(players, course.getHoleCount());
+        updateSelectedCell();
+
+
+    }
+
+    private void initializeViewElements() {
+        titleCourseTextView = (TextView) findViewById(R.id.titleCourseTextView);
 
         scoreTable = (TableLayout) findViewById(R.id.scoreTable);
         nameTable = (TableLayout) findViewById(R.id.nameTable);
@@ -114,36 +140,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         scoreScrollView.setScrollViewListener(this);
         currentScoreSV = (ObservableScrollView) findViewById(R.id.currentScoreSV);
         currentScoreSV.setScrollViewListener(this);
-
-
-        //endregion
-
-		//retrieve Player/Course data
-        //and setup references
-        retrieveGameData();
-
-
-
-        //If first time go, create new stuff
-        if (savedInstanceState == null) {
-            initPlayers(players);
-            if (scoreCard == null) //If coming from new game path...
-				scoreCard = new ScoreCard(players, course);
-        }
-
-        //If on recreation, pull out the saved state information and reset the object
-        //to the previous state.
-        if (savedInstanceState != null) {
-            players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
-            scoreCard = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
-        }
-        scoreTotalTextViews = new TextView[players.length];
-
-        titleCourseTextView.setText(course.getName());
-        generateTables(players, course.getHoleCount());
-        updateSelectedCell();
-
-
     }
 
     //endregion
@@ -160,11 +156,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         //Setup Par/Hole# Rows
         setupDynamicHeaderTable();
 
-        //Setup Final Current Score Column. Needs to be called on score changes.
         setupCurrentScoreColumn(players);
 
-
-        //Setup Name Column
         setupNameColumn(players);
 
         //Generate the score table. Used to refresh the view as well.
@@ -177,22 +170,31 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     public void OnIncrementScoreClick(View v){
 		gameStarted = true;
-        players[scoreCard.getCurrentPlayerSelected()].IncrementCurrentScore(scoreCard.getCurrentHole());
-//        generateScoreTable(players, course.getHoleCount());
-//        setupCurrentScoreColumn(players);
-
+        incrementCurrentPlayerScore();
         updateScoreTable();
         updateSelectedCell();
     }
 
+    private void incrementCurrentPlayerScore() {
+        Player currentPlayer = getCurrentPlayer();
+        currentPlayer.IncrementCurrentScore(scoreCard.getCurrentHole());
+    }
+
+    private Player getCurrentPlayer() {
+        return scoreCard.getCurrentPlayer();
+    }
+
     public void OnDecrementScoreClick(View v){
 		gameStarted = true;
-        scoreCard.getPlayerArray()[scoreCard.getCurrentPlayerSelected()].DecrementCurrentScore(scoreCard.getCurrentHole());
-//        generateScoreTable(players, course.getHoleCount());
-//        setupCurrentScoreColumn(players);
+        decrementCurrentPlayerScore();
         updateScoreTable();
         updateSelectedCell();
 
+    }
+
+    private void decrementCurrentPlayerScore() {
+        Player currentPlayer = getCurrentPlayer();
+        currentPlayer.DecrementCurrentScore(scoreCard.getCurrentHole());
     }
 
     public void OnNextHoleClick(View v){
@@ -206,17 +208,13 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     public void OnLastPlayerClick(View view) {
-        if (scoreCard.getCurrentPlayerSelected() > 0 ){
-            scoreCard.LastPlayer();
-            updateSelectedCell();
-        }
+        scoreCard.LastPlayer();
+        updateSelectedCell();
     }
 
     public void OnNxtPlayerClick(View view) {
-        if (scoreCard.getCurrentPlayerSelected() < players.length -1){
-            scoreCard.NextPlayer();
-            updateSelectedCell();
-        }
+        scoreCard.NextPlayer();
+        updateSelectedCell();
     }
 
 	public void OnSaveFinnishGameClick(View view) {
@@ -235,20 +233,14 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						finishedCards.AddScoreCardsToStorage(scoreCard);
-						finishedCards.SaveFinishedCardsToFile(context);
-						Intent intent = new Intent(context,MainMenuActivity.class);
-						startActivity(intent);
-					}
+                        saveGame();
+                    }
 				})
 				.setNeutralButton("Save", new DialogInterface.OnClickListener(){
 					@Override
 					public void onClick(DialogInterface dialog, int which){
-						unFinishedCards.AddScoreCardsToStorage(scoreCard);
-						unFinishedCards.SaveUnFinishedCardListToFile(context);
-						Intent intent = new Intent(context, MainMenuActivity.class);
-						startActivity(intent);
-					}
+                        saveGameAsResumable();
+                    }
 				});
 		AlertDialog art = aat.create();
 
@@ -256,74 +248,119 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
 	}
 
-    //endregion
+    private void saveGameAsResumable() {
+        unFinishedCards.AddScoreCardsToStorage(scoreCard);
+        unFinishedCards.SaveUnFinishedCardListToFile(context);
+        Intent intent = new Intent(context, MainMenuActivity.class);
+        startActivity(intent);
+    }
 
-    //region Private Helper Methods
+    private void saveGame() {
+        finishedCards.AddScoreCardsToStorage(scoreCard);
+        finishedCards.SaveFinishedCardsToFile(context);
+        Intent intent = new Intent(context, MainMenuActivity.class);
+        startActivity(intent);
+    }
 
     private void retrieveGameData(){
         Bundle b = this.getIntent().getExtras();
         if (b != null){
 
-			scoreCard = (ScoreCard) b.getSerializable("Unfinished Game");
+            scoreCard = loadFromBundle(b);
 
 			//If coming from resume game menu....
 			if (scoreCard != null){
-				players = scoreCard.getPlayerArray();
-				course = scoreCard.getCourse();
-			}
-
-			//else if coming from new game path.
-			else{
-				players = toPlayerArray((ArrayList<Player>) b.getSerializable("Players"));
-				course = (Course) b.getSerializable("Course");
-			}
-
+                loadDataFromScorecard();
+            } else {
+                loadDataFromNewGameBundle(b);
+            }
         }
+    }
 
-		unFinishedCards = ScoreCardStorage.LoadUnFinishedCardStorage(context);
-		if (unFinishedCards == null){
-			unFinishedCards = new ScoreCardStorage();
-		}
+    private void initializeScorecardRepositorys() {
+        initializeUnfinishedScorecardRepository();
+        initializeFinishedScorecardRepository();
+    }
 
-		finishedCards = ScoreCardStorage.LoadFinishedCardStorage(context);
-		if (finishedCards == null){
-			finishedCards = new ScoreCardStorage();
-		}
+    private void initializeFinishedScorecardRepository() {
+        finishedCards = ScorecardRepository.LoadFinishedCardStorage(context);
+        if (finishedCards == null){
+            finishedCards = new ScorecardRepository();
+        }
+    }
 
+    private void initializeUnfinishedScorecardRepository() {
+        unFinishedCards = ScorecardRepository.LoadUnFinishedCardStorage(context);
+        if (unFinishedCards == null){
+            unFinishedCards = new ScorecardRepository();
+        }
+    }
+
+    private void loadDataFromNewGameBundle(Bundle b) {
+        players = toPlayerArray((ArrayList<Player>) b.getSerializable("Players"));
+        course = (Course) b.getSerializable("Course");
+    }
+
+    private void loadDataFromScorecard() {
+        players = scoreCard.getPlayerArray();
+        course = scoreCard.getCourse();
+    }
+
+    private ScoreCard loadFromBundle(Bundle bundle) {
+        return (ScoreCard) bundle.getSerializable("Unfinished Game");
     }
 
     private void updateSelectedCell(){
-        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
+        TextView selectedCell = getSelectedCell();
+        if (selectedCell != lastTVBackgroundChanged){
+            resetLastSelectedCellToNormal();
+            updateSelectedCellToRed(selectedCell);
+            setFocusToCell(selectedCell);
+        }
+    }
 
-        //Change last red color to white again.
+    private TextView getSelectedCell(){
+        TableRow playerTableRow = (TableRow) scoreTable.getChildAt(scoreCard.getPlayerSelectedIndex());
+        return (TextView) playerTableRow.getChildAt(scoreCard.getCurrentHole()-1);
+
+    }
+
+    private void setFocusToCell(TextView tv) {
+        tv.getParent().requestChildFocus(tv,tv);
+    }
+
+    private void updateSelectedCellToRed(TextView tv) {
+        lastTVBackgroundChanged = tv;
+        lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape_red);
+    }
+
+    private void resetLastSelectedCellToNormal() {
         if (lastTVBackgroundChanged != null) {
             lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape);
         }
-
-        //Reset reference to current background and change it to red.
-        lastTVBackgroundChanged = tv;
-        lastTVBackgroundChanged.setBackgroundResource(R.drawable.cell_shape_red);
-
-        //Set focus to current cell.
-        tv.getParent().requestChildFocus(tv,tv);
     }
 
     private void updateScoreTable(){
         //data model has been updated to reflect the current player and hole that just got incremented/decremented
         //use that data to then get the approprite tv in the score and scoreTotal tv and update them
+        TextView selectedCell = getSelectedCell();
+        Player currentPlayer = getCurrentPlayer();
+        int score = currentPlayer.getScoreForHole(scoreCard.getCurrentHole() - 1);
+        selectedCell.setText(String.valueOf(score));
+        updateScoreTotalTextView();
+    }
 
-        TableRow tr = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
-        TextView tv = (TextView) tr.getChildAt(scoreCard.getCurrentHole()-1);
-
-        int score = players[scoreCard.getCurrentPlayerSelected()].getScore()[scoreCard.getCurrentHole()-1];
-        //Update the current box needing updated
-        tv.setText(score + "");
-        //Update scoreTotal
-        scoreTotalTextViews[scoreCard.getCurrentPlayerSelected()].setText(players[scoreCard.getCurrentPlayerSelected()].getCurrentParDifference(course.getParTotal()) + "");
+    private void updateScoreTotalTextView() {
+        TextView scoreTotalTextView = scoreTotalTextViews[scoreCard.getPlayerSelectedIndex()];
+        Player selectedPlayer = getCurrentPlayer();
+        int totalScoreRelativeToPar = selectedPlayer.getCurrentParDifference(course.getParTotal());
+        scoreTotalTextView.setText(String.valueOf(totalScoreRelativeToPar));
     }
 
     private Player[] toPlayerArray(ArrayList<Player> list){
+        if (list == null){
+            throw new IllegalArgumentException("Cannot convert null list to array!");
+        }
         Player[] ret = new Player[list.size()];
         for(int i = 0;i < ret.length;i++)
             ret[i] = list.get(i);
@@ -343,7 +380,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         tv.setBackgroundResource(resourceID);
         tv.setTextColor(Color.BLACK);
 		//tv.setTextAppearance(context,android.R.style.TextAppearance_Large);
-		int TEXT_SIZE = 20;
+		final int TEXT_SIZE = 20;
 		tv.setTextSize(TEXT_SIZE);
 		tv.setGravity(Gravity.CENTER);
         tv.setPadding(15, 5, 15, 5);
@@ -356,14 +393,17 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         scoreTable.removeAllViews();
 
         //Generate dynamic table.
-        for (int i = 1; i <= players.length; i++){
-            // outer for loop
+        for (int i = 0; i < players.length; i++){
             TableRow row = new TableRow(context);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-            // inner for loop
             for (int j = 1; j <= courseHoleCount; j++) {
-                TextView tv = setupTextViewInTable(String.valueOf(players[i-1].getScore()[j-1] ), applyLayoutWidth(LAYOUT_WIDTH), R.drawable.cell_shape);
+                String scoreForHole = String.valueOf(players[i].getScore()[j]);
+                TextView tv = setupTextViewInTable(
+                        scoreForHole,
+                        applyLayoutWidth(LAYOUT_WIDTH),
+                        R.drawable.cell_shape
+                );
                 row.addView(tv);
             }
             scoreTable.addView(row);
@@ -483,12 +523,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, getResources().getDisplayMetrics());
 	}
 
-    //endregion
-
-    //region Overridden Methods
-
-    //Custom Interface Override-- Handles the syncing of the scrollviews.
-
     //Handle Vertical Scrollview Sync
     @Override
     public void onScrollChanged(ObservableScrollView scrollView, int x, int y, int oldx, int oldy) {
@@ -505,7 +539,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     }
 
-    //Handle Horizontal Scrollview Sync
     @Override
     public void onScrollChanged(ObservableHorizontalScrollView horizontalScrollView, int x, int y, int oldx, int oldy) {
         if (horizontalScrollView == scoreHorizontalScrollView){
@@ -515,13 +548,12 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         }
     }
 
-    //Android Product Lifecycle overrides
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        players = (Player[])savedInstanceState.getSerializable("RestorePlayers");
-        scoreCard = (ScoreCard) savedInstanceState.getSerializable("RestoreScoreCard");
+        players = (Player[])savedInstanceState.getSerializable(RESTORE_PLAYERS_KEY);
+        scoreCard = (ScoreCard) savedInstanceState.getSerializable(RESTORE_SCORE_CARD_KEY);
     }
 
 
@@ -529,8 +561,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putSerializable("RestorePlayers",players);
-        outState.putSerializable("RestoreScoreCard", scoreCard);
+        outState.putSerializable(RESTORE_PLAYERS_KEY, players);
+        outState.putSerializable(RESTORE_SCORE_CARD_KEY, scoreCard);
 
     }
 
@@ -538,11 +570,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 	public void onBackPressed() {
 
 		if (gameStarted){ //If game started the normal way
-			unFinishedCards.AddScoreCardsToStorage(scoreCard);
-			unFinishedCards.SaveUnFinishedCardListToFile(context);
-			Intent intent = new Intent(context, MainMenuActivity.class);
-			startActivity(intent);
-		}
+            saveGameAsResumable();
+        }
 
 		else {
 			Bundle b = this.getIntent().getExtras();
@@ -550,19 +579,14 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 			//If Coming from resume game picker, save game and go to main menu on back press
 			//Fixes the bug of going back to an adapter that deleted that game on going to it.
 			if (b != null && b.getInt("From Resume Game Picker") == 2) {
-				unFinishedCards.AddScoreCardsToStorage(scoreCard);
-				unFinishedCards.SaveUnFinishedCardListToFile(context);
-				Intent intent = new Intent(context, MainMenuActivity.class);
-				startActivity(intent);
-			}
+                saveGameAsResumable();
+            }
 		}
 
 		super.onBackPressed();
 
 	}
-
-
-
+	
 	//endregion
 
 }

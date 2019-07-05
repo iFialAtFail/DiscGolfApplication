@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.manleysoftware.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.Model.ScoreCard;
-import com.manleysoftware.michael.discgolfapp.Model.ScoreCardStorage;
+import com.manleysoftware.michael.discgolfapp.Model.ScorecardRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -35,7 +35,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 	private Context context;
 	private ListView lvFinishedScoreCards;
 	private ScoreCardDataAdapter adapter;
-	private ScoreCardStorage scoreCardStorage;
+	private ScorecardRepository scorecardRepository;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,10 +130,10 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								//Make the change
-								scoreCardStorage.DeleteScoreCardFromStorage(position);
+								scorecardRepository.DeleteScoreCardFromStorage(position);
 
 								//Commit the change to persistant memory
-								scoreCardStorage.SaveFinishedCardsToFile(context);
+								scorecardRepository.SaveFinishedCardsToFile(context);
 
 								//Update View
 								adapter.notifyDataSetChanged();
@@ -151,8 +151,8 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private boolean setListViewAdapter(){
-		if (scoreCardStorage.getCount() >= 1){
-			adapter = new ScoreCardDataAdapter(context, scoreCardStorage);
+		if (scorecardRepository.getCount() >= 1){
+			adapter = new ScoreCardDataAdapter(context, scorecardRepository);
 			lvFinishedScoreCards.setAdapter(adapter);
 			return true;
 		}
@@ -160,9 +160,9 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private void initializeScoreCardStorage(){
-		scoreCardStorage = ScoreCardStorage.LoadFinishedCardStorage(context);
-		if (scoreCardStorage == null){
-			scoreCardStorage = new ScoreCardStorage();
+		scorecardRepository = ScorecardRepository.LoadFinishedCardStorage(context);
+		if (scorecardRepository == null){
+			scorecardRepository = new ScorecardRepository();
 		}
 	}
 
@@ -184,10 +184,10 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						//Make the change
-						scoreCardStorage.DeleteAll();
+						scorecardRepository.DeleteAll();
 
 						//Commit the change to persistant memory
-						scoreCardStorage.SaveFinishedCardsToFile(context);
+						scorecardRepository.SaveFinishedCardsToFile(context);
 
 						//Refresh adapter view
 						adapter.notifyDataSetChanged();

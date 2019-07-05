@@ -13,7 +13,7 @@ public class ScoreCard implements Serializable {
 
     private Player[] players;
     private int currentHole;
-    private int currentPlayerSelected;
+    private int playerSelectedIndex;
     private final Course course;
 	private String date;
 
@@ -55,8 +55,8 @@ public class ScoreCard implements Serializable {
         return players.length;
     }
 
-    public int getCurrentPlayerSelected(){
-        return currentPlayerSelected;
+    public int getPlayerSelectedIndex(){
+        return playerSelectedIndex;
     }
 
 	public String getCourseName(){
@@ -98,11 +98,21 @@ public class ScoreCard implements Serializable {
     }
 
     public void NextPlayer(){
-        currentPlayerSelected++;
+        playerSelectedIndex++;
+        if (playerSelectedIndex > players.length -1){
+            playerSelectedIndex = players.length - 1;
+        }
     }
 
     public void LastPlayer(){
-        currentPlayerSelected--;
+        playerSelectedIndex--;
+        if (playerSelectedIndex < 0){
+            playerSelectedIndex = 0;
+        }
+    }
+
+    public Player getCurrentPlayer(){
+        return players[playerSelectedIndex];
     }
 
     //endregion

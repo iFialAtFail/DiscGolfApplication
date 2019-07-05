@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.Model.ScoreCard;
-import com.manleysoftware.michael.discgolfapp.Model.ScoreCardStorage;
+import com.manleysoftware.michael.discgolfapp.Model.ScorecardRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.List;
@@ -22,9 +22,9 @@ public class ScoreCardDataAdapter extends BaseAdapter{
 	private final List<ScoreCard> scoreCardList;
 	private final Context context;
 
-	public ScoreCardDataAdapter(Context context, ScoreCardStorage scoreCardStorage){
+	public ScoreCardDataAdapter(Context context, ScorecardRepository scorecardRepository){
 		this.context = context;
-		this.scoreCardList = scoreCardStorage.getScoreCardStorage();
+		this.scoreCardList = scorecardRepository.getScoreCardStorage();
 	}
 
 	@Override

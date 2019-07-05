@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.manleysoftware.michael.discgolfapp.Adapters.ScoreCardDataAdapter;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.Model.ScoreCard;
-import com.manleysoftware.michael.discgolfapp.Model.ScoreCardStorage;
+import com.manleysoftware.michael.discgolfapp.Model.ScorecardRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -30,7 +30,7 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 
 	private Context context;
 	private ListView lvUnfinishedScoreCards;
-	private ScoreCardStorage scoreCardStorage;
+	private ScorecardRepository scorecardRepository;
 	private ScoreCardDataAdapter adapter;
 
 	@Override
@@ -81,8 +81,8 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 				b.putInt("From Resume Game Picker",2);
 				Intent intent = new Intent(context,RuntimeGameActivity.class);
 				intent.putExtras(b);
-				scoreCardStorage.DeleteScoreCardFromStorage(position);
-				scoreCardStorage.SaveUnFinishedCardListToFile(context);
+				scorecardRepository.DeleteScoreCardFromStorage(position);
+				scorecardRepository.SaveUnFinishedCardListToFile(context);
 				startActivity(intent);
 			}
 		});
@@ -108,10 +108,10 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 							public void onClick(DialogInterface dialog, int which) {
 
 								//Make the change
-								scoreCardStorage.DeleteScoreCardFromStorage(position);
+								scorecardRepository.DeleteScoreCardFromStorage(position);
 
 								//Commit the change to persistant memory
-								scoreCardStorage.SaveUnFinishedCardListToFile(context);
+								scorecardRepository.SaveUnFinishedCardListToFile(context);
 								adapter.notifyDataSetChanged();
 								if (adapter.getCount() == 0){
 									recreate();
@@ -127,8 +127,8 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private boolean onSetupListViewAdapter() {
-		if (scoreCardStorage.getCount() >= 1) {
-			adapter = new ScoreCardDataAdapter(context, scoreCardStorage);
+		if (scorecardRepository.getCount() >= 1) {
+			adapter = new ScoreCardDataAdapter(context, scorecardRepository);
 			lvUnfinishedScoreCards.setAdapter(adapter);
 			return true;
 		}
@@ -136,9 +136,9 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private void initializeScoreCardStorage(){
-		scoreCardStorage = ScoreCardStorage.LoadUnFinishedCardStorage(context);
-		if (scoreCardStorage == null){
-			scoreCardStorage = new ScoreCardStorage();
+		scorecardRepository = ScorecardRepository.LoadUnFinishedCardStorage(context);
+		if (scorecardRepository == null){
+			scorecardRepository = new ScorecardRepository();
 		}
 	}
 }
