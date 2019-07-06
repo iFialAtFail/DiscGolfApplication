@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.HorizontalScrollView;
 
-import com.manleysoftware.michael.discgolfapp.Interfaces.IHorizontalScrollViewListener;
+import com.manleysoftware.michael.discgolfapp.CustomViews.Interfaces.IHorizontalScrollViewListener;
 
 /**
  * Created by Michael on 8/11/2016.
