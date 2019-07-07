@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.manleysoftware.michael.discgolfapp.data.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.view.Adapters.CourseParDataAdapter;
 import com.manleysoftware.michael.discgolfapp.Model.Course;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
@@ -19,6 +20,8 @@ import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.manleysoftware.michael.discgolfapp.Model.Course.MAX_HOLE_COUNT;
 
 /**
  * Created by Michael on 6/23/2016.
@@ -31,7 +34,8 @@ public class AddCourseMenuActivity extends Activity {
     private static final int COURSE_EDITOR_INTENT = 2;
     private static final String COURSE_PICKER_KEY = "Course Picker Key";
     private static final int COURSE_PICKER_INTENT = 1;
-	private static final int maxHoleCount = 64;
+    public static final int DEFAULT_PAR_VALUE = 3;
+    public static final int MIN_PAR_VALUE = 1;
 
     //endregion
 
@@ -46,6 +50,10 @@ public class AddCourseMenuActivity extends Activity {
 	private TextView tvHoleCount;
     private TextView tvCourseName;
     private final Context context = this;
+    private Button btnSaveCourse;
+    private Button btnDecrementHoleCount;
+    private Button btnIncrementHoleCount;
+    private ListView lvHoleOptions;
 
     //endregion
 
@@ -56,29 +64,14 @@ public class AddCourseMenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_course_menu_layout);
 
-        //Initialize Refs
-		ListView lvHoleOptions = (ListView) findViewById(R.id.lvHoleOptions);
-		Button btnIncrementHoleCount = (Button) findViewById(R.id.btnIncrementHoleCount);
-		Button btnDecrementHoleCount = (Button) findViewById(R.id.btnDecrementHoleCnt);
-		Button btnSaveCourse = (Button) findViewById(R.id.btnSaveCourse);
-        tvHoleCount = (TextView) findViewById(R.id.tvHoleCount);
-        tvCourseName = (EditText) findViewById(R.id.tvCourseName);
-
-        //Initialize Business Objects
-        tryRestoreCourseStorageObj();
-
-        //disable the auto Keyboard
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        initializeViewReferences();
+        initializeCourseRepository();
+        disableAutoKeyboard();
 
         //if First time go
         if (savedInstanceState == null){
-            holeParsList = new ArrayList<Integer>();
-            setupArrayListToThrees();
-        }
-
-        //On Orientation change or needing to implement
-        //OnCreate again for any reason.
-        else{
+            initilizeEachHoleTo3();
+        } else {
             holeParsList = new ArrayList<>();
             holeParsList.addAll(toIntegerList(savedInstanceState.getIntArray(HOLE_ARRAY)));
             tvHoleCount.setText(savedInstanceState.getString(HOLE_COUNT));
@@ -106,20 +99,38 @@ public class AddCourseMenuActivity extends Activity {
             public void onClick(View v) {
                 String nameInput = tvCourseName.getText().toString();
 
-                if (!Course.isValidCoursename(nameInput) || !isUniqueObject(nameInput)){
-                    Toast toast = Toast.makeText(context, "Not a valid course name! Try again!",Toast.LENGTH_LONG);
-                    toast.show();
-                    return;
-                }
+                if (!validCourseName(nameInput)) return;
 
                 int[] populatedPars = toIntArray(adapter.getCourseList());
-
                 Course course = new Course(nameInput, populatedPars);
-                courseRepository.AddCourseToStorage(course);
-                courseRepository.SaveToFile(getApplicationContext());
+                courseRepository.addCourse(course);
+                courseRepository.Save(getApplicationContext());
                 goToPreviousActivityExplicitly();
             }
         });
+    }
+
+    private boolean validCourseName(String nameInput) {
+        if (!Course.isValidCoursename(nameInput) || !isUniqueObject(nameInput)){
+            Toast toast = Toast.makeText(context, "Not a valid course name! Try again!",Toast.LENGTH_LONG);
+            toast.show();
+            return false;
+        }
+        return true;
+    }
+
+    private void disableAutoKeyboard() {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
+    private void initializeViewReferences() {
+        //Initialize Refs
+        lvHoleOptions = (ListView) findViewById(R.id.lvHoleOptions);
+        btnIncrementHoleCount = (Button) findViewById(R.id.btnIncrementHoleCount);
+        btnDecrementHoleCount = (Button) findViewById(R.id.btnDecrementHoleCnt);
+        btnSaveCourse = (Button) findViewById(R.id.btnSaveCourse);
+        tvHoleCount = (TextView) findViewById(R.id.tvHoleCount);
+        tvCourseName = (EditText) findViewById(R.id.tvCourseName);
     }
 
     //endregion
@@ -139,8 +150,9 @@ public class AddCourseMenuActivity extends Activity {
 
     //region Private Helper Methods
 
+    //TODO: Move this to repository? maybe a provider class?
     private boolean isUniqueObject(String name){
-        for (Course c : courseRepository.getCourseStorage()){
+        for (Course c : courseRepository.getCourses()){
             if (c.getName().equals(name)){
                 return false;
             }
@@ -163,26 +175,28 @@ public class AddCourseMenuActivity extends Activity {
         return ret;
     }
 
-    private void setupArrayListToThrees(){
-        for(int i = 0; i < Integer.parseInt(tvHoleCount.getText().toString()); i++){
-            holeParsList.add(3);
+    private void initilizeEachHoleTo3(){
+        holeParsList = new ArrayList<>();
+        int numberOfHoles = Integer.parseInt(tvHoleCount.getText().toString());
+        for(int i = 0; i < numberOfHoles; i++){
+            holeParsList.add(DEFAULT_PAR_VALUE);
         }
     }
 
     private void incrementViewHoleCount() {
         int currentHole = Integer.parseInt(tvHoleCount.getText().toString());
-        if (currentHole >= maxHoleCount){
+        if (currentHole >= MAX_HOLE_COUNT){
 			return;
 		}
 		currentHole++;
         tvHoleCount.setText(String.valueOf(currentHole));
-        holeParsList.add(3);
+        holeParsList.add(DEFAULT_PAR_VALUE);
         adapter.notifyDataSetChanged();
     }
 
     private void decrementViewHoleCount() {
         int currentHole = Integer.parseInt(tvHoleCount.getText().toString());
-        if(currentHole > 1) {
+        if(currentHole > MIN_PAR_VALUE) {
             currentHole--;
             tvHoleCount.setText(String.valueOf(currentHole));
             holeParsList.remove(currentHole);
@@ -190,10 +204,9 @@ public class AddCourseMenuActivity extends Activity {
         }
     }
 
-    private void tryRestoreCourseStorageObj() {
-        Bundle b = this.getIntent().getExtras();
-        if (b != null){
-            courseRepository = (CourseRepository) b.getSerializable("CourseRepository");
+    private void initializeCourseRepository() {
+        if (courseRepository == null){
+            courseRepository = new CourseFileRepository(context);
         }
     }
 

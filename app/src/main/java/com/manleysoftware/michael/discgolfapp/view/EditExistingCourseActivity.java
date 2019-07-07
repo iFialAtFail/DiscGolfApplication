@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.manleysoftware.michael.discgolfapp.data.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.view.Adapters.CourseParDataAdapter;
 import com.manleysoftware.michael.discgolfapp.Model.Course;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
@@ -20,6 +21,8 @@ import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.manleysoftware.michael.discgolfapp.Model.Course.MAX_HOLE_COUNT;
 
 /**
  * Created by Michael on 8/28/2016.
@@ -33,7 +36,6 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 	private static final String COURSE_NAME = "Course Name";
 	private static final String COURSE_OBJECT = "Course Object";
 	private static final String COURSE_STORAGE = "Course Storage";
-	private static final int maxHoleCount = 64;
 
 	//endregion
 
@@ -72,7 +74,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		if (savedInstanceState == null){
 
 			//Setup course storage then get coure from it.
-			tryRestoreCourseStorageObj();
+			initializeCourseRepository();
 			setupCourseFromPreviousActivity();
 			holeList = toIntegerList(courseToEdit.getParArray());
 			tvHoleCount.setText(String.valueOf(courseToEdit.getHoleCount()));
@@ -124,7 +126,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 				courseToEdit.setName(nameInput);
 				courseToEdit.setParArray(populatedPars);
 
-				courseRepository.SaveToFile(getApplicationContext());
+				courseRepository.Save(getApplicationContext());
 
 				Intent intent = new Intent(getApplicationContext(),CourseEditorMenuActivity.class);
 				startActivity(intent);
@@ -142,7 +144,6 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		outState.putSerializable(COURSE_STORAGE, courseRepository);
 		outState.putSerializable(COURSE_OBJECT, courseToEdit);
 		outState.putIntArray(HOLE_ARRAY, toIntArray(holeList));
 		outState.putString(HOLE_COUNT, tvHoleCount.getText().toString());
@@ -170,7 +171,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 
 	private void incrementViewHoleCount() {
 		int currentHole = Integer.parseInt(tvHoleCount.getText().toString());
-		if (currentHole >= maxHoleCount){
+		if (currentHole >= MAX_HOLE_COUNT){
 			return;
 		}
 		currentHole++;
@@ -189,11 +190,8 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		}
 	}
 
-	private void tryRestoreCourseStorageObj() {
-		Bundle b = this.getIntent().getExtras();
-		if (b != null){
-			courseRepository = (CourseRepository) b.getSerializable("CourseRepository");
-		}
+	private void initializeCourseRepository() {
+		courseRepository = new CourseFileRepository(context);
 	}
 
 	private void setupCourseFromPreviousActivity() {
@@ -203,7 +201,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		}
 
 		if (courseRepository != null) {
-			courseToEdit = courseRepository.getCourseStorage().get(b.getInt("Position"));
+			courseToEdit = courseRepository.getCourses().get(b.getInt("Position"));
 		}
 	}
 

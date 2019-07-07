@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.manleysoftware.michael.discgolfapp.Model.Course;
+import com.manleysoftware.michael.discgolfapp.data.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.view.Adapters.CourseDataAdapter;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
@@ -50,26 +52,19 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
         }
 
 
-        setupCourseStorage();
+        initializeCourseRepository();
 
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
 
         //Used to add a view if the listview is not there.
 		RelativeLayout courseEditorRelativeLayout = (RelativeLayout) findViewById(R.id.courseEditorRelativeLayout);
 
-        if (!setupCourseListView()){//If nothing to populate adapter and listview fails to be created
-			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
 
-			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
-			Bitmap bm5 = BitmapFactory
-					.decodeResource(context.getResources(), R.drawable.roadrunner_500x500);
-			backgroundImage.setImageBitmap(bm5);
-
-			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
-			tvNoListViewMessage.setText("Oops! No courses here!\nPlease add a course.");
-			courseEditorRelativeLayout.addView(messageLayout);
-
-		}
+        if (!isCoursesToDisplay()){//If nothing to populate adapter and listview fails to be created
+            changeLayoutToNoCoursesAlternative(courseEditorRelativeLayout);
+        } else{
+            setupCourseDataAdapter();
+        }
 
         lvCourseList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -92,10 +87,11 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
 
                                 //Make the change
-                                courseRepository.DeleteCourseFromStorage(position);
+                                Course toDelete = (Course) adapter.getItem(position);
+                                courseRepository.removeCourse(toDelete);
 
                                 //Commit the change to persistant memory
-                                courseRepository.SaveToFile(context);
+                                courseRepository.Save(context);
                                 adapter.notifyDataSetChanged();
 
                                 //If listview is empty, recreate to show disc/empty view.
@@ -116,7 +112,6 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Bundle b = new Bundle();
 				b.putInt("Position", position);
-				b.putSerializable("CourseRepository", courseRepository);
 				Intent intent = new Intent(context, EditExistingCourseActivity.class);
 				intent.putExtras(b);
 				startActivity(intent);
@@ -130,7 +125,6 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
                 //Bundle up object to pass over
                 Bundle extras = new Bundle();
-                extras.putSerializable("CourseRepository", courseRepository);
                 extras.putInt(COURSE_EDITOR_KEY, COURSE_EDITOR_INTENT);
 
                 //Create intent and add bundle to it.
@@ -142,9 +136,22 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
         });
     }
 
+    private void changeLayoutToNoCoursesAlternative(RelativeLayout courseEditorRelativeLayout) {
+        View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+
+        ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+        Bitmap bm5 = BitmapFactory
+                .decodeResource(context.getResources(), R.drawable.roadrunner_500x500);
+        backgroundImage.setImageBitmap(bm5);
+
+        TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+        tvNoListViewMessage.setText("Oops! No courses here!\nPlease add a course.");
+        courseEditorRelativeLayout.addView(messageLayout);
+    }
+
     @Override
     protected void onDestroy(){
-        courseRepository.SaveToFile(context);
+        courseRepository.Save(context);
         super.onDestroy();
     }
 
@@ -157,19 +164,16 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
 
 
-    private boolean setupCourseListView(){
-        if (courseRepository != null && courseRepository.getStoredCoursesCount() > 0){
-            adapter = new CourseDataAdapter(context, courseRepository.getCourseStorage());
-            lvCourseList.setAdapter(adapter);
-			return true;
-        }
-		return false;
+    private boolean isCoursesToDisplay(){
+        return courseRepository != null && courseRepository.getCourses().size() > 0;
     }
 
-    private void setupCourseStorage() {
-        courseRepository = CourseRepository.LoadFromFile(context);
-        if (courseRepository == null){
-            courseRepository = new CourseRepository();
-        }
+    private void setupCourseDataAdapter() {
+        adapter = new CourseDataAdapter(context, courseRepository.getCourses());
+        lvCourseList.setAdapter(adapter);
+    }
+
+    private void initializeCourseRepository() {
+        courseRepository = new CourseFileRepository(context);
     }
 }

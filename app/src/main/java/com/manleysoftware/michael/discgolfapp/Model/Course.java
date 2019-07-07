@@ -5,7 +5,9 @@ import java.io.Serializable;
 /**
  * Created by Michael on 5/21/2016.
  */
-public class Course implements Serializable{
+public class Course implements Serializable {
+
+    public static final int MAX_HOLE_COUNT = 64;
 
     //region private fields
     private int[] holes;

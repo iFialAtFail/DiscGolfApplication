@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.manleysoftware.michael.discgolfapp.data.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.view.Adapters.CourseDataAdapter;
 import com.manleysoftware.michael.discgolfapp.Model.Course;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
@@ -37,7 +38,7 @@ public class CoursePickerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_picker_layout);
-        setupCourseStorage();
+        initializeCourseRepository();
 
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
 		RelativeLayout coursePickerRelativeLayout = (RelativeLayout) findViewById(R.id.coursePickerRelativeLayout);
@@ -87,10 +88,11 @@ public class CoursePickerActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //Make the change
-                                courseRepository.DeleteCourseFromStorage(position);
+                                Course courseToDelete = (Course)adapter.getItem(position);
+                                courseRepository.removeCourse(courseToDelete);
 
                                 //Commit the change to persistant memory
-                                courseRepository.SaveToFile(context);
+                                courseRepository.Save(context);
                                 adapter.notifyDataSetChanged();
 								if (adapter.getCount()== 0){
 									recreate();
@@ -110,7 +112,6 @@ public class CoursePickerActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), AddCourseMenuActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(COURSE_PICKER_KEY,COURSE_PICKER_INTENT);
-                bundle.putSerializable("CourseRepository", courseRepository);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -126,18 +127,15 @@ public class CoursePickerActivity extends AppCompatActivity {
     }
 
     private boolean setupCourseListView(){
-        if (courseRepository != null && courseRepository.getStoredCoursesCount() > 0){
-            adapter = new CourseDataAdapter(context, courseRepository.getCourseStorage());
+        if (courseRepository != null && courseRepository.getCourses().size() > 0){
+            adapter = new CourseDataAdapter(context, courseRepository.getCourses());
             lvCourseList.setAdapter(adapter);
 			return true;
         }
 		return false;
     }
 
-    private void setupCourseStorage() {
-        courseRepository = CourseRepository.LoadFromFile(context);
-        if (courseRepository == null){
-            courseRepository = new CourseRepository();
-        }
+    private void initializeCourseRepository() {
+        courseRepository = new CourseFileRepository(context);
     }
 }
