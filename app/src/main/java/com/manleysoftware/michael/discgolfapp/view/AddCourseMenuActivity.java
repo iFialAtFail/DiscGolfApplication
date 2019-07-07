@@ -35,7 +35,7 @@ public class AddCourseMenuActivity extends Activity {
     private static final String COURSE_PICKER_KEY = "Course Picker Key";
     private static final int COURSE_PICKER_INTENT = 1;
     public static final int DEFAULT_PAR_VALUE = 3;
-    public static final int MIN_PAR_VALUE = 1;
+    public static final int MIN_HOLE_COUNT = 1;
 
     //endregion
 
@@ -90,7 +90,7 @@ public class AddCourseMenuActivity extends Activity {
         btnDecrementHoleCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                decrementViewHoleCount();
+                decrementHoleCount();
             }
         });
 
@@ -194,12 +194,12 @@ public class AddCourseMenuActivity extends Activity {
         adapter.notifyDataSetChanged();
     }
 
-    private void decrementViewHoleCount() {
-        int currentHole = Integer.parseInt(tvHoleCount.getText().toString());
-        if(currentHole > MIN_PAR_VALUE) {
-            currentHole--;
-            tvHoleCount.setText(String.valueOf(currentHole));
-            holeParsList.remove(currentHole);
+    private void decrementHoleCount() {
+        int currentHoleCount = Integer.parseInt(tvHoleCount.getText().toString());
+        if(currentHoleCount > MIN_HOLE_COUNT) {
+            currentHoleCount--;
+            tvHoleCount.setText(String.valueOf(currentHoleCount));
+            holeParsList.remove(currentHoleCount);
             adapter.notifyDataSetChanged();
         }
     }

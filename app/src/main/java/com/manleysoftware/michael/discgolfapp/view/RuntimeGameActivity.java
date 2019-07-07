@@ -397,7 +397,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             TableRow row = new TableRow(context);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
-            for (int j = 1; j <= courseHoleCount; j++) {
+            for (int j = 0; j < courseHoleCount; j++) {
                 String scoreForHole = String.valueOf(players[i].getScore()[j]);
                 TextView tv = setupTextViewInTable(
                         scoreForHole,

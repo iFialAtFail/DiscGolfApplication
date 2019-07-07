@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Michael on 6/27/2016.
  */
-public class CourseFileRepository implements CourseRepository {
+public class CourseFileRepository implements CourseRepository, Serializable {
 
     //region Private Fields
 
@@ -68,10 +68,10 @@ public class CourseFileRepository implements CourseRepository {
     private boolean isUniqueCourse(Course course) {
         for (Course c : courses){
             if (course.getName().equals(c.getName())){
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
