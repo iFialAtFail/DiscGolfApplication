@@ -150,8 +150,10 @@ public class Player implements Serializable {
             }
             else { return false; }
         }
+
         return true;
     }
+
 
     private void initializeScore(){
         if (course != null) {

@@ -101,7 +101,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void OnEditPlayersClick(View v){
-        Intent intent = new Intent(context,PlayerEditorActivity.class);
+        Intent intent = new Intent(context, PlayerListActivity.class);
         startActivity(intent);
     }
     private void OnScorecardsClick(View v){

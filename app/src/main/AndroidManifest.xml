@@ -27,11 +27,11 @@
             />
         <activity android:name="com.manleysoftware.michael.discgolfapp.view.CoursePickerActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.view.AddCourseMenuActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.PlayerEditorActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.AddPlayerMenuActivity"
+        <activity android:name="com.manleysoftware.michael.discgolfapp.view.PlayerListActivity"/>
+        <activity android:name="com.manleysoftware.michael.discgolfapp.view.PlayerEditorActivity"
             android:windowSoftInputMode="adjustResize"
             />
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.PlayerPickerActivity"/>
+        <activity android:name="com.manleysoftware.michael.discgolfapp.view.RoundPlayerPickerActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.view.FinishedScorecardsActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.view.UnfinishedScorecardsActivity"/>
         <activity android:name="com.manleysoftware.michael.discgolfapp.view.ScorecardOverview"

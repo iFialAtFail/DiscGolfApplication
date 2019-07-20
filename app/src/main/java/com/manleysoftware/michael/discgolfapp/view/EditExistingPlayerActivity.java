@@ -10,8 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.manleysoftware.michael.discgolfapp.Model.Player;
-import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
+import com.manleysoftware.michael.discgolfapp.data.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
+import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
 
 /**
  * Created by Michael on 8/30/2016.
@@ -59,8 +60,8 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				playerToEdit.setName(etPlayerName.getText().toString());
-				playerRepository.SaveToFile(context);
-				Intent intent = new Intent(context,PlayerEditorActivity.class);
+				playerRepository.Save(context);
+				Intent intent = new Intent(context, PlayerListActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -86,17 +87,14 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 
 	//region Private Helper Methods
 	private void setupPlayerStorage(){
-		Bundle b = this.getIntent().getExtras();
-		if (b != null && b.getSerializable("PlayerRepository") instanceof PlayerRepository){
-			playerRepository = (PlayerRepository) b.getSerializable("PlayerRepository");
-		}
+		playerRepository = new PlayerFileRepository(context);
 	}
 
 	private void setupPlayerToEdit(){
 		Bundle b = this.getIntent().getExtras();
 		if (b != null){
 			int position = b.getInt("Position");
-			playerToEdit = playerRepository.getPlayerStorageListArray().get(position);
+			playerToEdit = playerRepository.getPlayers().get(position);
 		}
 	}
 

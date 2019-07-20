@@ -18,10 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.manleysoftware.michael.discgolfapp.Application.CourseNotFoundException;
 import com.manleysoftware.michael.discgolfapp.view.Adapters.MultiplePlayerDataAdapter;
 import com.manleysoftware.michael.discgolfapp.Model.Course;
 import com.manleysoftware.michael.discgolfapp.Model.Player;
-import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
+import com.manleysoftware.michael.discgolfapp.data.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.ArrayList;
@@ -29,15 +30,14 @@ import java.util.ArrayList;
 /**
  * Created by Michael on 7/10/2016.
  */
-public class PlayerPickerActivity extends AppCompatActivity {
+public class RoundPlayerPickerActivity extends AppCompatActivity {
 
-    private static final int PLAYER_PICKER_INTENT = 3;
+    public static final int PLAYER_PICKER_INTENT = 3;
 
     private MultiplePlayerDataAdapter adapter;
-    private PlayerRepository playerRepository;
+    private PlayerFileRepository playerRepository;
     private final Context context = this;
     private ListView lvPlayerList;
-
 
 	private Course selectedCourse;
 
@@ -47,8 +47,8 @@ public class PlayerPickerActivity extends AppCompatActivity {
         setContentView(R.layout.player_picker_layout);
 
 
-        setupPlayerStorage();
-        tryCourseRetrieval();
+        initializePlayerStorage();
+        getSelectedCourse();
 
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
 		RelativeLayout playerPickerRelativeLayout = (RelativeLayout) findViewById(R.id.playerPickerRelativeLayout);
@@ -96,10 +96,11 @@ public class PlayerPickerActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //Make the change
-                                playerRepository.DeletePlayerFromStorage(position);
+                                Player playerToDelete = (Player)adapter.getItem(position);
+                                playerRepository.removePlayer(playerToDelete);
 
                                 //Commit the change to persistant memory
-                                playerRepository.SaveToFile(context);
+                                playerRepository.Save(context);
 								adapter.notifyDataSetChanged();
 								if (adapter.getCount() == 0){
 									recreate();
@@ -122,7 +123,7 @@ public class PlayerPickerActivity extends AppCompatActivity {
 
         SparseBooleanArray sparseBooleanArray = lvPlayerList.getCheckedItemPositions();
 
-        for (int i = 0; i < playerRepository.getStoredPlayersCount(); i++){
+        for (int i = 0; i < playerRepository.getPlayers().size(); i++){
             if (sparseBooleanArray.get(i)){
                 playersPlaying.add((Player)lvPlayerList.getItemAtPosition(i));
             }
@@ -143,11 +144,10 @@ public class PlayerPickerActivity extends AppCompatActivity {
     }
 
     public void onNewPlayerClicked(View v){
-        Intent intent = new Intent(getApplicationContext(), AddPlayerMenuActivity.class);
+        Intent intent = new Intent(getApplicationContext(), PlayerEditorActivity.class);
         Bundle bundle = new Bundle();
 
         bundle.putInt("PlayerKey",PLAYER_PICKER_INTENT);
-        bundle.putSerializable("PlayerRepository", playerRepository);
         bundle.putSerializable("Course", selectedCourse);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -158,29 +158,28 @@ public class PlayerPickerActivity extends AppCompatActivity {
     //region Private Helper Methods
 
     private boolean setupPlayersListView(){
-        if (playerRepository != null && playerRepository.getStoredPlayersCount() > 0){
+        if (playerRepository != null && playerRepository.getPlayers().size() > 0){
             lvPlayerList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-            adapter = new MultiplePlayerDataAdapter(context, playerRepository.getPlayerStorageListArray());
+            adapter = new MultiplePlayerDataAdapter(context, playerRepository.getPlayers());
             lvPlayerList.setAdapter(adapter);
 			return true;
         }
 		return false;
     }
 
-    private void setupPlayerStorage() {
-        playerRepository = PlayerRepository.LoadPlayerStorage(context);
-        if (playerRepository == null){
-            playerRepository = new PlayerRepository();
-        }
+    private void initializePlayerStorage() {
+        playerRepository = new PlayerFileRepository(context);
     }
 
 
 
 
-    private void tryCourseRetrieval(){
+    private void getSelectedCourse(){
         Bundle b = this.getIntent().getExtras();
         if (b != null){
             selectedCourse = (Course)b.getSerializable("Course");
+        } else{
+            throw new CourseNotFoundException();
         }
     }
 

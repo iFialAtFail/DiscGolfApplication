@@ -63,7 +63,7 @@ public class CoursePickerActivity extends AppCompatActivity {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Course",course);
-                Intent intent = new Intent(getApplicationContext(),PlayerPickerActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RoundPlayerPickerActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
