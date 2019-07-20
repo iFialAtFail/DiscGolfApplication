@@ -2,7 +2,7 @@ package com.manleysoftware.michael.discgolfapp.data;
 
 import android.content.Context;
 
-import com.manleysoftware.michael.discgolfapp.Model.Player;
+import com.manleysoftware.michael.discgolfapp.data.Model.Player;
 
 import java.util.List;
 

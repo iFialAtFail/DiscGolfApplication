@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MenuTheme">
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.MainMenuActivity"
+        <activity android:name=".ui.main.MainMenuActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
@@ -18,23 +18,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.RuntimeGameActivity"
+        <activity android:name=".ui.main.RuntimeGameActivity"
             android:theme="@style/NoActionBarTheme"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.CourseEditorMenuActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.EditExistingCourseActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.EditExistingPlayerActivity"
+        <activity android:name=".ui.view.CourseEditorMenuActivity"/>
+        <activity android:name=".ui.view.EditExistingCourseActivity"/>
+        <activity android:name=".ui.player.EditExistingPlayerActivity"
             android:windowSoftInputMode="adjustResize"
             />
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.CoursePickerActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.AddCourseMenuActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.PlayerListActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.PlayerEditorActivity"
+        <activity android:name=".ui.view.CoursePickerActivity"/>
+        <activity android:name=".ui.view.AddCourseMenuActivity"/>
+        <activity android:name=".ui.player.PlayerListActivity"/>
+        <activity android:name=".ui.player.PlayerEditorActivity"
             android:windowSoftInputMode="adjustResize"
             />
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.RoundPlayerPickerActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.FinishedScorecardsActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.UnfinishedScorecardsActivity"/>
-        <activity android:name="com.manleysoftware.michael.discgolfapp.view.ScorecardOverview"
+        <activity android:name=".ui.main.RoundPlayerPickerActivity"/>
+        <activity android:name=".ui.scorecard.FinishedScorecardsActivity"/>
+        <activity android:name=".ui.scorecard.UnfinishedScorecardsActivity"/>
+        <activity android:name=".ui.scorecard.ScorecardOverview"
                   android:screenOrientation="landscape"/>
     </application>
 
