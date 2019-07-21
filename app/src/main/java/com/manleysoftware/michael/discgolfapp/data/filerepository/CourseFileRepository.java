@@ -2,6 +2,7 @@ package com.manleysoftware.michael.discgolfapp.data.filerepository;
 
 import android.content.Context;
 
+import com.manleysoftware.michael.discgolfapp.Application.CourseExistsAlreadyException;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.data.Model.Course;
 
@@ -61,9 +62,13 @@ public class CourseFileRepository implements CourseRepository, Serializable {
     //region Public Methods
 
     @Override
-    public void addCourse(Course course){
-        if (isUniqueCourse(course))
+    public void addCourse(Course course) throws CourseExistsAlreadyException {
+        if (isUniqueCourse(course)){
             courses.add(course);
+        } else{
+            throw new CourseExistsAlreadyException();
+        }
+
     }
 
     private boolean isUniqueCourse(Course course) {
