@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/parCellTable"
                     android:layout_alignParentTop="true"/>
-                <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableScrollView
+                <com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:id="@+id/nameScrollView"
@@ -54,7 +54,7 @@
                         android:id="@+id/nameTable"
                         >
                 </TableLayout>
-                </com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableScrollView>
+                </com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView>
 
             </RelativeLayout>
             <RelativeLayout
@@ -69,7 +69,7 @@
                     android:layout_toLeftOf="@+id/currentScoreLayout"
                     >
 
-                    <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                    <com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableHorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                                                                                                        android:layout_width="match_parent"
                                                                                                        android:layout_height="wrap_content"
                                                                                                        android:scrollbars="horizontal"
@@ -82,13 +82,13 @@
                             android:stretchColumns="*"
                             android:id="@+id/parTable">
                         </TableLayout>
-                    </com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableHorizontalScrollView>
-                    <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableHorizontalScrollView
+                    </com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableHorizontalScrollView>
+                    <com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableHorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scrollbars="vertical|horizontal"
                         android:id="@+id/scoreHorizontalScrollView">
-                        <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableScrollView
+                        <com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/scoreScrollView">
@@ -99,8 +99,8 @@
 
                             </TableLayout>
 
-                        </com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableScrollView>
-                    </com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableHorizontalScrollView>
+                        </com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView>
+                    </com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableHorizontalScrollView>
 
                 </LinearLayout>
 
@@ -118,7 +118,7 @@
 
                     </TableLayout>
 
-                    <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableScrollView
+                    <com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/currentScoreSV">
@@ -128,7 +128,7 @@
 
                             android:id="@+id/currentScoreTable">
                         </TableLayout>
-                    </com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.ObservableScrollView>
+                    </com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView>
 
 
                 </LinearLayout>
@@ -202,7 +202,7 @@
                         android:layout_weight="1"/>
                 </LinearLayout>
 
-                <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.SquareLinearLayout
+                <com.manleysoftware.michael.discgolfapp.ui.customViews.SquareLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -213,7 +213,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1">
 
-                        <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.SquareImageView
+                        <com.manleysoftware.michael.discgolfapp.ui.customViews.SquareImageView
                             android:id="@+id/squareImageView"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -231,7 +231,7 @@
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:layout_weight="1">
-                        <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.SquareImageView
+                        <com.manleysoftware.michael.discgolfapp.ui.customViews.SquareImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -242,12 +242,12 @@
                             android:enabled="true"
                             android:onClick="OnPreviousHoleClick"
                             android:scaleType="centerCrop"/>
-                        <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.SquareImageView
+                        <com.manleysoftware.michael.discgolfapp.ui.customViews.SquareImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"/>
                         <!-- Needed this empty element to ensure equally spaced view. -->
-                        <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.SquareImageView
+                        <com.manleysoftware.michael.discgolfapp.ui.customViews.SquareImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -264,7 +264,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
-                        <com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.SquareImageView
+                        <com.manleysoftware.michael.discgolfapp.ui.customViews.SquareImageView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/downarrow"
@@ -277,7 +277,7 @@
                     </FrameLayout>
 
 
-                </com.manleysoftware.michael.discgolfapp.ui.view.CustomViews.SquareLinearLayout>
+                </com.manleysoftware.michael.discgolfapp.ui.customViews.SquareLinearLayout>
 
 
             </LinearLayout>

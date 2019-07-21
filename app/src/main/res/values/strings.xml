@@ -12,4 +12,5 @@
     <string name="mainMenuBottomAd">ca-app-pub-3693522296743727/3568681671</string>
     <string name="playerEditorBannerAd">ca-app-pub-3693522296743727/8573596342</string>
     <string name="unfinishedSCBannerAd">ca-app-pub-3693522296743727/1859960283</string>
+    <string name="export_to_pdf">Export to PDF</string>
 </resources>

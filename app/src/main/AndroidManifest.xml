@@ -3,6 +3,7 @@
     package="com.manleysoftware.michael.discgolfapp">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/mdgt_darker"
@@ -20,13 +21,13 @@
         </activity>
         <activity android:name=".ui.main.RuntimeGameActivity"
             android:theme="@style/NoActionBarTheme"/>
-        <activity android:name=".ui.view.CourseEditorMenuActivity"/>
-        <activity android:name=".ui.view.EditExistingCourseActivity"/>
+        <activity android:name=".ui.course.CourseEditorMenuActivity"/>
+        <activity android:name=".ui.course.EditExistingCourseActivity"/>
         <activity android:name=".ui.player.EditExistingPlayerActivity"
             android:windowSoftInputMode="adjustResize"
             />
-        <activity android:name=".ui.view.CoursePickerActivity"/>
-        <activity android:name=".ui.view.AddCourseMenuActivity"/>
+        <activity android:name=".ui.main.CoursePickerActivity"/>
+        <activity android:name=".ui.course.AddCourseMenuActivity"/>
         <activity android:name=".ui.player.PlayerListActivity"/>
         <activity android:name=".ui.player.PlayerEditorActivity"
             android:windowSoftInputMode="adjustResize"
