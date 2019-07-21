@@ -44,17 +44,8 @@ public class CoursePickerActivity extends AppCompatActivity {
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
 		RelativeLayout coursePickerRelativeLayout = (RelativeLayout) findViewById(R.id.coursePickerRelativeLayout);
         if (!setupCourseListView()){
-			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
-
-			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
-			Bitmap bm5 = BitmapFactory
-					.decodeResource(context.getResources(), R.drawable.roadrunner_500x500);
-			backgroundImage.setImageBitmap(bm5);
-
-			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
-			tvNoListViewMessage.setText("Oops! No courses here!\nPlease add a course.");
-			coursePickerRelativeLayout.addView(messageLayout);
-		}
+            showAlternativeLayout(coursePickerRelativeLayout);
+        }
         lvCourseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,6 +109,19 @@ public class CoursePickerActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void showAlternativeLayout(RelativeLayout coursePickerRelativeLayout) {
+        View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+
+        ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+        Bitmap bm5 = BitmapFactory
+                .decodeResource(context.getResources(), R.drawable.roadrunner_500x500);
+        backgroundImage.setImageBitmap(bm5);
+
+        TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+        tvNoListViewMessage.setText("Oops! No courses here!\nPlease add a course.");
+        coursePickerRelativeLayout.addView(messageLayout);
     }
 
     @Override

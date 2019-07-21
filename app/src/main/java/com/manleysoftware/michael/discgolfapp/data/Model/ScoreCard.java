@@ -125,7 +125,7 @@ public class ScoreCard implements Serializable {
 
 	private void getCurrentDate(){
 		Calendar calendar = Calendar.getInstance();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
 		date = dateFormat.format(calendar.getTime());
 	}
 
