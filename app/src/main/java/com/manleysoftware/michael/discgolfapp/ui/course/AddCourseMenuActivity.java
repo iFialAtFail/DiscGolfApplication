@@ -32,10 +32,6 @@ public class AddCourseMenuActivity extends Activity {
     //region Class Constants
     private static final String HOLE_ARRAY = "Hole Array";
     private static final String HOLE_COUNT = "Hole Count";
-    private static final String COURSE_EDITOR_KEY = "Course Editor Key";
-    private static final int COURSE_EDITOR_INTENT = 2;
-    private static final String COURSE_PICKER_KEY = "Course Picker Key";
-    private static final int COURSE_PICKER_INTENT = 1;
     public static final int DEFAULT_PAR_VALUE = 3;
     public static final int MIN_HOLE_COUNT = 1;
 
@@ -101,7 +97,8 @@ public class AddCourseMenuActivity extends Activity {
             public void onClick(View v) {
                 String nameInput = tvCourseName.getText().toString();
 
-                if (!validCourseName(nameInput)) return;
+                if (!validCourseName(nameInput))
+                    return;
 
                 int[] populatedPars = toIntArray(adapter.getCourseList());
                 Course course = new Course(nameInput, populatedPars);
@@ -112,7 +109,9 @@ public class AddCourseMenuActivity extends Activity {
                     showCourseAlreadyExistsToast(course);
                     return;
                 }
-                goToPreviousActivityExplicitly();
+
+                //finish the activity and go back to calling activity
+                finish();
             }
         });
     }
@@ -123,7 +122,7 @@ public class AddCourseMenuActivity extends Activity {
     }
 
     private boolean validCourseName(String nameInput) {
-        if (!Course.isValidCoursename(nameInput) || !isUniqueObject(nameInput)){
+        if (!Course.isValidCoursename(nameInput)){
             Toast toast = Toast.makeText(context, "Not a valid course name! Try again!",Toast.LENGTH_LONG);
             toast.show();
             return false;
@@ -222,19 +221,5 @@ public class AddCourseMenuActivity extends Activity {
         }
     }
 
-    //This method handles returning to the previous activity manually.
-    private void goToPreviousActivityExplicitly(){
-        Bundle b = this.getIntent().getExtras();
-        if (b == null)
-            return;
-        if (b.getInt(COURSE_EDITOR_KEY) == COURSE_EDITOR_INTENT){
-            Intent intent = new Intent(getApplicationContext(),CourseEditorMenuActivity.class);
-            startActivity(intent);
-        }
-        if (b.getInt(COURSE_PICKER_KEY) == COURSE_PICKER_INTENT){
-            Intent intent = new Intent(getApplicationContext(), CoursePickerActivity.class);
-            startActivity(intent);
-        }
-    }
     //endregion
 }

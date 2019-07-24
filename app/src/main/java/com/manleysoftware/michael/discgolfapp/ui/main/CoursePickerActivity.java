@@ -102,13 +102,14 @@ public class CoursePickerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AddCourseMenuActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt(COURSE_PICKER_KEY,COURSE_PICKER_INTENT);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent, 3);
             }
         });
 
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        recreate();
     }
 
     private void showAlternativeLayout(RelativeLayout coursePickerRelativeLayout) {

@@ -61,10 +61,10 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 		RelativeLayout courseEditorRelativeLayout = (RelativeLayout) findViewById(R.id.courseEditorRelativeLayout);
 
 
-        if (!isCoursesToDisplay()){//If nothing to populate adapter and listview fails to be created
-            changeLayoutToNoCoursesAlternative(courseEditorRelativeLayout);
-        } else{
+        if (isCoursesToDisplay()){//If nothing to populate adapter and listview fails to be created
             setupCourseDataAdapter();
+        } else{
+            changeLayoutToNoCoursesAlternative(courseEditorRelativeLayout);
         }
 
         lvCourseList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -124,17 +124,15 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Bundle up object to pass over
-                Bundle extras = new Bundle();
-                extras.putInt(COURSE_EDITOR_KEY, COURSE_EDITOR_INTENT);
-
-                //Create intent and add bundle to it.
                 Intent intent = new Intent(getApplicationContext(), AddCourseMenuActivity.class);
-                intent.putExtras(extras);
-
                 startActivityForResult(intent, 2);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        recreate();
     }
 
     private void changeLayoutToNoCoursesAlternative(RelativeLayout courseEditorRelativeLayout) {
@@ -150,11 +148,6 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
         courseEditorRelativeLayout.addView(messageLayout);
     }
 
-    @Override
-    protected void onDestroy(){
-        courseRepository.Save(context);
-        super.onDestroy();
-    }
 
     @Override
     public void onBackPressed(){
