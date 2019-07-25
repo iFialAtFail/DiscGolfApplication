@@ -320,7 +320,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     private TextView getSelectedCell(){
-        TableRow playerTableRow = (TableRow) scoreTable.getChildAt(scoreCard.getPlayerSelectedIndex());
+        TableRow playerTableRow = (TableRow) scoreTable.getChildAt(scoreCard.getCurrentPlayerSelected());
         return (TextView) playerTableRow.getChildAt(scoreCard.getCurrentHole()-1);
 
     }
@@ -351,7 +351,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     private void updateScoreTotalTextView() {
-        TextView scoreTotalTextView = scoreTotalTextViews[scoreCard.getPlayerSelectedIndex()];
+        TextView scoreTotalTextView = scoreTotalTextViews[scoreCard.getCurrentPlayerSelected()];
         Player selectedPlayer = getCurrentPlayer();
         int totalScoreRelativeToPar = selectedPlayer.getCurrentParDifference(course.getParTotal());
         scoreTotalTextView.setText(String.valueOf(totalScoreRelativeToPar));
