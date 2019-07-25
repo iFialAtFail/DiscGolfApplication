@@ -113,8 +113,9 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		btnSaveCourse.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String nameInput = tvCourseName.getText().toString();
-
+				String rawNameInput = tvCourseName.getText().toString();
+				String nameInput = rawNameInput.trim();
+				
 				if (!Course.isValidCoursename(nameInput)){
 					Toast toast = Toast.makeText(context, "Not a valid course name! Try again!",Toast.LENGTH_LONG);
 					toast.show();

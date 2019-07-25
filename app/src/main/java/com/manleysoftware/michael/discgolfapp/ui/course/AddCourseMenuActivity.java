@@ -95,7 +95,8 @@ public class AddCourseMenuActivity extends Activity {
         btnSaveCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nameInput = tvCourseName.getText().toString();
+                String rawNameInput = tvCourseName.getText().toString();
+                String nameInput = rawNameInput.trim();
 
                 if (!validCourseName(nameInput))
                     return;
@@ -160,16 +161,6 @@ public class AddCourseMenuActivity extends Activity {
     //endregion
 
     //region Private Helper Methods
-
-    //TODO: Move this to repository? maybe a provider class?
-    private boolean isUniqueObject(String name){
-        for (Course c : courseRepository.getCourses()){
-            if (c.getName().equals(name)){
-                return false;
-            }
-        }
-        return true;
-    }
 
     private int[] toIntArray(List<Integer> list){
         int[] ret = new int[list.size()];
