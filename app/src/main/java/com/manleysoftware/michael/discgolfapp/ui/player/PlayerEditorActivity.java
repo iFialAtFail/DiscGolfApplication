@@ -51,7 +51,9 @@ public class PlayerEditorActivity extends AppCompatActivity {
         btnSavePlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = etName.getText().toString();
+                String rawName = etName.getText().toString();
+                String name = rawName.trim();
+
                 if (Player.isValidPlayerName(name)){
                     Player p = new Player(name);
                     playerRepository.addPlayer(p);

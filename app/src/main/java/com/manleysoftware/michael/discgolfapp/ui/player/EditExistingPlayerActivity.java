@@ -3,6 +3,7 @@ package com.manleysoftware.michael.discgolfapp.ui.player;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -59,12 +60,23 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 		btnSavePlayer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				playerToEdit.setName(etPlayerName.getText().toString());
-				playerRepository.Save(context);
-				Intent intent = new Intent(context, PlayerListActivity.class);
-				startActivity(intent);
+				savePlayerButtonClickHandler();
 			}
 		});
+	}
+
+	private void savePlayerButtonClickHandler() {
+		String name = getTrimmedName();
+		playerToEdit.setName(name);
+		playerRepository.Save(context);
+		Intent intent = new Intent(context, PlayerListActivity.class);
+		startActivity(intent);
+	}
+
+	@NonNull
+	private String getTrimmedName() {
+		String rawName = etPlayerName.getText().toString();
+		return rawName.trim();
 	}
 
 	//endregion
