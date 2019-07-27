@@ -46,7 +46,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
         //Setup Model
         initializePlayerRepository(); //using serializable and bundle
-        tryRestoreCourseObject();
+        //tryRestoreCourseObject();
 
         etName = (EditText) findViewById(R.id.etName);
 		Button btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
@@ -67,10 +67,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
                         showPlayerAlreadyExistsToast(player);
                         return;
                     }
-
-
-                    gotoPriorActivity();
-
+                    finish();
                 }
 
                 else{
@@ -91,29 +88,29 @@ public class PlayerEditorActivity extends AppCompatActivity {
     //region Private Helper Methods
 
 
-    private void gotoPriorActivity(){
-        Bundle b = this.getIntent().getExtras();
-        if (b != null && b.getInt("PlayerKey")== PLAYER_PICKER_INTENT){ //if coming from player picker...
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("Course",course);
-            Intent intent = new Intent(getApplicationContext(), RoundPlayerPickerActivity.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
-        else{ //or if coming from player editor...
-            Intent intent = new Intent(getApplicationContext(), PlayerListActivity.class);
-            startActivity(intent);
-        }
-    }
+//    private void gotoPriorActivity(){
+//        Bundle b = this.getIntent().getExtras();
+//        if (b != null && b.getInt("PlayerKey")== PLAYER_PICKER_INTENT){ //if coming from player picker...
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("Course",course);
+//            Intent intent = new Intent(getApplicationContext(), RoundPlayerPickerActivity.class);
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+//        }
+//        else{ //or if coming from player editor...
+//            Intent intent = new Intent(getApplicationContext(), PlayerListActivity.class);
+//            startActivity(intent);
+//        }
+//    }
 
     private void initializePlayerRepository() {
         this.playerRepository = new PlayerFileRepository(this);
     }
-    private void tryRestoreCourseObject(){
-        Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null){
-            course = (Course) bundle.getSerializable("Course");
-        }
-    }
+//    private void tryRestoreCourseObject(){
+//        Bundle bundle = this.getIntent().getExtras();
+//        if (bundle != null){
+//            course = (Course) bundle.getSerializable("Course");
+//        }
+//    }
     //endregion
 }
