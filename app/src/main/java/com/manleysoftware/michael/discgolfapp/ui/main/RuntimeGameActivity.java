@@ -315,8 +315,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         if (selectedCell != lastTVBackgroundChanged){
             resetLastSelectedCellToNormal();
             updateSelectedCellToRed(selectedCell);
-            setFocusToCell(selectedCell);
         }
+        setFocusToCell(selectedCell);
     }
 
     private TextView getSelectedCell(){
