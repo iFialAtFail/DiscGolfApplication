@@ -1,5 +1,6 @@
 package com.manleysoftware.michael.discgolfapp.ui.player;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.manleysoftware.michael.discgolfapp.Application.PlayerExistsAlreadyException;
 import com.manleysoftware.michael.discgolfapp.data.Model.Course;
 import com.manleysoftware.michael.discgolfapp.data.Model.Player;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
@@ -26,6 +28,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
     //UI References
     private EditText etName;
+    private Context context;
 
 	//Model References
     private PlayerRepository playerRepository;
@@ -39,6 +42,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_player_menu_layout);
+        context = this;
 
         //Setup Model
         initializePlayerRepository(); //using serializable and bundle
@@ -55,9 +59,15 @@ public class PlayerEditorActivity extends AppCompatActivity {
                 String name = rawName.trim();
 
                 if (Player.isValidPlayerName(name)){
-                    Player p = new Player(name);
-                    playerRepository.addPlayer(p);
-                    playerRepository.Save(getApplicationContext());
+                    Player player = new Player(name);
+                    try {
+                        playerRepository.addPlayer(player);
+                        playerRepository.Save(getApplicationContext());
+                    } catch (PlayerExistsAlreadyException whoops){
+                        showPlayerAlreadyExistsToast(player);
+                        return;
+                    }
+
 
                     gotoPriorActivity();
 
@@ -69,6 +79,11 @@ public class PlayerEditorActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showPlayerAlreadyExistsToast(Player player) {
+        Toast toast = Toast.makeText(context, "Player: " + player.getName() + " exists already",Toast.LENGTH_LONG);
+        toast.show();
     }
 
     //endregion

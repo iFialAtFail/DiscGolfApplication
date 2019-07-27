@@ -2,6 +2,8 @@ package com.manleysoftware.michael.discgolfapp.data.filerepository;
 
 import android.content.Context;
 
+import com.manleysoftware.michael.discgolfapp.Application.CourseExistsAlreadyException;
+import com.manleysoftware.michael.discgolfapp.Application.PlayerExistsAlreadyException;
 import com.manleysoftware.michael.discgolfapp.data.Model.Player;
 import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
 
@@ -65,9 +67,11 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
     //region Public Methods
 
     @Override
-    public void addPlayer(Player player){
+    public void addPlayer(Player player)  throws PlayerExistsAlreadyException {
         if (isUniquePlayer(player)){
             players.add(player);
+        } else{
+            throw new PlayerExistsAlreadyException();
         }
     }
 
