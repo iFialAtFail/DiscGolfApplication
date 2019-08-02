@@ -70,6 +70,7 @@ public class ScorecardRepository implements Serializable {
 	}
 
 	public boolean SaveFinishedCardsToFile(Context context){
+		if (this.scoreCardStorage.isEmpty()) return false;
 		try {
 			FileOutputStream fos = context.openFileOutput(SCORECARD_STORAGE_FILE_FINISHED, Context.MODE_PRIVATE);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);

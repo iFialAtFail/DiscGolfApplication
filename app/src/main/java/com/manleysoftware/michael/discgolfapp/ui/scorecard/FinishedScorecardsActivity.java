@@ -136,10 +136,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 								scorecardRepository.SaveFinishedCardsToFile(context);
 
 								//Update View
-								adapter.notifyDataSetChanged();
-								if (adapter.getCount() == 0){
-									recreate();
-								}
+								refreshAdapterView();
 							}
 						});
 				AlertDialog art = aat.create();
@@ -190,15 +187,20 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 						scorecardRepository.SaveFinishedCardsToFile(context);
 
 						//Refresh adapter view
-						adapter.notifyDataSetChanged();
-						if (adapter.getCount() == 0){
-							recreate();
-						}
+						refreshAdapterView();
 
 					}
 				});
 		AlertDialog art = aat.create();
 
 		art.show();
+	}
+
+	private void refreshAdapterView() {
+		if (adapter == null) return;
+		adapter.notifyDataSetChanged();
+		if (adapter.getCount() == 0) {
+			recreate();
+		}
 	}
 }
