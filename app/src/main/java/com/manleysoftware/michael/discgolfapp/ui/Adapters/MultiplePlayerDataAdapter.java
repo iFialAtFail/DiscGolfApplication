@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 
+import com.manleysoftware.michael.discgolfapp.Application.PlayersSelected;
 import com.manleysoftware.michael.discgolfapp.data.Model.Player;
 import com.manleysoftware.michael.discgolfapp.R;
 
@@ -18,12 +19,16 @@ import java.util.List;
 public class MultiplePlayerDataAdapter extends PlayerDataAdapter {
 
     private final Context context;
-    private boolean[] checkMarks;
+    private PlayersSelected checkMarks;
 
-    public MultiplePlayerDataAdapter(Context context, List<Player> playerStorage) {
+    public MultiplePlayerDataAdapter(Context context, List<Player> playerStorage, PlayersSelected playersSelected) {
         super(context, playerStorage);
         this.context = context;
-        checkMarks = new boolean[playerStorage.size()];
+        if (playersSelected != null ){
+            this.checkMarks = playersSelected;
+        } else {
+            this.checkMarks = new PlayersSelected(playerStorage.size());
+        }
     }
 
     @Override
@@ -44,12 +49,8 @@ public class MultiplePlayerDataAdapter extends PlayerDataAdapter {
             thumbnail.setImageResource(R.mipmap.roadrunnder_blank_100x100);
         }
 
-        tvNameText.setChecked(checkMarks[position]);
+        tvNameText.setChecked(checkMarks.isPlayerSelected(position));
         tvNameText.setText(player.getName());
         return rowView;
-    }
-
-    public void SetCheckmarkLocation(boolean check, int arrayPosition){
-        checkMarks[arrayPosition] = check;
     }
 }

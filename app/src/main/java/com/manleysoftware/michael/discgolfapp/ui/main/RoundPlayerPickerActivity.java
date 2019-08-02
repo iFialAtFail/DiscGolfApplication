@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.manleysoftware.michael.discgolfapp.Application.PlayersSelected;
 import com.manleysoftware.michael.discgolfapp.data.Model.*;
 import com.manleysoftware.michael.discgolfapp.Application.CourseNotFoundException;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.MultiplePlayerDataAdapter;
@@ -33,13 +35,17 @@ import java.util.ArrayList;
 public class RoundPlayerPickerActivity extends AppCompatActivity {
 
     public static final int PLAYER_PICKER_INTENT = 3;
+    private static final String PLAYERS_SELECTED_KEY = "PLAYERS_SELECTED_KEY";
+    private static final String NEW_PLAYER_BOOL = "NEW_PLAYER_BOOL";
 
     private MultiplePlayerDataAdapter adapter;
     private PlayerFileRepository playerRepository;
     private final Context context = this;
     private ListView lvPlayerList;
+    private boolean addedNewPlayer = false;
 
 	private Course selectedCourse;
+	private PlayersSelected selectedPlayers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,8 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
 
         initializePlayerStorage();
         getSelectedCourse();
+
+        handleSavedInstanceRestoration(savedInstanceState);
 
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
 		RelativeLayout playerPickerRelativeLayout = (RelativeLayout) findViewById(R.id.playerPickerRelativeLayout);
@@ -65,12 +73,16 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
 			tvNoListViewMessage.setText("Oops! No players here yet!\nPlease add some players.");
 			playerPickerRelativeLayout.addView(messageLayout);
 		}
+		if (addedNewPlayer){
+		    addedNewPlayer = false;
+		    selectedPlayers.unselectAllPlayers();
+        }
         lvPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CheckedTextView check = (CheckedTextView)view.findViewById(R.id.tvPlayerName);
-                check.toggle();
-                adapter.SetCheckmarkLocation(check.isChecked(),position);
+                selectedPlayers.togglePlayer(position);
+                check.setChecked(selectedPlayers.isPlayerSelected(position));
             }
         });
 
@@ -115,16 +127,34 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
         });
     }
 
+    private void handleSavedInstanceRestoration(Bundle savedInstanceState) {
+        if (savedInstanceState != null){
+            restoreSelectedPlayersFromSavedInstanceState(savedInstanceState);
+            addedNewPlayer = savedInstanceState.getBoolean(NEW_PLAYER_BOOL);
+        } else{
+            selectedPlayers = new PlayersSelected(playerRepository.getPlayers().size());
+        }
+    }
+
+    private void restoreSelectedPlayersFromSavedInstanceState(Bundle savedInstanceState) {
+        selectedPlayers = (PlayersSelected) savedInstanceState.getSerializable(PLAYERS_SELECTED_KEY);
+        handlePlayerCountChange();
+    }
+
+    private void handlePlayerCountChange() {
+        if (selectedPlayers.getPlayersSelected().length != playerRepository.getPlayers().size()){
+            selectedPlayers = new PlayersSelected(playerRepository.getPlayers().size());
+        }
+    }
+
 
     //region Button Handling
 
     public void onNewGameClicked(View v){
 		ArrayList<Player> playersPlaying = new ArrayList<>();
 
-        SparseBooleanArray sparseBooleanArray = lvPlayerList.getCheckedItemPositions();
-
         for (int i = 0; i < playerRepository.getPlayers().size(); i++){
-            if (sparseBooleanArray.get(i)){
+            if (selectedPlayers.isPlayerSelected(i)){
                 playersPlaying.add((Player)lvPlayerList.getItemAtPosition(i));
             }
         }
@@ -145,12 +175,21 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
 
     public void onNewPlayerClicked(View v){
         Intent intent = new Intent(getApplicationContext(), PlayerEditorActivity.class);
-        Bundle bundle = new Bundle();
+        startActivityForResult(intent,1);
+    }
 
-        bundle.putInt("PlayerKey",PLAYER_PICKER_INTENT);
-        bundle.putSerializable("Course", selectedCourse);
-        intent.putExtras(bundle);
-        startActivity(intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        addedNewPlayer = true;
+        recreate();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(PLAYERS_SELECTED_KEY,selectedPlayers);
+        outState.putBoolean(NEW_PLAYER_BOOL, addedNewPlayer);
+        super.onSaveInstanceState(outState);
     }
 
     //endregion
@@ -160,12 +199,14 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
     private boolean setupPlayersListView(){
         if (playerRepository != null && playerRepository.getPlayers().size() > 0){
             lvPlayerList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-            adapter = new MultiplePlayerDataAdapter(context, playerRepository.getPlayers());
+            adapter = new MultiplePlayerDataAdapter(context, playerRepository.getPlayers(), selectedPlayers);
             lvPlayerList.setAdapter(adapter);
 			return true;
         }
 		return false;
     }
+
+
 
     private void initializePlayerStorage() {
         playerRepository = new PlayerFileRepository(context);
