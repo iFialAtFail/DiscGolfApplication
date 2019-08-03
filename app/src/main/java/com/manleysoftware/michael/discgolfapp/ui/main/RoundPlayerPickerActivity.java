@@ -28,6 +28,7 @@ import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.ui.player.PlayerEditorActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Michael on 7/10/2016.
@@ -45,6 +46,7 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
     private boolean addedNewPlayer = false;
 
 	private Course selectedCourse;
+	private List<Player> allPlayers;
 	private PlayersSelected selectedPlayers;
 
     @Override
@@ -109,10 +111,9 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Make the change
                                 Player playerToDelete = (Player)adapter.getItem(position);
-                                playerRepository.removePlayer(playerToDelete);
+                                playerRepository.delete(playerToDelete, context);
 
                                 //Commit the change to persistant memory
-                                playerRepository.Save(context);
 								adapter.notifyDataSetChanged();
 								if (adapter.getCount() == 0){
 									recreate();
@@ -132,7 +133,7 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
             restoreSelectedPlayersFromSavedInstanceState(savedInstanceState);
             addedNewPlayer = savedInstanceState.getBoolean(NEW_PLAYER_BOOL);
         } else{
-            selectedPlayers = new PlayersSelected(playerRepository.getPlayers().size());
+            selectedPlayers = new PlayersSelected(allPlayers.size());
         }
     }
 
@@ -142,8 +143,8 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
     }
 
     private void handlePlayerCountChange() {
-        if (selectedPlayers.getPlayersSelected().length != playerRepository.getPlayers().size()){
-            selectedPlayers = new PlayersSelected(playerRepository.getPlayers().size());
+        if (selectedPlayers.getPlayersSelected().length != allPlayers.size()){
+            selectedPlayers = new PlayersSelected(allPlayers.size());
         }
     }
 
@@ -153,7 +154,7 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
     public void onNewGameClicked(View v){
 		ArrayList<Player> playersPlaying = new ArrayList<>();
 
-        for (int i = 0; i < playerRepository.getPlayers().size(); i++){
+        for (int i = 0; i < allPlayers.size(); i++){
             if (selectedPlayers.isPlayerSelected(i)){
                 playersPlaying.add((Player)lvPlayerList.getItemAtPosition(i));
             }
@@ -197,9 +198,9 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
     //region Private Helper Methods
 
     private boolean setupPlayersListView(){
-        if (playerRepository != null && playerRepository.getPlayers().size() > 0){
+        if (playerRepository != null && allPlayers.size() > 0){
             lvPlayerList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-            adapter = new MultiplePlayerDataAdapter(context, playerRepository.getPlayers(), selectedPlayers);
+            adapter = new MultiplePlayerDataAdapter(context, allPlayers, selectedPlayers);
             lvPlayerList.setAdapter(adapter);
 			return true;
         }
@@ -210,6 +211,7 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
 
     private void initializePlayerStorage() {
         playerRepository = new PlayerFileRepository(context);
+        allPlayers = playerRepository.getAllPlayers();
     }
 
 

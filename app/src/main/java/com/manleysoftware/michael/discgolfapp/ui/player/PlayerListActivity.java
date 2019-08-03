@@ -47,7 +47,7 @@ public class PlayerListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.player_editor);
 
-        if (BuildConfig.FLAVOR.equals("free")) {
+        if (BuildConfig.FLAVOR.equals("free") && !BuildConfig.BUILD_TYPE.equals("debug")) {
             AdView adView = (AdView) findViewById(R.id.adViewPE);
             AdRequest request = new AdRequest.Builder().build();
 //                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -97,10 +97,9 @@ public class PlayerListActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Make the change
                                 Player playerToRemove = (Player)adapter.getItem(position);
-                                playerRepository.removePlayer(playerToRemove);
+                                playerRepository.delete(playerToRemove, context);
 
                                 //Commit the change to persistant memory
-                                playerRepository.Save(context);
 								adapter.notifyDataSetChanged();
 								if (adapter.getCount()== 0){
 									recreate();
@@ -161,8 +160,8 @@ public class PlayerListActivity extends AppCompatActivity {
     //region Private helper methods
 
     private boolean setupPlayerListView() {
-        if (playerRepository != null && playerRepository.getPlayers().size() > 0) {
-            adapter = new PlayerDataAdapter(context, playerRepository.getPlayers());
+        if (playerRepository != null && playerRepository.getAllPlayers().size() > 0) {
+            adapter = new PlayerDataAdapter(context, playerRepository.getAllPlayers());
             lvPlayerList.setAdapter(adapter);
             return true;
         }

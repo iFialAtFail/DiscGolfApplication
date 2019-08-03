@@ -15,6 +15,8 @@ import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepo
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
 
+import java.util.List;
+
 /**
  * Created by Michael on 8/30/2016.
  */
@@ -32,6 +34,7 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 	private Player playerToEdit;
 	private EditText etPlayerName;
 	private Context context;
+	private List<Player> allPlayers;
 
 
 	//endregion
@@ -68,7 +71,7 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 	private void savePlayerButtonClickHandler() {
 		String name = getTrimmedName();
 		playerToEdit.setName(name);
-		playerRepository.Save(context);
+		playerRepository.update(playerToEdit,context);
 		Intent intent = new Intent(context, PlayerListActivity.class);
 		startActivity(intent);
 	}
@@ -100,13 +103,14 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
 	//region Private Helper Methods
 	private void setupPlayerStorage(){
 		playerRepository = new PlayerFileRepository(context);
+		allPlayers = playerRepository.getAllPlayers();
 	}
 
 	private void setupPlayerToEdit(){
 		Bundle b = this.getIntent().getExtras();
 		if (b != null){
 			int position = b.getInt("Position");
-			playerToEdit = playerRepository.getPlayers().get(position);
+			playerToEdit = allPlayers.get(position);
 		}
 	}
 

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.manleysoftware.michael.discgolfapp.Application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.Application.PlayerExistsAlreadyException;
 import com.manleysoftware.michael.discgolfapp.data.Model.Course;
 import com.manleysoftware.michael.discgolfapp.data.Model.Player;
@@ -61,9 +62,8 @@ public class PlayerEditorActivity extends AppCompatActivity {
                 if (Player.isValidPlayerName(name)){
                     Player player = new Player(name);
                     try {
-                        playerRepository.addPlayer(player);
-                        playerRepository.Save(getApplicationContext());
-                    } catch (PlayerExistsAlreadyException whoops){
+                        playerRepository.add(player, context);
+                    } catch (AlreadyExistsException whoops){
                         showPlayerAlreadyExistsToast(player);
                         return;
                     }
@@ -85,32 +85,7 @@ public class PlayerEditorActivity extends AppCompatActivity {
 
     //endregion
 
-    //region Private Helper Methods
-
-
-//    private void gotoPriorActivity(){
-//        Bundle b = this.getIntent().getExtras();
-//        if (b != null && b.getInt("PlayerKey")== PLAYER_PICKER_INTENT){ //if coming from player picker...
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("Course",course);
-//            Intent intent = new Intent(getApplicationContext(), RoundPlayerPickerActivity.class);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//        }
-//        else{ //or if coming from player editor...
-//            Intent intent = new Intent(getApplicationContext(), PlayerListActivity.class);
-//            startActivity(intent);
-//        }
-//    }
-
     private void initializePlayerRepository() {
         this.playerRepository = new PlayerFileRepository(this);
     }
-//    private void tryRestoreCourseObject(){
-//        Bundle bundle = this.getIntent().getExtras();
-//        if (bundle != null){
-//            course = (Course) bundle.getSerializable("Course");
-//        }
-//    }
-    //endregion
 }

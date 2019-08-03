@@ -34,7 +34,7 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
     public PlayerFileRepository(Context context){
         PlayerRepository repo = loadFromFile(context);
         if (repo != null){
-            players = repo.getPlayers();
+            players = repo.getAllPlayers();
         } else {
             players = new ArrayList<>();
         }
@@ -53,26 +53,32 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
 
     //endregion
 
-    //region Getters and Setters
-
-    @Override
-    public List<Player> getPlayers() {
-
-        return players;
-    }
-
-
-    //endregion
 
     //region Public Methods
 
     @Override
-    public void addPlayer(Player player)  throws PlayerExistsAlreadyException {
+    public void add(Player player, Context context)  throws PlayerExistsAlreadyException {
         if (isUniquePlayer(player)){
             players.add(player);
+            save(context);
         } else{
             throw new PlayerExistsAlreadyException();
         }
+    }
+
+
+    @Override
+    public void update(Player entity, Context context) {
+        //Everything is by reference for the file version
+        //save to file if it's unique.
+        if (isUniquePlayer(entity)){
+            save(context);
+        }
+    }
+
+    @Override
+    public List<Player> getAllPlayers() {
+        return players;
     }
 
     private boolean isUniquePlayer(Player player) {
@@ -85,13 +91,25 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
         return true;
     }
 
+
     @Override
-    public void removePlayer(Player player){
+    public void delete(Player player, Context context){
         players.remove(player);
+        save(context);
     }
 
     @Override
-    public boolean Save(Context context){
+    public Player findByPrimaryKey(Player template) {
+        Player retval = null;
+        for(Player player: players){
+            if (template.getName().equals(template.getName())){
+                retval = player;
+            }
+        }
+        return retval;
+    }
+
+    private boolean save(Context context){
         try {
             // Write to disk with FileOutputStream
             FileOutputStream fos = context.openFileOutput(PLAYER_STORAGE_FILE, Context.MODE_PRIVATE);

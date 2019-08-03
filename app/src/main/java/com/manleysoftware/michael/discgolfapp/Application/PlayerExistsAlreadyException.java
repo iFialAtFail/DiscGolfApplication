@@ -1,5 +1,5 @@
 package com.manleysoftware.michael.discgolfapp.Application;
 
-public class PlayerExistsAlreadyException extends Throwable {
+public class PlayerExistsAlreadyException extends AlreadyExistsException {
 
 }
