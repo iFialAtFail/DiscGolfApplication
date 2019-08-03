@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.manleysoftware.michael.discgolfapp.Application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.Application.CourseExistsAlreadyException;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseParDataAdapter;
@@ -104,9 +105,8 @@ public class AddCourseMenuActivity extends Activity {
                 int[] populatedPars = toIntArray(adapter.getCourseList());
                 Course course = new Course(nameInput, populatedPars);
                 try {
-                    courseRepository.addCourse(course);
-                    courseRepository.Save(getApplicationContext());
-                } catch (CourseExistsAlreadyException whoops){
+                    courseRepository.add(course, context);
+                } catch (AlreadyExistsException whoops){
                     showCourseAlreadyExistsToast(course);
                     return;
                 }

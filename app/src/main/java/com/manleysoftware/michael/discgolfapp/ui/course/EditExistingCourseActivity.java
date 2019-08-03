@@ -115,7 +115,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				String rawNameInput = tvCourseName.getText().toString();
 				String nameInput = rawNameInput.trim();
-				
+
 				if (!Course.isValidCoursename(nameInput)){
 					Toast toast = Toast.makeText(context, "Not a valid course name! Try again!",Toast.LENGTH_LONG);
 					toast.show();
@@ -127,7 +127,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 				courseToEdit.setName(nameInput);
 				courseToEdit.setParArray(populatedPars);
 
-				courseRepository.Save(getApplicationContext());
+				courseRepository.update(courseToEdit,getApplicationContext());
 
 				Intent intent = new Intent(getApplicationContext(),CourseEditorMenuActivity.class);
 				startActivity(intent);
@@ -202,7 +202,7 @@ public class EditExistingCourseActivity extends AppCompatActivity {
 		}
 
 		if (courseRepository != null) {
-			courseToEdit = courseRepository.getCourses().get(b.getInt("Position"));
+			courseToEdit = courseRepository.getAllCourses().get(b.getInt("Position"));
 		}
 	}
 

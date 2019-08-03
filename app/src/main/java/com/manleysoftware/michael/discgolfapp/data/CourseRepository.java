@@ -7,12 +7,6 @@ import com.manleysoftware.michael.discgolfapp.data.Model.Course;
 
 import java.util.List;
 
-public interface CourseRepository {
-    List<Course> getCourses();
-
-    void addCourse(Course course) throws CourseExistsAlreadyException;
-
-    void removeCourse(Course course);
-
-    boolean Save(Context context);
+public interface CourseRepository extends Repository<Course> {
+    List<Course> getAllCourses();
 }

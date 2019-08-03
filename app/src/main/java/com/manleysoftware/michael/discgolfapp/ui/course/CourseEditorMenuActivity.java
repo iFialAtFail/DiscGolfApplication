@@ -89,10 +89,8 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
                                 //Make the change
                                 Course toDelete = (Course) adapter.getItem(position);
-                                courseRepository.removeCourse(toDelete);
+                                courseRepository.delete(toDelete, context);
 
-                                //Commit the change to persistant memory
-                                courseRepository.Save(context);
                                 adapter.notifyDataSetChanged();
 
                                 //If listview is empty, recreate to show disc/empty view.
@@ -159,11 +157,11 @@ public class CourseEditorMenuActivity extends AppCompatActivity {
 
 
     private boolean isCoursesToDisplay(){
-        return courseRepository != null && courseRepository.getCourses().size() > 0;
+        return courseRepository != null && courseRepository.getAllCourses().size() > 0;
     }
 
     private void setupCourseDataAdapter() {
-        adapter = new CourseDataAdapter(context, courseRepository.getCourses());
+        adapter = new CourseDataAdapter(context, courseRepository.getAllCourses());
         lvCourseList.setAdapter(adapter);
     }
 

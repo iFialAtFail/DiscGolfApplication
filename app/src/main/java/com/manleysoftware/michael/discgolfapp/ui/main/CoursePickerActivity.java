@@ -81,10 +81,8 @@ public class CoursePickerActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Make the change
                                 Course courseToDelete = (Course)adapter.getItem(position);
-                                courseRepository.removeCourse(courseToDelete);
+                                courseRepository.delete(courseToDelete, context);
 
-                                //Commit the change to persistant memory
-                                courseRepository.Save(context);
                                 adapter.notifyDataSetChanged();
 								if (adapter.getCount()== 0){
 									recreate();
@@ -133,8 +131,8 @@ public class CoursePickerActivity extends AppCompatActivity {
     }
 
     private boolean setupCourseListView(){
-        if (courseRepository != null && courseRepository.getCourses().size() > 0){
-            adapter = new CourseDataAdapter(context, courseRepository.getCourses());
+        if (courseRepository != null && courseRepository.getAllCourses().size() > 0){
+            adapter = new CourseDataAdapter(context, courseRepository.getAllCourses());
             lvCourseList.setAdapter(adapter);
 			return true;
         }

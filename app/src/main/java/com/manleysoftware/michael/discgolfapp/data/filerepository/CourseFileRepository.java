@@ -2,6 +2,7 @@ package com.manleysoftware.michael.discgolfapp.data.filerepository;
 
 import android.content.Context;
 
+import com.manleysoftware.michael.discgolfapp.Application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.Application.CourseExistsAlreadyException;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.data.Model.Course;
@@ -33,7 +34,7 @@ public class CourseFileRepository implements CourseRepository, Serializable {
     public CourseFileRepository(Context context){
         CourseFileRepository repo = LoadFromFile(context);
         if (repo != null){
-            courses = repo.getCourses();
+            courses = repo.getAllCourses();
         } else{
             courses = new ArrayList<>();
         }
@@ -53,7 +54,7 @@ public class CourseFileRepository implements CourseRepository, Serializable {
     //region Getters and Setters
 
     @Override
-    public List<Course> getCourses() {
+    public List<Course> getAllCourses() {
         return courses;
     }
 
@@ -62,13 +63,21 @@ public class CourseFileRepository implements CourseRepository, Serializable {
     //region Public Methods
 
     @Override
-    public void addCourse(Course course) throws CourseExistsAlreadyException {
+    public void add(Course course, Context context) throws AlreadyExistsException {
         if (isUniqueCourse(course)){
             courses.add(course);
+            save(context);
         } else{
-            throw new CourseExistsAlreadyException();
+            throw new AlreadyExistsException();
         }
 
+    }
+
+    @Override
+    public void update(Course entity, Context context) {
+        if (isUniqueCourse(entity)){
+            save(context);
+        }
     }
 
     private boolean isUniqueCourse(Course course) {
@@ -81,11 +90,23 @@ public class CourseFileRepository implements CourseRepository, Serializable {
     }
 
     @Override
-    public void removeCourse(Course course){
+    public void delete(Course course, Context context){
         courses.remove(course);
+        save(context);
     }
 
-    public static CourseFileRepository LoadFromFile(Context context){
+    @Override
+    public Course findByPrimaryKey(Course template) {
+        Course retval = null;
+        for(Course course: courses){
+            if (course.getName().equals(template.getName())){
+                retval = course;
+            }
+        }
+        return retval;
+    }
+
+    private static CourseFileRepository LoadFromFile(Context context){
         CourseFileRepository retrieve;
         try {
             // Read from disk using FileInputStream
@@ -110,8 +131,7 @@ public class CourseFileRepository implements CourseRepository, Serializable {
         return null;
     }
 
-    @Override
-    public boolean Save(Context context){
+    private boolean save(Context context){
         try {
             // Write to disk with FileOutputStream
             FileOutputStream fos = context.openFileOutput(COURSE_STORAGE_FILE, Context.MODE_PRIVATE);
