@@ -221,7 +221,7 @@
                         android:layout_height="match_parent"
                         android:text="Save/Finish Game"
                         android:layout_gravity="center_horizontal"
-                        android:onClick="OnSaveFinnishGameClick"/>
+                        android:onClick="OnSaveOrFinishGameBtn"/>
             </LinearLayout>
 
         </LinearLayout>

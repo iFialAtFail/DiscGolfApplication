@@ -19,13 +19,17 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.ScoreCardDataAdapter;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
-import com.manleysoftware.michael.discgolfapp.data.Model.ScoreCard;
-import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
+import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Michael on 8/16/2016.
@@ -43,7 +47,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 		setContentView(R.layout.finished_scorecards_layout);
 		context = this;
 
-		if (BuildConfig.FLAVOR.equals("free")) {
+		if (BuildConfig.FLAVOR.equals("free") && !BuildConfig.BUILD_TYPE.equals("debug")) {
 			AdView adView = (AdView) findViewById(R.id.adViewFinishedSC);
 			AdRequest request = new AdRequest.Builder().build();
 //					.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -70,7 +74,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 			backgroundImage.setImageBitmap(bm5);
 
 			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
-			tvNoListViewMessage.setText("Oops! No finished games here!");
+			tvNoListViewMessage.setText(R.string.NO_GAMES_FOUND);
 			finishedScoreCardLinearLayout.addView(messageLayout);
 		}
 
@@ -103,7 +107,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Bundle b = new Bundle();
-				b.putSerializable("Finished Game", (ScoreCard)adapter.getItem(position));
+				b.putSerializable("Finished Game", (Scorecard)adapter.getItem(position));
 				Intent intent = new Intent(context, ScorecardOverview.class);
 				intent.putExtras(b);
 				startActivity(intent);
@@ -129,12 +133,10 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								//Make the change
-								scorecardRepository.DeleteScoreCardFromStorage(position);
 
-								//Commit the change to persistant memory
-								scorecardRepository.SaveFinishedCardsToFile(context);
-
+								Scorecard scorecardToDelete = (Scorecard)adapter.getItem(position);
+								scorecardRepository.delete(scorecardToDelete,context);
+								adapter.updateScorecards(scorecardRepository.findAllFinishedScorecards());
 								//Update View
 								refreshAdapterView();
 							}
@@ -148,8 +150,8 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private boolean setListViewAdapter(){
-		if (scorecardRepository.getCount() >= 1){
-			adapter = new ScoreCardDataAdapter(context, scorecardRepository);
+		if (scorecardRepository.findAllFinishedScorecards().size() > 0){
+			adapter = new ScoreCardDataAdapter(context, scorecardRepository.findAllFinishedScorecards());
 			lvFinishedScoreCards.setAdapter(adapter);
 			return true;
 		}
@@ -157,10 +159,7 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private void initializeScoreCardStorage(){
-		scorecardRepository = ScorecardRepository.LoadFinishedCardStorage(context);
-		if (scorecardRepository == null){
-			scorecardRepository = new ScorecardRepository();
-		}
+		scorecardRepository = new ScorecardFileRepository(context);
 	}
 
 	private void showDeleteAllDialog(){
@@ -181,11 +180,8 @@ public class FinishedScorecardsActivity extends AppCompatActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						//Make the change
-						scorecardRepository.DeleteAll();
-
-						//Commit the change to persistant memory
-						scorecardRepository.SaveFinishedCardsToFile(context);
-
+						scorecardRepository.deleteAllFinishedScorecards(context);
+						adapter.updateScorecards(new ArrayList<Scorecard>());
 						//Refresh adapter view
 						refreshAdapterView();
 

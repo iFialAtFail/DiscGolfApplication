@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.data.Model.ScoreCard;
+import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.feature.exportdata.ExcelExporter;
 import com.manleysoftware.michael.discgolfapp.ui.utils.TableGenerator;
@@ -26,7 +26,7 @@ import com.manleysoftware.michael.discgolfapp.ui.utils.TableGenerator;
 public class ScorecardOverview extends AppCompatActivity {
 	private Context context;
 	private TableLayout tblFinalScorecard;
-	private ScoreCard scoreCard;
+	private Scorecard scoreCard;
 	private RelativeLayout parentLayout;
 
 
@@ -53,7 +53,7 @@ public class ScorecardOverview extends AppCompatActivity {
 		Intent intent = getIntent();
 		Bundle b = intent.getExtras();
 		if (b != null){
-			scoreCard = (ScoreCard) b.getSerializable("Finished Game");
+			scoreCard = (Scorecard) b.getSerializable("Finished Game");
 		}
 	}
 

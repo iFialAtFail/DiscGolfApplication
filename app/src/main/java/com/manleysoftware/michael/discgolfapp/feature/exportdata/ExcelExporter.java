@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.Environment;
 
 import com.manleysoftware.michael.discgolfapp.Application.MutableInt;
-import com.manleysoftware.michael.discgolfapp.data.Model.ScoreCard;
+import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -28,7 +28,7 @@ import jxl.write.WriteException;
 public class ExcelExporter {
 
 
-    public static void exportScorecard(ScoreCard scoreCard, Context context) {
+    public static void exportScorecard(Scorecard scoreCard, Context context) {
 
         File downloadPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         String filename = createNewFileName();
@@ -63,7 +63,7 @@ public class ExcelExporter {
         return fileName;
     }
 
-    private static void fillExcelDocFromScorecard(ScoreCard scoreCard, WritableSheet sheetA) throws WriteException {
+    private static void fillExcelDocFromScorecard(Scorecard scoreCard, WritableSheet sheetA) throws WriteException {
         MutableInt columnCursor = new MutableInt(0);
         MutableInt rowCursor = new MutableInt(0);
 
@@ -79,14 +79,14 @@ public class ExcelExporter {
         writePlayerScores(scoreCard, sheetA, rowCursor);
     }
 
-    private static void writePlayerScores(ScoreCard scoreCard, WritableSheet sheetA, MutableInt rowCursor) throws WriteException {
+    private static void writePlayerScores(Scorecard scoreCard, WritableSheet sheetA, MutableInt rowCursor) throws WriteException {
         //Print out player scores
         for (int row = 0; row < scoreCard.getPlayersCount(); row++) {
             printPlayerScoreInfoOnRow(scoreCard, sheetA, rowCursor, row);
         }
     }
 
-    private static void printPlayerScoreInfoOnRow(ScoreCard scoreCard, WritableSheet sheetA, MutableInt rowCursor, int row) throws WriteException {
+    private static void printPlayerScoreInfoOnRow(Scorecard scoreCard, WritableSheet sheetA, MutableInt rowCursor, int row) throws WriteException {
         int PLAYER_TOTAL_INDEX = scoreCard.getCourse().getHoleCount() + 1;
         int NAME_INDEX = 0;
         for (int columns = 0; columns < scoreCard.getCourse().getHoleCount() + 2; columns++) {
@@ -101,7 +101,7 @@ public class ExcelExporter {
         rowCursor.increment();
     }
 
-    private static void writeCourseParsRow(ScoreCard scoreCard, WritableSheet sheetA, MutableInt rowCursor) throws WriteException {
+    private static void writeCourseParsRow(Scorecard scoreCard, WritableSheet sheetA, MutableInt rowCursor) throws WriteException {
         WritableCellFormat parHeader = new WritableCellFormat();
         parHeader.setBackground(Colour.LIGHT_TURQUOISE);
         parHeader.setBorder(Border.ALL, BorderLineStyle.THIN);
@@ -126,7 +126,7 @@ public class ExcelExporter {
         rowCursor.increment();
     }
 
-    private static void writeHoleNumbersRow(ScoreCard scoreCard, WritableSheet sheetA, MutableInt rowCursor) throws WriteException {
+    private static void writeHoleNumbersRow(Scorecard scoreCard, WritableSheet sheetA, MutableInt rowCursor) throws WriteException {
         WritableCellFormat headerFormat = new WritableCellFormat();
         headerFormat.setBackground(Colour.LIGHT_GREEN);
         headerFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
@@ -151,13 +151,13 @@ public class ExcelExporter {
         rowCursor.increment();
     }
 
-    private static void writeDateInformation(ScoreCard scoreCard, WritableSheet sheetA, MutableInt columnCursor, MutableInt rowCursor) throws WriteException {
+    private static void writeDateInformation(Scorecard scoreCard, WritableSheet sheetA, MutableInt columnCursor, MutableInt rowCursor) throws WriteException {
         sheetA.addCell(new Label(columnCursor.getValue(), rowCursor.getValue(), "Date:"));
         sheetA.addCell(new Label(columnCursor.getValue() + 1, rowCursor.getValue(), scoreCard.getDate()));
         rowCursor.increment();
     }
 
-    private static void writeCourseInformation(ScoreCard scoreCard, WritableSheet sheetA, MutableInt columnCursor, MutableInt rowCursor) throws WriteException {
+    private static void writeCourseInformation(Scorecard scoreCard, WritableSheet sheetA, MutableInt columnCursor, MutableInt rowCursor) throws WriteException {
         sheetA.addCell(new Label(columnCursor.getValue(), rowCursor.getValue(), "Course:"));
         sheetA.addCell(new Label(columnCursor.getValue() + 1, rowCursor.getValue(), scoreCard.getCourseName()));
         rowCursor.increment();

@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.data.Model.ScoreCard;
-import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
+import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.List;
@@ -19,22 +19,27 @@ import java.util.List;
  */
 public class ScoreCardDataAdapter extends BaseAdapter{
 
-	private final List<ScoreCard> scoreCardList;
+	private List<Scorecard> scorecardList;
 	private final Context context;
 
-	public ScoreCardDataAdapter(Context context, ScorecardRepository scorecardRepository){
+	public ScoreCardDataAdapter(Context context, List<Scorecard> scorecards){
 		this.context = context;
-		this.scoreCardList = scorecardRepository.getScoreCardStorage();
+		this.scorecardList = scorecards;
 	}
+
+	public void updateScorecards(List<Scorecard> scorecards){
+	    this.scorecardList = scorecards;
+	    notifyDataSetChanged();
+    }
 
 	@Override
 	public int getCount() {
-		return scoreCardList.size();
+		return scorecardList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return scoreCardList.get(position);
+		return scorecardList.get(position);
 	}
 
 	@Override
@@ -46,7 +51,7 @@ public class ScoreCardDataAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.scorecard_listview_row, parent, false);
-		ScoreCard scoreCard = (ScoreCard) getItem(position);
+		Scorecard scoreCard = (Scorecard) getItem(position);
 
 		TextView courseName = (TextView) rowView.findViewById(R.id.tvCourseName);
 		TextView date = (TextView) rowView.findViewById(R.id.tvDateLP);

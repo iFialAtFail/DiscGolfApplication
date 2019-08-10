@@ -9,11 +9,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.R;
-import com.manleysoftware.michael.discgolfapp.data.Model.ScoreCard;
+import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
 
 public class TableGenerator {
 
-    public TableLayout generateTable(Context context, TableLayout tableLayout, ScoreCard scoreCard){
+    public TableLayout generateTable(Context context, TableLayout tableLayout, Scorecard scoreCard){
         tableLayout.removeAllViews();
         //Generate dynamic table.
         for (int i = 0; i < scoreCard.getPlayersCount() + 2; i++){ //Plus 2 for Par And Hole # rows.

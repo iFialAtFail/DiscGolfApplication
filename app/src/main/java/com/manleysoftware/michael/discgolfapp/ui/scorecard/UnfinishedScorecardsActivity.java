@@ -15,14 +15,17 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.ScoreCardDataAdapter;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
-import com.manleysoftware.michael.discgolfapp.data.Model.ScoreCard;
-import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
+import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.manleysoftware.michael.discgolfapp.ui.main.RuntimeGameActivity;
+
+import java.util.List;
 
 /**
  * Created by Michael on 8/16/2016.
@@ -33,6 +36,7 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 	private ListView lvUnfinishedScoreCards;
 	private ScorecardRepository scorecardRepository;
 	private ScoreCardDataAdapter adapter;
+	private List<Scorecard> unfinishedScorecards;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +82,16 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Bundle b = new Bundle();
-				b.putSerializable("Unfinished Game", (ScoreCard)adapter.getItem(position));
+				Scorecard resumableScorecard = (Scorecard) adapter.getItem(position);
+				b.putSerializable("Unfinished Game", resumableScorecard);
 				b.putInt("From Resume Game Picker",2);
 				Intent intent = new Intent(context, RuntimeGameActivity.class);
 				intent.putExtras(b);
-				scorecardRepository.DeleteScoreCardFromStorage(position);
-				scorecardRepository.SaveUnFinishedCardListToFile(context);
+				//Remove scorecard from currently resumable scorecards
+				scorecardRepository.delete(resumableScorecard, context);
+				//TODO figure out a way to pass unfinished games to runtime
+				//TODO and update the delete functionality to use "primary key" to make
+				//certain we're deleting/finding the correct scorecard
 				startActivity(intent);
 			}
 		});
@@ -108,11 +116,10 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 
+								Scorecard scorecardToDelete = (Scorecard)adapter.getItem(position);
 								//Make the change
-								scorecardRepository.DeleteScoreCardFromStorage(position);
+								scorecardRepository.delete(scorecardToDelete,context);
 
-								//Commit the change to persistant memory
-								scorecardRepository.SaveUnFinishedCardListToFile(context);
 								adapter.notifyDataSetChanged();
 								if (adapter.getCount() == 0){
 									recreate();
@@ -128,8 +135,8 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private boolean onSetupListViewAdapter() {
-		if (scorecardRepository.getCount() >= 1) {
-			adapter = new ScoreCardDataAdapter(context, scorecardRepository);
+		if (unfinishedScorecards.size() > 0) {
+			adapter = new ScoreCardDataAdapter(context, unfinishedScorecards);
 			lvUnfinishedScoreCards.setAdapter(adapter);
 			return true;
 		}
@@ -137,9 +144,7 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private void initializeScoreCardStorage(){
-		scorecardRepository = ScorecardRepository.LoadUnFinishedCardStorage(context);
-		if (scorecardRepository == null){
-			scorecardRepository = new ScorecardRepository();
-		}
+		scorecardRepository = new ScorecardFileRepository(context);
+		this.unfinishedScorecards = scorecardRepository.findAllUnfinishedScorecards();
 	}
 }

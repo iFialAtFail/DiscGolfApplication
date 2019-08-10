@@ -14,4 +14,5 @@
     <string name="unfinishedSCBannerAd">ca-app-pub-3693522296743727/1859960283</string>
     <string name="export_to_pdf">Export to PDF</string>
     <string name="export_to_excel">Export to Excel</string>
+    <string name="NO_GAMES_FOUND">Oops! No finished games here!</string>
 </resources>

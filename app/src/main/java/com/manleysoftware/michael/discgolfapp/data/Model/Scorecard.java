@@ -7,7 +7,7 @@ import java.util.Calendar;
 /**
  * Created by Michael on 5/20/2016.
  */
-public class ScoreCard implements Serializable {
+public class Scorecard implements Serializable {
 
     //region Private Fields
 
@@ -16,13 +16,15 @@ public class ScoreCard implements Serializable {
     private int currentPlayerSelected;
     private final Course course;
 	private String date;
+	private Boolean archived;
 
     //endregion
 
     //region Constructors
 
-    public ScoreCard(Player[] players, Course course)
+    public Scorecard(Player[] players, Course course)
     {
+        this.archived = false;
         this.players = players;
         this.course = course;
         currentHole = 1;
@@ -69,7 +71,15 @@ public class ScoreCard implements Serializable {
 		return date;
 	}
 
-	public String getPlayersNames(){
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
+    }
+
+    public String getPlayersNames(){
 		String concatNames = "";
 		for(Player player : players){
 			concatNames += (player.getName() + ", ");
@@ -81,7 +91,7 @@ public class ScoreCard implements Serializable {
 
     //region Public Methods
 
-    public void NextHole()
+    public void nextHole()
     {
         if (currentHole < course.getHoleCount())
         {
@@ -89,7 +99,7 @@ public class ScoreCard implements Serializable {
         }
     }
 
-    public void PreviousHole()
+    public void previousHole()
     {
         if (currentHole > 1)
         {
@@ -97,7 +107,7 @@ public class ScoreCard implements Serializable {
         }
     }
 
-    public void NextPlayer(){
+    public void nextPlayer(){
         currentPlayerSelected++;
         if (currentPlayerSelected > players.length -1){
             currentPlayerSelected = players.length - 1;
