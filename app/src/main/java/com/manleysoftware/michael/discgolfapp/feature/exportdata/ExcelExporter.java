@@ -164,7 +164,7 @@ public class ExcelExporter {
     }
 
     private static void notifyMediaScanner(Context context, File file){
-        Intent intent =
+        var intent =
                 new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         intent.setData(Uri.fromFile(file));
         context.sendBroadcast(intent);

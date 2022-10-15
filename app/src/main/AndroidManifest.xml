@@ -2,15 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.manleysoftware.michael.discgolfapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/mdgt_darker"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MenuTheme">
-        <activity android:name=".ui.main.MainMenuActivity"
+        <activity
+            android:name=".ui.main.MainMenuActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
@@ -19,24 +22,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.RuntimeGameActivity"
-            android:theme="@style/NoActionBarTheme"/>
-        <activity android:name=".ui.course.CourseEditorMenuActivity"/>
-        <activity android:name=".ui.course.EditExistingCourseActivity"/>
-        <activity android:name=".ui.player.EditExistingPlayerActivity"
-            android:windowSoftInputMode="adjustResize"
-            />
-        <activity android:name=".ui.main.CoursePickerActivity"/>
-        <activity android:name=".ui.course.AddCourseMenuActivity"/>
-        <activity android:name=".ui.player.PlayerListActivity"/>
-        <activity android:name=".ui.player.PlayerEditorActivity"
-            android:windowSoftInputMode="adjustResize"
-            />
-        <activity android:name=".ui.main.RoundPlayerPickerActivity"/>
-        <activity android:name=".ui.scorecard.FinishedScorecardsActivity"/>
-        <activity android:name=".ui.scorecard.UnfinishedScorecardsActivity"/>
-        <activity android:name=".ui.scorecard.ScorecardOverview"
-                  android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ui.main.RuntimeGameActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity android:name=".ui.course.CourseEditorMenuActivity" />
+        <activity android:name=".ui.course.EditExistingCourseActivity" />
+        <activity
+            android:name=".ui.player.EditExistingPlayerActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.main.CoursePickerActivity" />
+        <activity android:name=".ui.course.AddCourseMenuActivity" />
+        <activity android:name=".ui.player.PlayerListActivity" />
+        <activity
+            android:name=".ui.player.PlayerEditorActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.main.RoundPlayerPickerActivity" />
+        <activity android:name=".ui.scorecard.FinishedScorecardsActivity" />
+        <activity android:name=".ui.scorecard.UnfinishedScorecardsActivity" />
+        <activity
+            android:name=".ui.scorecard.ScorecardOverview"
+            android:screenOrientation="landscape" />
+        <!--        //String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504"; //Test admob app id-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
     </application>
 
 </manifest>

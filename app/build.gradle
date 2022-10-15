@@ -17,14 +17,14 @@ android {
         }
     }
 
-    compileSdkVersion 27
-    buildToolsVersion '28.0.1'
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.manleysoftware.michael.discgolfapp"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 33
         versionCode 1
-        versionName "1.1"
+        versionName "1.2"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -46,18 +46,25 @@ android {
             versionName "1.1"
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_18
+        targetCompatibility JavaVersion.VERSION_18
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-ads:15.0.1'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:customtabs:27.1.1'
-    implementation 'com.android.support:support-media-compat:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.google.android.gms:play-services-ads:21.2.0'
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+    implementation 'com.google.firebase:firebase-ads:21.2.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.browser:browser:1.4.0'
+    implementation 'androidx.media:media:1.6.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6'
-    testImplementation 'junit:junit:4.12'
+    def multidex_version = "2.0.1"
+    implementation "androidx.multidex:multidex:$multidex_version"
+    testImplementation 'junit:junit:4.13.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

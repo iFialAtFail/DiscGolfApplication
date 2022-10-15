@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DiscGolfApp.iml" filepath="$PROJECT_DIR$/DiscGolfApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/DiscGolfApplication.iml" filepath="$PROJECT_DIR$/DiscGolfApplication.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DiscGolfApplication.iml" filepath="$PROJECT_DIR$/.idea/modules/DiscGolfApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DiscGolfApplication.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DiscGolfApplication.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DiscGolfApplication.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DiscGolfApplication.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DiscGolfApplication.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DiscGolfApplication.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DiscGolfApplication.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DiscGolfApplication.app.unitTest.iml" />
     </modules>
   </component>
 </project>
