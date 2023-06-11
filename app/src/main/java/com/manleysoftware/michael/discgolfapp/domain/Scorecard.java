@@ -2,6 +2,7 @@ package com.manleysoftware.michael.discgolfapp.domain;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.StringJoiner;
@@ -15,16 +16,16 @@ public class Scorecard implements Serializable {
     private final Players players;
     private int currentHole;
     private final Course course;
-    private String date;
+    private final ZonedDateTime dateTime;
     private boolean archived;
 
-    public Scorecard(Players players, Course course) {
+    public Scorecard(Players players, Course course, ZonedDateTime dateTime) {
         this.archived = false;
         if (players.isEmpty()) throw new IllegalStateException();
         this.players = players;
         this.course = course;
         currentHole = 1;
-        initializeCurrentDate();
+        this.dateTime = dateTime;
     }
 
     public int getCurrentHole() {
@@ -51,8 +52,8 @@ public class Scorecard implements Serializable {
         return course;
     }
 
-    public String getDate() {
-        return date;
+    public String displayDate() {
+        return formattedDate(dateTime);
     }
 
     public boolean getArchived() {
@@ -93,10 +94,9 @@ public class Scorecard implements Serializable {
         return players.currentPlayer();
     }
 
-    private void initializeCurrentDate() {
-        Calendar calendar = Calendar.getInstance();
+    private static String formattedDate(ZonedDateTime dateTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
-        date = dateFormat.format(calendar.getTime());
+        return dateFormat.format(dateTime);
     }
 
 }

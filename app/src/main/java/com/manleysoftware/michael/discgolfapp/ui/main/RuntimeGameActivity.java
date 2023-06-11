@@ -30,7 +30,7 @@ import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 
-import java.util.ArrayList;
+import java.time.ZonedDateTime;
 
 public class RuntimeGameActivity extends AppCompatActivity implements IScrollViewListener, IHorizontalScrollViewListener {
     public static final String RESTORE_PLAYERS_KEY = "RestorePlayers";
@@ -107,7 +107,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         if (savedInstanceState == null) {
             initPlayers(players);
             if (scorecard == null) //If coming from new game path...
-				scorecard = new Scorecard(players, course);
+				scorecard = new Scorecard(players, course, ZonedDateTime.now());
         }else {
             players = savedInstanceState.getSerializable(RESTORE_PLAYERS_KEY, Players.class);
             scorecard = (Scorecard) savedInstanceState.getSerializable(RESTORE_SCORE_CARD_KEY);

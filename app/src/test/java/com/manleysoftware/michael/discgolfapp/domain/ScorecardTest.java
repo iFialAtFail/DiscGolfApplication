@@ -7,27 +7,31 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public class ScorecardTest {
 
     private Scorecard testling;
 
+    private ZonedDateTime dateTime;
+
     @Before
     public void setup() {
         //nothing
+        dateTime = ZonedDateTime.now();
     }
 
     @Test(expected = IllegalStateException.class)
     public void canNotCreateScorecardWithEmptyPlayers() {
-        testling = new Scorecard(new Players(), getGenericCourse());
+        testling = new Scorecard(new Players(), getGenericCourse(), dateTime);
     }
 
     @Test
     public void canGetListOfPlayerNamesWithSinglePlayer() {
         testling = new Scorecard(
                 new Players(List.of(new Player("Mike"))),
-                getGenericCourse()
+                getGenericCourse(), dateTime
         );
 
         String results = testling.playersNames();
@@ -39,7 +43,7 @@ public class ScorecardTest {
     public void canGetListOfPlayerNamesWithMultiplePlayers() {
         testling = new Scorecard(
                 new Players(List.of(new Player("Mike"), new Player("Ben"), new Player("Andrew"))),
-                getGenericCourse()
+                getGenericCourse(), dateTime
         );
 
         String results = testling.playersNames();

@@ -58,7 +58,7 @@ public class ScoreCardDataAdapter extends BaseAdapter{
 
 		courseName.setText(scoreCard.getCourseName());
 		courseName.setTextColor(Color.BLACK);
-		date.setText(scoreCard.getDate());
+		date.setText(scoreCard.displayDate());
 		playersList.setText("Players:  " + scoreCard.playersNames());
 
 		return rowView;

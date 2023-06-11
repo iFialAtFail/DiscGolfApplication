@@ -153,7 +153,7 @@ public class ExcelExporter {
 
     private static void writeDateInformation(Scorecard scoreCard, WritableSheet sheetA, MutableInt columnCursor, MutableInt rowCursor) throws WriteException {
         sheetA.addCell(new Label(columnCursor.getValue(), rowCursor.getValue(), "Date:"));
-        sheetA.addCell(new Label(columnCursor.getValue() + 1, rowCursor.getValue(), scoreCard.getDate()));
+        sheetA.addCell(new Label(columnCursor.getValue() + 1, rowCursor.getValue(), scoreCard.displayDate()));
         rowCursor.increment();
     }
 

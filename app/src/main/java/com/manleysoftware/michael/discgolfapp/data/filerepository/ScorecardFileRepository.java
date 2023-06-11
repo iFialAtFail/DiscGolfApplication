@@ -129,7 +129,7 @@ public class ScorecardFileRepository implements ScorecardRepository, Serializabl
 	@Override
 	public void delete(Scorecard entity, Context context) {
 		for (int i = 0; i < scorecards.size(); i++) {
-			if (scorecards.get(i).getDate().equals(entity.getDate()) &&
+			if (scorecards.get(i).displayDate().equals(entity.displayDate()) &&
 					scorecards.get(i).getCourseName().equals(entity.getCourseName())){
 				scorecards.remove(i);
 				save(context);
@@ -143,7 +143,7 @@ public class ScorecardFileRepository implements ScorecardRepository, Serializabl
 		Scorecard retval = null;
 		for(Scorecard scorecard: scorecards){
 			if (retval.getCourseName().equals(template.getCourseName()) &&
-			retval.getDate().equals(template.getDate())){
+			retval.displayDate().equals(template.displayDate())){
 				retval = scorecard;
 				break;
 			}
