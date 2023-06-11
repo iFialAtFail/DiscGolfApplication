@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.data.Model;
+package com.manleysoftware.michael.discgolfapp.domain;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -96,18 +96,6 @@ public class Course implements Serializable {
         if (prePopulatedPars.length > 0 && isValidParArray(prePopulatedPars)) {
             holes = prePopulatedPars;
         }
-    }
-
-    public void IncrementHolePar(int currentHole) {
-        holes[currentHole]++;
-    }
-
-    public void DecrementHolePar(int currentHole) {
-        if (holes[currentHole] > 1) {
-
-            holes[currentHole]--;
-        }
-
     }
 
     @Override

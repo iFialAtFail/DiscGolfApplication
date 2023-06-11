@@ -1,9 +1,6 @@
 package com.manleysoftware.michael.discgolfapp.data;
 
-import android.content.Context;
-
-import com.manleysoftware.michael.discgolfapp.Application.PlayerExistsAlreadyException;
-import com.manleysoftware.michael.discgolfapp.data.Model.Player;
+import com.manleysoftware.michael.discgolfapp.domain.Player;
 
 import java.util.List;
 

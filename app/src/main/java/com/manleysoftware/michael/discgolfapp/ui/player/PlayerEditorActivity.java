@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.manleysoftware.michael.discgolfapp.Application.AlreadyExistsException;
-import com.manleysoftware.michael.discgolfapp.data.Model.Course;
-import com.manleysoftware.michael.discgolfapp.data.Model.Player;
+import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
+import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;

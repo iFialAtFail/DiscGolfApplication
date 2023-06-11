@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.feature.exportdata.ExcelExporter;
 import com.manleysoftware.michael.discgolfapp.ui.utils.TableGenerator;

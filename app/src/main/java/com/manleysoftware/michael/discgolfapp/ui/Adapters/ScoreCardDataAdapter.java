@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.List;
@@ -60,7 +59,7 @@ public class ScoreCardDataAdapter extends BaseAdapter{
 		courseName.setText(scoreCard.getCourseName());
 		courseName.setTextColor(Color.BLACK);
 		date.setText(scoreCard.getDate());
-		playersList.setText("Players:  " + scoreCard.getPlayersNames());
+		playersList.setText("Players:  " + scoreCard.playersNames());
 
 		return rowView;
 	}

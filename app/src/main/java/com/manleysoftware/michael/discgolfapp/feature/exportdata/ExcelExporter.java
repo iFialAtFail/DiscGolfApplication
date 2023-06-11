@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 
-import com.manleysoftware.michael.discgolfapp.Application.MutableInt;
-import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.application.MutableInt;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -91,11 +91,11 @@ public class ExcelExporter {
         int NAME_INDEX = 0;
         for (int columns = 0; columns < scoreCard.getCourse().getHoleCount() + 2; columns++) {
             if(columns == NAME_INDEX){
-                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayerArray()[row].getName()));
+                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayers().get(row).getName()));
             } else if (columns == PLAYER_TOTAL_INDEX){
-                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayerArray()[row].getCurrentTotal()+""));
+                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayers().get(row).getCurrentTotal()+""));
             } else{
-                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayerArray()[row].getScore()[columns-1]+""));
+                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayers().get(row).getScores()[columns-1]+""));
             }
         }
         rowCursor.increment();

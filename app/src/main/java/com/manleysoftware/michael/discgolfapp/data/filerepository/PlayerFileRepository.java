@@ -2,9 +2,8 @@ package com.manleysoftware.michael.discgolfapp.data.filerepository;
 
 import android.content.Context;
 
-import com.manleysoftware.michael.discgolfapp.Application.CourseExistsAlreadyException;
-import com.manleysoftware.michael.discgolfapp.Application.PlayerExistsAlreadyException;
-import com.manleysoftware.michael.discgolfapp.data.Model.Player;
+import com.manleysoftware.michael.discgolfapp.application.PlayerExistsAlreadyException;
+import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
 
 import java.io.FileInputStream;

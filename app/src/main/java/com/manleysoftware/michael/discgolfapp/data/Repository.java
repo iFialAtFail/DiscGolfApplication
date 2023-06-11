@@ -2,7 +2,7 @@ package com.manleysoftware.michael.discgolfapp.data;
 
 import android.content.Context;
 
-import com.manleysoftware.michael.discgolfapp.Application.AlreadyExistsException;
+import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
 
 public interface Repository<T> {
     void add(T entity, Context context) throws AlreadyExistsException;

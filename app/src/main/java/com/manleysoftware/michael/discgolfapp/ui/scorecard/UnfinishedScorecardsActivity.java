@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.ScoreCardDataAdapter;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
-import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;

@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.Application;
+package com.manleysoftware.michael.discgolfapp.application;
 
 public class MutableInt {
 

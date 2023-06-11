@@ -19,9 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manleysoftware.michael.discgolfapp.Application.PlayersSelected;
-import com.manleysoftware.michael.discgolfapp.data.Model.*;
-import com.manleysoftware.michael.discgolfapp.Application.CourseNotFoundException;
+import com.manleysoftware.michael.discgolfapp.application.PlayersSelected;
+import com.manleysoftware.michael.discgolfapp.application.CourseNotFoundException;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
+import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.MultiplePlayerDataAdapter;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;

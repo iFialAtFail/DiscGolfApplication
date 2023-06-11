@@ -9,7 +9,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.R;
-import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 
 public class TableGenerator {
 
@@ -57,17 +57,17 @@ public class TableGenerator {
                 }
 
                 if (i >= 2 && j == 0){ //Set Player Names
-                    TextView tv = setupTextViewInTable(scoreCard.getPlayerArray()[i-2].getName(),applyLayoutWidth(FIRST_COLUMN_WIDTH, context), R.drawable.cell_shape, context);
+                    TextView tv = setupTextViewInTable(scoreCard.getPlayers().get(i-2).getName(),applyLayoutWidth(FIRST_COLUMN_WIDTH, context), R.drawable.cell_shape, context);
                     row.addView(tv);
                 }
 
                 if (i >= 2 && j >0 && j != scoreCard.getCourse().getHoleCount()+1){ //handle player scores
-                    TextView tv = setupTextViewInTable(String.valueOf(scoreCard.getPlayerArray()[i-2].getScore()[j-1]),applyLayoutWidth(LAYOUT_WIDTH, context), R.drawable.cell_shape, context);
+                    TextView tv = setupTextViewInTable(String.valueOf(scoreCard.getPlayers().get(i-2).getScores()[j-1]),applyLayoutWidth(LAYOUT_WIDTH, context), R.drawable.cell_shape, context);
                     row.addView(tv);
                 }
 
                 if (i >= 2 && j == scoreCard.getCourse().getHoleCount() + 1){
-                    TextView tv = setupTextViewInTable(String.valueOf(scoreCard.getPlayerArray()[i-2].getCurrentTotal()),applyLayoutWidth(LAYOUT_WIDTH, context), R.drawable.cell_shape, context);
+                    TextView tv = setupTextViewInTable(String.valueOf(scoreCard.getPlayers().get(i-2).getCurrentTotal()),applyLayoutWidth(LAYOUT_WIDTH, context), R.drawable.cell_shape, context);
                     row.addView(tv);
                 }
 

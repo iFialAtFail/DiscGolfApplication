@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.data.Model.Course;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.List;

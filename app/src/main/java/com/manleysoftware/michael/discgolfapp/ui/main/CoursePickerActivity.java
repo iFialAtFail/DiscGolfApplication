@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseDataAdapter;
-import com.manleysoftware.michael.discgolfapp.data.Model.Course;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.ui.course.AddCourseMenuActivity;

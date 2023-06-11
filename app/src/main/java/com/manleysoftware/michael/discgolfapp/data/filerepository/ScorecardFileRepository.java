@@ -3,8 +3,8 @@ package com.manleysoftware.michael.discgolfapp.data.filerepository;
 import android.content.Context;
 import androidx.annotation.NonNull;
 
-import com.manleysoftware.michael.discgolfapp.Application.AlreadyExistsException;
-import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
 
 import java.io.FileInputStream;

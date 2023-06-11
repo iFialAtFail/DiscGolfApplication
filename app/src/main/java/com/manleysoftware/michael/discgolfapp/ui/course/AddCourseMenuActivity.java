@@ -2,7 +2,6 @@ package com.manleysoftware.michael.discgolfapp.ui.course;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,19 +11,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manleysoftware.michael.discgolfapp.Application.AlreadyExistsException;
-import com.manleysoftware.michael.discgolfapp.Application.CourseExistsAlreadyException;
+import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseParDataAdapter;
-import com.manleysoftware.michael.discgolfapp.data.Model.Course;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.R;
-import com.manleysoftware.michael.discgolfapp.ui.main.CoursePickerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.manleysoftware.michael.discgolfapp.data.Model.Course.MAX_HOLE_COUNT;
+import static com.manleysoftware.michael.discgolfapp.domain.Course.MAX_HOLE_COUNT;
 
 /**
  * Created by Michael on 6/23/2016.

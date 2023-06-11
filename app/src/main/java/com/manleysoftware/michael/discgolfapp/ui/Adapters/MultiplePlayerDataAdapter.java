@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 
-import com.manleysoftware.michael.discgolfapp.Application.PlayersSelected;
-import com.manleysoftware.michael.discgolfapp.data.Model.Player;
+import com.manleysoftware.michael.discgolfapp.application.PlayersSelected;
+import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.R;
 
 import java.util.List;

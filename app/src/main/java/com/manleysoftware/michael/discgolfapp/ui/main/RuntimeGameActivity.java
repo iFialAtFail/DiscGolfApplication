@@ -17,15 +17,16 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.Application.AlreadyExistsException;
+import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
+import com.manleysoftware.michael.discgolfapp.domain.Players;
 import com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableHorizontalScrollView;
 import com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView;
 import com.manleysoftware.michael.discgolfapp.ui.customViews.Interfaces.IHorizontalScrollViewListener;
 import com.manleysoftware.michael.discgolfapp.ui.customViews.Interfaces.IScrollViewListener;
-import com.manleysoftware.michael.discgolfapp.data.Model.Course;
-import com.manleysoftware.michael.discgolfapp.data.Model.Player;
-import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
+import com.manleysoftware.michael.discgolfapp.domain.Player;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 
@@ -38,7 +39,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     //region Private Model Variables
 
     private Course course;
-    private Player[] players;
+    private Players players;
     private Scorecard scorecard;
 	private ScorecardRepository scorecardRepository;
     private Context context;
@@ -108,11 +109,11 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
             if (scorecard == null) //If coming from new game path...
 				scorecard = new Scorecard(players, course);
         }else {
-            players = (Player[])savedInstanceState.getSerializable(RESTORE_PLAYERS_KEY);
+            players = savedInstanceState.getSerializable(RESTORE_PLAYERS_KEY, Players.class);
             scorecard = (Scorecard) savedInstanceState.getSerializable(RESTORE_SCORE_CARD_KEY);
         }
 
-        scoreTotalTextViews = new TextView[players.length];
+        scoreTotalTextViews = new TextView[players.size()];
         titleCourseTextView.setText(course.getName());
         generateTables(players, course.getHoleCount());
         updateSelectedCell();
@@ -145,7 +146,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     //endregion
 
-    private void generateTables(Player[] players, int courseHoleCount){
+    private void generateTables(Players players, int courseHoleCount){
 
         //Setup Static cells (Par, Hole#)
         setupStaticHeaderRows();
@@ -178,11 +179,11 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private void incrementCurrentPlayerScore() {
         Player currentPlayer = getCurrentPlayer();
-        currentPlayer.IncrementCurrentScore(scorecard.getCurrentHole());
+        currentPlayer.incrementScore(scorecard.getCurrentHole());
     }
 
     private Player getCurrentPlayer() {
-        return scorecard.getCurrentPlayer();
+        return scorecard.currentPlayer();
     }
 
     public void OnDecrementScoreClick(View v){
@@ -195,7 +196,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private void decrementCurrentPlayerScore() {
         Player currentPlayer = getCurrentPlayer();
-        currentPlayer.DecrementCurrentScore(scorecard.getCurrentHole());
+        currentPlayer.decrementScore(scorecard.getCurrentHole());
     }
 
     public void OnNextHoleClick(View v){
@@ -209,7 +210,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     public void OnLastPlayerClick(View view) {
-        scorecard.LastPlayer();
+        scorecard.previousPlayer();
         updateSelectedCell();
     }
 
@@ -290,31 +291,15 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private void initializeScorecardRepositorys() {
         scorecardRepository = new ScorecardFileRepository(context);
-//        initializeUnfinishedScorecardRepository();
-//        initializeFinishedScorecardRepository();
     }
 
-//    private void initializeFinishedScorecardRepository() {
-//        finishedCards = ScorecardFileRepository.LoadFinishedCardStorage(context);
-//        if (finishedCards == null){
-//            finishedCards = new ScorecardFileRepository();
-//        }
-//    }
-//
-//    private void initializeUnfinishedScorecardRepository() {
-//        unFinishedCards = ScorecardFileRepository.LoadUnFinishedCardStorage(context);
-//        if (unFinishedCards == null){
-//            unFinishedCards = new ScorecardFileRepository();
-//        }
-//    }
-
     private void loadDataFromNewGameBundle(Bundle b) {
-        players = toPlayerArray((ArrayList<Player>) b.getSerializable("Players"));
-        course = (Course) b.getSerializable("Course");
+        players = b.getSerializable("Players", Players.class);
+        course = b.getSerializable("Course", Course.class);
     }
 
     private void loadDataFromScorecard() {
-        players = scorecard.getPlayerArray();
+        players = scorecard.getPlayers();
         course = scorecard.getCourse();
     }
 
@@ -369,19 +354,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         scoreTotalTextView.setText(String.valueOf(totalScoreRelativeToPar));
     }
 
-    private Player[] toPlayerArray(ArrayList<Player> list){
-        if (list == null){
-            throw new IllegalArgumentException("Cannot convert null list to array!");
-        }
-        Player[] ret = new Player[list.size()];
-        for(int i = 0;i < ret.length;i++)
-            ret[i] = list.get(i);
-        return ret;
-    }
-
-    private void initPlayers(Player[] players){
-        for (Player player : players){
-            player.StartGame(course);
+    private void initPlayers(Players players){
+        for (Player player : players.getPlayers()){
+            player.startGame(course);
         }
     }
 
@@ -400,17 +375,17 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         return tv;
     }
 
-    private void generateScoreTable(Player[] players, int courseHoleCount) {
+    private void generateScoreTable(Players players, int courseHoleCount) {
         // setup score info table
         scoreTable.removeAllViews();
 
         //Generate dynamic table.
-        for (int i = 0; i < players.length; i++){
+        for (int i = 0; i < players.size(); i++){
             TableRow row = new TableRow(context);
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             for (int j = 0; j < courseHoleCount; j++) {
-                String scoreForHole = String.valueOf(players[i].getScore()[j]);
+                String scoreForHole = String.valueOf(players.getPlayers().get(i).getScores()[j]);
                 TextView tv = setupTextViewInTable(
                         scoreForHole,
                         applyLayoutWidth(LAYOUT_WIDTH),
@@ -496,11 +471,11 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         }
     }
 
-    private void setupCurrentScoreColumn(Player[] players) {
+    private void setupCurrentScoreColumn(Players players) {
 
         int i = 0;
         currentScoreTable.removeAllViews();
-		for (Player player : players) {
+		for (Player player : players.getPlayers()) {
 			LinearLayout _linearLayout = new LinearLayout(context);
 			TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
 			_linearLayout.setLayoutParams(params);
@@ -515,9 +490,9 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     }
 
-    private void setupNameColumn(Player[] players) {
+    private void setupNameColumn(Players players) {
         if (nameTable.getChildCount() < 1){
-			for (Player player : players) {
+			for (Player player : players.getPlayers()) {
 				LinearLayout linearLayout = new LinearLayout(this);
 				TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT, 1f);
 				linearLayout.setLayoutParams(params);
@@ -564,7 +539,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        players = (Player[])savedInstanceState.getSerializable(RESTORE_PLAYERS_KEY);
+        players = savedInstanceState.getSerializable(RESTORE_PLAYERS_KEY, Players.class);
         scorecard = (Scorecard) savedInstanceState.getSerializable(RESTORE_SCORE_CARD_KEY);
     }
 

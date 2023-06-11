@@ -1,9 +1,6 @@
 package com.manleysoftware.michael.discgolfapp.data;
 
-import android.content.Context;
-
-import com.manleysoftware.michael.discgolfapp.Application.CourseExistsAlreadyException;
-import com.manleysoftware.michael.discgolfapp.data.Model.Course;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
 
 import java.util.List;
 

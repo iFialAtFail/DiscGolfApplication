@@ -2,7 +2,7 @@ package com.manleysoftware.michael.discgolfapp.data;
 
 import android.content.Context;
 
-import com.manleysoftware.michael.discgolfapp.data.Model.Scorecard;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
 
 import java.util.List;
 
