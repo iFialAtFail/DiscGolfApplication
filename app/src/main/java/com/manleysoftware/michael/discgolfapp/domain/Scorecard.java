@@ -3,6 +3,7 @@ package com.manleysoftware.michael.discgolfapp.domain;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.StringJoiner;
 
 /**
@@ -10,6 +11,7 @@ import java.util.StringJoiner;
  */
 public class Scorecard implements Serializable {
 
+    public static final String DATE_TIME_FORMAT = "dd MMM yyyy HH:mm";
     private final Players players;
     private int currentHole;
     private final Course course;
@@ -93,7 +95,7 @@ public class Scorecard implements Serializable {
 
     private void initializeCurrentDate() {
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
         date = dateFormat.format(calendar.getTime());
     }
 
