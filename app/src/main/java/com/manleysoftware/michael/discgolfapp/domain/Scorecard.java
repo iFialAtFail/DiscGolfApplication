@@ -3,7 +3,6 @@ package com.manleysoftware.michael.discgolfapp.domain;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.StringJoiner;
 
@@ -28,27 +27,27 @@ public class Scorecard implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public int getCurrentHole() {
+    public int currentHole() {
         return currentHole;
     }
 
-    public Players getPlayers() {
+    public Players players() {
         return players;
     }
 
-    public int getPlayersCount() {
+    public int playerCount() {
         return players.size();
     }
 
-    public int getCurrentPlayerSelected() {
-        return players.currentPlayerSelected();
+    public int currentPlayerIndex() {
+        return players.currentPlayerIndex();
     }
 
-    public String getCourseName() {
+    public String courseName() {
         return course.getName();
     }
 
-    public Course getCourse() {
+    public Course course() {
         return course;
     }
 
@@ -56,15 +55,15 @@ public class Scorecard implements Serializable {
         return formattedDate(dateTime);
     }
 
-    public boolean getArchived() {
+    public boolean isArchived() {
         return archived;
     }
 
-    public void setArchived(Boolean archived) {
-        this.archived = archived;
+    public void setArchived() {
+        this.archived = true;
     }
 
-    public String playersNames() {
+    public String playerNames() {
         StringJoiner joiner = new StringJoiner(", ");
         players.getPlayers().stream().map(Player::getName).forEach(joiner::add);
         return joiner.toString();

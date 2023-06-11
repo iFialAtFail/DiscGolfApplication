@@ -34,7 +34,7 @@ public class ScorecardTest {
                 getGenericCourse(), dateTime
         );
 
-        String results = testling.playersNames();
+        String results = testling.playerNames();
 
         assertEquals("Mike", results);
     }
@@ -46,7 +46,7 @@ public class ScorecardTest {
                 getGenericCourse(), dateTime
         );
 
-        String results = testling.playersNames();
+        String results = testling.playerNames();
 
         assertEquals("Mike, Ben, Andrew", results);
     }

@@ -81,21 +81,21 @@ public class ExcelExporter {
 
     private static void writePlayerScores(Scorecard scoreCard, WritableSheet sheetA, MutableInt rowCursor) throws WriteException {
         //Print out player scores
-        for (int row = 0; row < scoreCard.getPlayersCount(); row++) {
+        for (int row = 0; row < scoreCard.playerCount(); row++) {
             printPlayerScoreInfoOnRow(scoreCard, sheetA, rowCursor, row);
         }
     }
 
     private static void printPlayerScoreInfoOnRow(Scorecard scoreCard, WritableSheet sheetA, MutableInt rowCursor, int row) throws WriteException {
-        int PLAYER_TOTAL_INDEX = scoreCard.getCourse().getHoleCount() + 1;
+        int PLAYER_TOTAL_INDEX = scoreCard.course().getHoleCount() + 1;
         int NAME_INDEX = 0;
-        for (int columns = 0; columns < scoreCard.getCourse().getHoleCount() + 2; columns++) {
+        for (int columns = 0; columns < scoreCard.course().getHoleCount() + 2; columns++) {
             if(columns == NAME_INDEX){
-                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayers().get(row).getName()));
+                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.players().get(row).getName()));
             } else if (columns == PLAYER_TOTAL_INDEX){
-                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayers().get(row).getCurrentTotal()+""));
+                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.players().get(row).getCurrentTotal()+""));
             } else{
-                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.getPlayers().get(row).getScores()[columns-1]+""));
+                sheetA.addCell(new Label(columns,rowCursor.getValue(), scoreCard.players().get(row).getScores()[columns-1]+""));
             }
         }
         rowCursor.increment();
@@ -106,20 +106,20 @@ public class ExcelExporter {
         parHeader.setBackground(Colour.LIGHT_TURQUOISE);
         parHeader.setBorder(Border.ALL, BorderLineStyle.THIN);
         //print out Course pars
-        for (int i = 0; i < scoreCard.getCourse().getHoleCount() + 2; i++) {
+        for (int i = 0; i < scoreCard.course().getHoleCount() + 2; i++) {
             if (i == 0){
                 WritableCell cell = new Label(i, rowCursor.getValue(), "Par");
                 cell.setCellFormat(parHeader);
                 sheetA.addCell(cell);
                 continue;
             }
-            if (i == scoreCard.getCourse().getHoleCount() + 1){
-                WritableCell cell = new Label(i, rowCursor.getValue(), String.valueOf(scoreCard.getCourse().getParTotal()));
+            if (i == scoreCard.course().getHoleCount() + 1){
+                WritableCell cell = new Label(i, rowCursor.getValue(), String.valueOf(scoreCard.course().getParTotal()));
                 cell.setCellFormat(parHeader);
                 sheetA.addCell(cell);
                 continue;
             }
-            WritableCell cell = new Label(i, rowCursor.getValue(), String.valueOf(scoreCard.getCourse().getParArray()[i - 1]));
+            WritableCell cell = new Label(i, rowCursor.getValue(), String.valueOf(scoreCard.course().getParArray()[i - 1]));
             cell.setCellFormat(parHeader);
             sheetA.addCell(cell);
         }
@@ -131,14 +131,14 @@ public class ExcelExporter {
         headerFormat.setBackground(Colour.LIGHT_GREEN);
         headerFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
 
-        for (int i = 0; i < scoreCard.getCourse().getHoleCount() + 2; i++) {
+        for (int i = 0; i < scoreCard.course().getHoleCount() + 2; i++) {
             if (i == 0){
                 WritableCell cell = new Label(i,rowCursor.getValue(),"Hole");
                 cell.setCellFormat(headerFormat);
                 sheetA.addCell(cell);
                 continue;
             }
-            if (i == scoreCard.getCourse().getHoleCount() + 1){
+            if (i == scoreCard.course().getHoleCount() + 1){
                 WritableCell cell = new Label(i, rowCursor.getValue(), "Total");
                 cell.setCellFormat(headerFormat);
                 sheetA.addCell(cell);
@@ -159,7 +159,7 @@ public class ExcelExporter {
 
     private static void writeCourseInformation(Scorecard scoreCard, WritableSheet sheetA, MutableInt columnCursor, MutableInt rowCursor) throws WriteException {
         sheetA.addCell(new Label(columnCursor.getValue(), rowCursor.getValue(), "Course:"));
-        sheetA.addCell(new Label(columnCursor.getValue() + 1, rowCursor.getValue(), scoreCard.getCourseName()));
+        sheetA.addCell(new Label(columnCursor.getValue() + 1, rowCursor.getValue(), scoreCard.courseName()));
         rowCursor.increment();
     }
 

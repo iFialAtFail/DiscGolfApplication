@@ -44,7 +44,7 @@ public class ScorecardOverview extends AppCompatActivity {
 
 		TableGenerator tableGenerator = new TableGenerator();
 		tblFinalScorecard = tableGenerator.generateTable(context,tblFinalScorecard,scoreCard);
-		tvFSCourseTitle.setText(scoreCard.getCourseName());
+		tvFSCourseTitle.setText(scoreCard.courseName());
 
 
 	}

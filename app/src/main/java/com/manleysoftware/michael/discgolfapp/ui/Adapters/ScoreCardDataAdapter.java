@@ -56,10 +56,10 @@ public class ScoreCardDataAdapter extends BaseAdapter{
 		TextView date = (TextView) rowView.findViewById(R.id.tvDateLP);
 		TextView playersList = (TextView) rowView.findViewById(R.id.tvPlayersList);
 
-		courseName.setText(scoreCard.getCourseName());
+		courseName.setText(scoreCard.courseName());
 		courseName.setTextColor(Color.BLACK);
 		date.setText(scoreCard.displayDate());
-		playersList.setText("Players:  " + scoreCard.playersNames());
+		playersList.setText("Players:  " + scoreCard.playerNames());
 
 		return rowView;
 	}

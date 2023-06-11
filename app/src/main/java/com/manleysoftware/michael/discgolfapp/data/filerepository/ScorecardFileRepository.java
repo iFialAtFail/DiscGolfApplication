@@ -97,7 +97,7 @@ public class ScorecardFileRepository implements ScorecardRepository, Serializabl
 	private List<Scorecard> getUnfinishedScorecards() {
 		List<Scorecard> finishedScorecards = new ArrayList<>();
 		for (Scorecard scorecard : scorecards) {
-			if (scorecard.getArchived()) {
+			if (scorecard.isArchived()) {
 				finishedScorecards.add(scorecard);
 			}
 		}
@@ -108,7 +108,7 @@ public class ScorecardFileRepository implements ScorecardRepository, Serializabl
 	public List<Scorecard> findAllUnfinishedScorecards() {
 		List<Scorecard> unfinishedScorecards = new ArrayList<>();
 		for (Scorecard scorecard : scorecards){
-			if (!scorecard.getArchived()){
+			if (!scorecard.isArchived()){
 				unfinishedScorecards.add(scorecard);
 			}
 		}
@@ -130,7 +130,7 @@ public class ScorecardFileRepository implements ScorecardRepository, Serializabl
 	public void delete(Scorecard entity, Context context) {
 		for (int i = 0; i < scorecards.size(); i++) {
 			if (scorecards.get(i).displayDate().equals(entity.displayDate()) &&
-					scorecards.get(i).getCourseName().equals(entity.getCourseName())){
+					scorecards.get(i).courseName().equals(entity.courseName())){
 				scorecards.remove(i);
 				save(context);
 				break;
@@ -142,7 +142,7 @@ public class ScorecardFileRepository implements ScorecardRepository, Serializabl
 	public Scorecard findByPrimaryKey(Scorecard template) {
 		Scorecard retval = null;
 		for(Scorecard scorecard: scorecards){
-			if (retval.getCourseName().equals(template.getCourseName()) &&
+			if (retval.courseName().equals(template.courseName()) &&
 			retval.displayDate().equals(template.displayDate())){
 				retval = scorecard;
 				break;

@@ -15,7 +15,7 @@ public class Players extends ArrayList<Player> implements Serializable, List<Pla
 
     private int currentPlayerSelected;
 
-    public int currentPlayerSelected() {
+    public int currentPlayerIndex() {
         return currentPlayerSelected;
     }
 

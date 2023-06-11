@@ -179,7 +179,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private void incrementCurrentPlayerScore() {
         Player currentPlayer = getCurrentPlayer();
-        currentPlayer.incrementScore(scorecard.getCurrentHole());
+        currentPlayer.incrementScore(scorecard.currentHole());
     }
 
     private Player getCurrentPlayer() {
@@ -196,7 +196,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private void decrementCurrentPlayerScore() {
         Player currentPlayer = getCurrentPlayer();
-        currentPlayer.decrementScore(scorecard.getCurrentHole());
+        currentPlayer.decrementScore(scorecard.currentHole());
     }
 
     public void OnNextHoleClick(View v){
@@ -265,7 +265,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     private void saveGame() {
-        scorecard.setArchived(true);
+        scorecard.setArchived();
         try {
             scorecardRepository.add(scorecard,context);
         } catch (AlreadyExistsException whoops){
@@ -299,8 +299,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     private void loadDataFromScorecard() {
-        players = scorecard.getPlayers();
-        course = scorecard.getCourse();
+        players = scorecard.players();
+        course = scorecard.course();
     }
 
     private Scorecard loadFromBundle(Bundle bundle) {
@@ -317,8 +317,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     private TextView getSelectedCell(){
-        TableRow playerTableRow = (TableRow) scoreTable.getChildAt(scorecard.getCurrentPlayerSelected());
-        return (TextView) playerTableRow.getChildAt(scorecard.getCurrentHole()-1);
+        TableRow playerTableRow = (TableRow) scoreTable.getChildAt(scorecard.currentPlayerIndex());
+        return (TextView) playerTableRow.getChildAt(scorecard.currentHole()-1);
 
     }
 
@@ -342,13 +342,13 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         //use that data to then get the approprite tv in the score and scoreTotal tv and update them
         TextView selectedCell = getSelectedCell();
         Player currentPlayer = getCurrentPlayer();
-        int score = currentPlayer.getScoreForHole(scorecard.getCurrentHole() - 1);
+        int score = currentPlayer.getScoreForHole(scorecard.currentHole() - 1);
         selectedCell.setText(String.valueOf(score));
         updateScoreTotalTextView();
     }
 
     private void updateScoreTotalTextView() {
-        TextView scoreTotalTextView = scoreTotalTextViews[scorecard.getCurrentPlayerSelected()];
+        TextView scoreTotalTextView = scoreTotalTextViews[scorecard.currentPlayerIndex()];
         Player selectedPlayer = getCurrentPlayer();
         int totalScoreRelativeToPar = selectedPlayer.getCurrentParDifference(course.getParTotal());
         scoreTotalTextView.setText(String.valueOf(totalScoreRelativeToPar));
