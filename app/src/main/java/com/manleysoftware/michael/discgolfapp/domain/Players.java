@@ -13,6 +13,12 @@ import java.util.ListIterator;
 public class Players extends ArrayList<Player> implements Serializable, List<Player> {
     List<Player> players;
 
+    private int currentPlayerSelected;
+
+    public int currentPlayerSelected() {
+        return currentPlayerSelected;
+    }
+
     public List<Player> getPlayers() {
         return players;
     }
@@ -164,5 +170,23 @@ public class Players extends ArrayList<Player> implements Serializable, List<Pla
     @Override
     public List<Player> subList(int fromIndex, int toIndex) {
         return players.subList(fromIndex, toIndex);
+    }
+
+    public void nextPlayer() {
+        currentPlayerSelected++;
+        if (currentPlayerSelected > players.size() - 1) {
+            currentPlayerSelected = players.size() - 1;
+        }
+    }
+
+    public void previousPlayer() {
+        currentPlayerSelected--;
+        if (currentPlayerSelected < 0) {
+            currentPlayerSelected = 0;
+        }
+    }
+
+    public Player currentPlayer() {
+        return get(currentPlayerSelected);
     }
 }

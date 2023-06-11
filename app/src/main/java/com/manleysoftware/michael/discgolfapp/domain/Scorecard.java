@@ -12,7 +12,6 @@ public class Scorecard implements Serializable {
 
     private final Players players;
     private int currentHole;
-    private int currentPlayerSelected;
     private final Course course;
     private String date;
     private boolean archived;
@@ -23,7 +22,7 @@ public class Scorecard implements Serializable {
         this.players = players;
         this.course = course;
         currentHole = 1;
-        currentDate();
+        initializeCurrentDate();
     }
 
     public int getCurrentHole() {
@@ -39,7 +38,7 @@ public class Scorecard implements Serializable {
     }
 
     public int getCurrentPlayerSelected() {
-        return currentPlayerSelected;
+        return players.currentPlayerSelected();
     }
 
     public String getCourseName() {
@@ -81,24 +80,18 @@ public class Scorecard implements Serializable {
     }
 
     public void nextPlayer() {
-        currentPlayerSelected++;
-        if (currentPlayerSelected > players.size() - 1) {
-            currentPlayerSelected = players.size() - 1;
-        }
+        players.nextPlayer();
     }
 
     public void previousPlayer() {
-        currentPlayerSelected--;
-        if (currentPlayerSelected < 0) {
-            currentPlayerSelected = 0;
-        }
+        players.previousPlayer();
     }
 
     public Player currentPlayer() {
-        return players.getPlayers().get(currentPlayerSelected);
+        return players.currentPlayer();
     }
 
-    private void currentDate() {
+    private void initializeCurrentDate() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm");
         date = dateFormat.format(calendar.getTime());
