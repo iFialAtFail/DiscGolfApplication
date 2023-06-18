@@ -1,3 +1,7 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.dagger.hilt.android'
+}
 apply plugin: 'com.android.application'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -8,8 +12,8 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
 
-    signingConfigs{
-        laptopConfig{
+    signingConfigs {
+        laptopConfig {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
@@ -47,8 +51,10 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_18
-        targetCompatibility JavaVersion.VERSION_18
+//        sourceCompatibility JavaVersion.VERSION_18
+//        targetCompatibility JavaVersion.VERSION_18
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     namespace 'com.manleysoftware.michael.discgolfapp'
 }
@@ -65,6 +71,10 @@ dependencies {
     implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12'
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
+
+    implementation "com.google.dagger:hilt-android:2.44"
+    annotationProcessor 'com.google.dagger:hilt-compiler:{hilt_version}'
+
     testImplementation 'junit:junit:4.13.2'
 }
 
