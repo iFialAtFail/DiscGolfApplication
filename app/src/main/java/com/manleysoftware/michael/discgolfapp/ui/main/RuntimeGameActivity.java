@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.domain.Players;
@@ -32,7 +31,13 @@ import com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableHorizonta
 import com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class RuntimeGameActivity extends AppCompatActivity implements IScrollViewListener, IHorizontalScrollViewListener {
     public static final String RESTORE_PLAYERS_KEY = "RestorePlayers";
     public static final String RESTORE_SCORE_CARD_KEY = "RestoreScoreCard";
@@ -42,7 +47,10 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     private Course course;
     private Players players;
     private Scorecard scorecard;
-	private ScorecardRepository scorecardRepository;
+
+    @Inject
+    protected ScorecardRepository scorecardRepository;
+
     private Context context;
 	private Boolean gameStarted = false;
 
@@ -291,11 +299,11 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     }
 
     private void initializeScorecardRepositorys() {
-        scorecardRepository = new ScorecardFileRepository(context);
+//        scorecardRepository = new ScorecardFileRepository(context);
     }
 
     private void loadDataFromNewGameBundle(Bundle b) {
-        players = (Players) b.getSerializable("Players");
+        players = new Players((ArrayList) b.getSerializable("Players"));
         course = (Course) b.getSerializable("Course");
     }
 
