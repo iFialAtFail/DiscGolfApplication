@@ -1,8 +1,10 @@
 package com.manleysoftware.michael.discgolfapp.domain;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.StringJoiner;
 
@@ -10,6 +12,8 @@ import java.util.StringJoiner;
  * Created by Michael on 5/20/2016.
  */
 public class Scorecard implements Serializable {
+
+    private Long id;
 
     public static final String DATE_TIME_FORMAT = "dd MMM yyyy HH:mm";
     private final Players players;
@@ -43,6 +47,7 @@ public class Scorecard implements Serializable {
         return players.currentPlayerIndex();
     }
 
+    @NotNull
     public String courseName() {
         return course.getName();
     }
@@ -94,8 +99,15 @@ public class Scorecard implements Serializable {
     }
 
     private static String formattedDate(ZonedDateTime dateTime) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.getDefault());
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT, Locale.getDefault());
         return dateFormat.format(dateTime);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

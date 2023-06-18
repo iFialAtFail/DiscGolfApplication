@@ -1,6 +1,7 @@
 package com.manleysoftware.michael.discgolfapp.data.filerepository;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
@@ -14,161 +15,136 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Michael on 8/16/2016.
  */
 public class ScorecardFileRepository implements ScorecardRepository, Serializable {
 
-	//region Private Fields
+    private long scorecardSequence = 0;
 
-	private static final long serialVersionUID = 3L;
-	private static final String SCORECARD_STORAGE_FILE = "scorecards.data";
-	private final List<Scorecard> scorecards;
+    private static final long serialVersionUID = 3L;
+    private static final String SCORECARD_STORAGE_FILE = "scorecards.data";
+    private final List<Scorecard> scorecards;
 
-	//endregion
+    public ScorecardFileRepository(Context context) {
+        ScorecardFileRepository repo = loadAllScorecardsFromFile(context);
+        if (repo != null) {
+            scorecards = repo.getAllScorecards();
+            scorecardSequence = repo.scorecardSequence;
+        } else {
+            scorecards = new ArrayList<>();
+        }
+    }
 
-	//region Constructors
+    public ScorecardFileRepository(List<Scorecard> scorecards, long sequence) {
+        this.scorecards = scorecards;
+        this.scorecardSequence = sequence;
+    }
 
-	public ScorecardFileRepository(Context context){
-		ScorecardFileRepository repo = loadFinishedCardStorage(context);
-		if (repo != null){
-			scorecards = repo.getAllScorecards();
-		} else{
-			scorecards = new ArrayList<Scorecard>();
-		}
-	}
+    private boolean save(Context context) {
+        if (this.scorecards.isEmpty() && this.scorecardSequence == 0L) return false;
+        return saveToFile(context, this);
+    }
 
+    protected boolean saveToFile(Context context, ScorecardFileRepository objectToWriteToFile) {
+        try {
+            FileOutputStream fos = context.openFileOutput(SCORECARD_STORAGE_FILE, Context.MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(objectToWriteToFile);
 
-	//endregion
+            oos.close();
+            fos.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
+    private static ScorecardFileRepository loadAllScorecardsFromFile(Context context) {
+        ScorecardFileRepository cardStorage;
+        try {
+            FileInputStream fis = context.openFileInput(SCORECARD_STORAGE_FILE);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Object obj = ois.readObject();
 
-	//region Public Methods
+            if (obj instanceof ScorecardFileRepository) {
+                cardStorage = (ScorecardFileRepository) obj;
+                return cardStorage;
+            }
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
 
-	private boolean save(Context context){
-		if (this.scorecards.isEmpty()) return false;
-		try {
-			FileOutputStream fos = context.openFileOutput(SCORECARD_STORAGE_FILE, Context.MODE_PRIVATE);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(this);
+    @NonNull
+    public List<Scorecard> findAllFinishedScorecards() {
+        return scorecards.stream().filter(Scorecard::isArchived).collect(Collectors.toList());
+    }
 
-			oos.close();
-			fos.close();
-		} catch (Exception ex){
-			ex.printStackTrace();
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public List<Scorecard> findAllUnfinishedScorecards() {
+        return scorecards.stream().filter(s -> !s.isArchived()).collect(Collectors.toList());
+    }
 
-	private static ScorecardFileRepository loadFinishedCardStorage(Context context){
-		ScorecardFileRepository cardStorage;
-		try{
-			FileInputStream fis = context.openFileInput(SCORECARD_STORAGE_FILE);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			Object obj = ois.readObject();
+    @Override
+    public void add(Scorecard entity, Context context) throws AlreadyExistsException {
+        scorecards.add(entity);
+        save(context);
+    }
 
-			if (obj instanceof ScorecardFileRepository){
-				cardStorage = (ScorecardFileRepository) obj;
-				return cardStorage;
-			}
+    @Override
+    public void update(Scorecard entity, Context context) {
 
-		} catch(Exception ex) {
-			ex.printStackTrace();
-		}
-		return null;
-	}
+    }
 
+    @Override
+    public void delete(Scorecard entity, Context context) {
+        for (int i = 0; i < scorecards.size(); i++) {
+            if (scorecards.get(i).displayDate().equals(entity.displayDate()) &&
+                    scorecards.get(i).courseName().equals(entity.courseName())) {
+                scorecards.remove(i);
+                save(context);
+                break;
+            }
+        }
+    }
 
-	@Override
-	public List<Scorecard> findAllFinishedScorecards() {
-		List<Scorecard> finishedScorecards = getFinishedScorecards();
-		return finishedScorecards;
-	}
+    @Override
+    public Scorecard findByPrimaryKey(Scorecard template) {
+        Scorecard retval = null;
+        for (Scorecard scorecard : scorecards) {
+            if (scorecard.courseName().equals(template.courseName()) &&
+                    scorecard.displayDate().equals(template.displayDate())) {
+                retval = scorecard;
+                break;
+            }
+        }
+        return retval;
+    }
 
-	@NonNull
-	private List<Scorecard> getFinishedScorecards() {
-		List<Scorecard> finishedScorecards = getUnfinishedScorecards();
-		return finishedScorecards;
-	}
+    @Override
+    public List<Scorecard> getAllScorecards() {
+        return scorecards;
+    }
 
-	@NonNull
-	private List<Scorecard> getUnfinishedScorecards() {
-		List<Scorecard> finishedScorecards = new ArrayList<>();
-		for (Scorecard scorecard : scorecards) {
-			if (scorecard.isArchived()) {
-				finishedScorecards.add(scorecard);
-			}
-		}
-		return finishedScorecards;
-	}
+    @Override
+    public void deleteAllFinishedScorecards(Context context) {
+        List<Scorecard> finishedScorecards = findAllFinishedScorecards();
+        for (Scorecard finishedScorecard : finishedScorecards) {
+            delete(finishedScorecard, context);
+        }
+    }
 
-	@Override
-	public List<Scorecard> findAllUnfinishedScorecards() {
-		List<Scorecard> unfinishedScorecards = new ArrayList<>();
-		for (Scorecard scorecard : scorecards){
-			if (!scorecard.isArchived()){
-				unfinishedScorecards.add(scorecard);
-			}
-		}
-		return unfinishedScorecards;
-	}
-
-	@Override
-	public void add(Scorecard entity, Context context) throws AlreadyExistsException {
-		scorecards.add(entity);
-		save(context);
-	}
-
-	@Override
-	public void update(Scorecard entity, Context context) {
-		return;
-	}
-
-	@Override
-	public void delete(Scorecard entity, Context context) {
-		for (int i = 0; i < scorecards.size(); i++) {
-			if (scorecards.get(i).displayDate().equals(entity.displayDate()) &&
-					scorecards.get(i).courseName().equals(entity.courseName())){
-				scorecards.remove(i);
-				save(context);
-				break;
-			}
-		}
-	}
-
-	@Override
-	public Scorecard findByPrimaryKey(Scorecard template) {
-		Scorecard retval = null;
-		for(Scorecard scorecard: scorecards){
-			if (retval.courseName().equals(template.courseName()) &&
-			retval.displayDate().equals(template.displayDate())){
-				retval = scorecard;
-				break;
-			}
-		}
-		return retval;
-	}
-
-	@Override
-	public List<Scorecard> getAllScorecards() {
-		return scorecards;
-	}
-
-	@Override
-	public void deleteAllFinishedScorecards(Context context) {
-		List<Scorecard> finishedScorecards = getFinishedScorecards();
-		for (Scorecard finishedScorecard : finishedScorecards) {
-			delete(finishedScorecard, context);
-		}
-	}
-
-	@Override
-	public void deleteAllUnfinishedScorecards(Context context) {
-		List<Scorecard> unfinishedScorecards = getUnfinishedScorecards();
-		for (Scorecard unfinishedScorecard : unfinishedScorecards) {
-			delete(unfinishedScorecard, context);
-		}
-	}
+    @Override
+    public void deleteAllUnfinishedScorecards(Context context) {
+        List<Scorecard> unfinishedScorecards = findAllUnfinishedScorecards();
+        for (Scorecard unfinishedScorecard : unfinishedScorecards) {
+            delete(unfinishedScorecard, context);
+        }
+    }
 }
