@@ -70,7 +70,7 @@ public class Scorecard implements Serializable {
 
     public String playerNames() {
         StringJoiner joiner = new StringJoiner(", ");
-        players.getPlayers().stream().map(Player::getName).forEach(joiner::add);
+        players.stream().map(Player::getName).forEach(joiner::add);
         return joiner.toString();
     }
 

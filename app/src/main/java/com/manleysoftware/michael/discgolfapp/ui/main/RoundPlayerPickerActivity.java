@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckedTextView;
@@ -19,16 +16,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manleysoftware.michael.discgolfapp.application.PlayersSelected;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.application.CourseNotFoundException;
+import com.manleysoftware.michael.discgolfapp.application.PlayersSelected;
+import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
+import com.manleysoftware.michael.discgolfapp.domain.Players;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.MultiplePlayerDataAdapter;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
-import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.ui.player.PlayerEditorActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -153,22 +152,22 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
     //region Button Handling
 
     public void onNewGameClicked(View v){
-		ArrayList<Player> playersPlaying = new ArrayList<>();
+        Players players = new Players();
 
         for (int i = 0; i < allPlayers.size(); i++){
             if (selectedPlayers.isPlayerSelected(i)){
-                playersPlaying.add((Player)lvPlayerList.getItemAtPosition(i));
+                players.add((Player)lvPlayerList.getItemAtPosition(i));
             }
         }
 
-        if (playersPlaying.isEmpty()) {
+        if (players.isEmpty()) {
             Toast.makeText(getApplicationContext(),"No players chosen, please select a player and try again.",Toast.LENGTH_LONG).show();
             return;
         }
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("Course",selectedCourse);
-        bundle.putSerializable("Players", playersPlaying);
+        bundle.putSerializable("Players", players);
 
         Intent intent = new Intent(getApplicationContext(),RuntimeGameActivity.class);
         intent.putExtras(bundle);
