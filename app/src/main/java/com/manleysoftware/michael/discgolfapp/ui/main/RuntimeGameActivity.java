@@ -42,8 +42,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     public static final String RESTORE_PLAYERS_KEY = "RestorePlayers";
     public static final String RESTORE_SCORE_CARD_KEY = "RestoreScoreCard";
 
-    //region Private Model Variables
-
     private Course course;
     private Players players;
     private Scorecard scorecard;
@@ -60,18 +58,8 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     //Cache the scoreTotal TextViews
     private TextView[] scoreTotalTextViews;
 
-    //endregion
-
-    //region Constants
-
-
-
     private final int LAYOUT_WIDTH = 50;
     private final int TOTAL_COLUMN_WIDTH = 60;
-
-	//endregion
-
-    //region Control/View references
 
 	//Custom Scrollviews
     private ObservableHorizontalScrollView parHorizontalScrollView;
@@ -91,10 +79,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
 
     private TextView titleCourseTextView;
 
-	//endregion
-
-    //region Android Product Lifecycle
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,15 +86,11 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
         setContentView(R.layout.runtime_game_layout);
         context = this;
 
-
         initializeViewElements();
 
 
 		//retrieve Player/Course/scorecard data
         retrieveGameData();
-
-        initializeScorecardRepositorys();
-
 
         //If first time go, create new stuff
         if (savedInstanceState == null) {
@@ -286,9 +266,7 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
     private void retrieveGameData(){
         Bundle b = this.getIntent().getExtras();
         if (b != null){
-
             scorecard = loadFromBundle(b);
-
 			//If coming from resume game menu....
 			if (scorecard != null){
                 loadDataFromScorecard();
@@ -296,10 +274,6 @@ public class RuntimeGameActivity extends AppCompatActivity implements IScrollVie
                 loadDataFromNewGameBundle(b);
             }
         }
-    }
-
-    private void initializeScorecardRepositorys() {
-//        scorecardRepository = new ScorecardFileRepository(context);
     }
 
     private void loadDataFromNewGameBundle(Bundle b) {

@@ -2,13 +2,11 @@ package com.manleysoftware.michael.discgolfapp.ui.main;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.application.CourseNotFoundException;
 import com.manleysoftware.michael.discgolfapp.application.PlayersSelected;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
+import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.domain.Players;
@@ -30,9 +28,14 @@ import com.manleysoftware.michael.discgolfapp.ui.player.PlayerEditorActivity;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
 /**
  * Created by Michael on 7/10/2016.
  */
+@AndroidEntryPoint
 public class RoundPlayerPickerActivity extends AppCompatActivity {
 
     public static final int PLAYER_PICKER_INTENT = 3;
@@ -40,7 +43,10 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
     private static final String NEW_PLAYER_BOOL = "NEW_PLAYER_BOOL";
 
     private MultiplePlayerDataAdapter adapter;
-    private PlayerFileRepository playerRepository;
+
+    @Inject
+    protected PlayerRepository playerRepository;
+
     private final Context context = this;
     private ListView lvPlayerList;
     private boolean addedNewPlayer = false;
@@ -55,23 +61,23 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
         setContentView(R.layout.player_picker_layout);
 
 
-        initializePlayerStorage();
+        initializePlayers();
         getSelectedCourse();
 
         handleSavedInstanceRestoration(savedInstanceState);
 
-        lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
-		RelativeLayout playerPickerRelativeLayout = (RelativeLayout) findViewById(R.id.playerPickerRelativeLayout);
+        lvPlayerList = findViewById(R.id.lvPlayerList);
+		RelativeLayout playerPickerRelativeLayout = findViewById(R.id.playerPickerRelativeLayout);
 
         if (!setupPlayersListView()){ //if we don't have any players or deserialization didn't work...
 			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
 
-			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+			ImageView backgroundImage = messageLayout.findViewById(R.id.ivImage);
 			Bitmap bm5 = BitmapFactory
 					.decodeResource(context.getResources(), R.drawable.jade_500x500);
 			backgroundImage.setImageBitmap(bm5);
 
-			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+			TextView tvNoListViewMessage = messageLayout.findViewById(R.id.tvNoListViewMessage);
 			tvNoListViewMessage.setText("Oops! No players here yet!\nPlease add some players.");
 			playerPickerRelativeLayout.addView(messageLayout);
 		}
@@ -79,52 +85,35 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
 		    addedNewPlayer = false;
 		    selectedPlayers.unselectAllPlayers();
         }
-        lvPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CheckedTextView check = (CheckedTextView)view.findViewById(R.id.tvPlayerName);
-                selectedPlayers.togglePlayer(position);
-                check.setChecked(selectedPlayers.isPlayerSelected(position));
-            }
+        lvPlayerList.setOnItemClickListener((parent, view, position, id) -> {
+            CheckedTextView check = view.findViewById(R.id.tvPlayerName);
+            selectedPlayers.togglePlayer(position);
+            check.setChecked(selectedPlayers.isPlayerSelected(position));
         });
 
 
 
-        lvPlayerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder aat = new AlertDialog.Builder(context);
-                aat.setTitle("Delete?")
-                        .setMessage("Are you sure you want to delete "+parent.getItemAtPosition(position).toString()+"?")
-                        .setCancelable(true)
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+        lvPlayerList.setOnItemLongClickListener((parent, view, position, id) -> {
+            AlertDialog.Builder aat = new AlertDialog.Builder(context);
+            aat.setTitle("Delete?")
+                    .setMessage("Are you sure you want to delete "+parent.getItemAtPosition(position).toString()+"?")
+                    .setCancelable(true)
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
+                    .setPositiveButton("Delete", (dialog, which) -> {
+                        //Make the change
+                        Player playerToDelete = (Player)adapter.getItem(position);
+                        playerRepository.delete(playerToDelete, context);
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
+                        //Commit the change to persistant memory
+                        adapter.notifyDataSetChanged();
+                        if (adapter.getCount() == 0){
+                            recreate();
+                        }
+                    });
+            AlertDialog art = aat.create();
 
-                        })
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //Make the change
-                                Player playerToDelete = (Player)adapter.getItem(position);
-                                playerRepository.delete(playerToDelete, context);
-
-                                //Commit the change to persistant memory
-								adapter.notifyDataSetChanged();
-								if (adapter.getCount() == 0){
-									recreate();
-								}
-                            }
-                        });
-                AlertDialog art = aat.create();
-
-                art.show();
-                return true;
-            }
+            art.show();
+            return true;
         });
     }
 
@@ -209,8 +198,7 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
 
 
 
-    private void initializePlayerStorage() {
-        playerRepository = new PlayerFileRepository(context);
+    private void initializePlayers() {
         allPlayers = playerRepository.getAllPlayers();
     }
 
