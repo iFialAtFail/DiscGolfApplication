@@ -3,117 +3,108 @@ package com.manleysoftware.michael.discgolfapp.ui.player;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
-import com.manleysoftware.michael.discgolfapp.domain.Player;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
+import com.manleysoftware.michael.discgolfapp.domain.Player;
 
 import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by Michael on 8/30/2016.
  */
+@AndroidEntryPoint
 public class EditExistingPlayerActivity extends AppCompatActivity {
 
-	//region Constants
+    private final static String PLAYER_NAME = "Player Name";
 
-	private final static String PLAYER_NAME = "Player Name";
+    @Inject
+    protected PlayerRepository playerRepository;
 
-	//endregion
+    private Player playerToEdit;
+    private EditText etPlayerName;
+    private Context context;
+    private List<Player> allPlayers;
+    private static final String TAG = "EDIT_EXISTING_ACTIVITY";
+    private Toast toast;
 
-	//region Private Fields
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_player_menu_layout);
+        context = this;
 
-	private PlayerRepository playerRepository;
-	private Player playerToEdit;
-	private EditText etPlayerName;
-	private Context context;
-	private List<Player> allPlayers;
+        etPlayerName = findViewById(R.id.etName);
+        Button btnSavePlayer = findViewById(R.id.btnSavePlayer);
 
+        allPlayers = playerRepository.getAllPlayers();
+        setupPlayerToEdit();
 
-	//endregion
+        if (savedInstanceState == null) {
+            etPlayerName.setText(playerToEdit.getName());
+        } else {
+            etPlayerName.setText(savedInstanceState.getString(PLAYER_NAME));
+        }
 
+        btnSavePlayer.setOnClickListener(v -> savePlayerButtonClickHandler());
+    }
 
-	//region Android Product Lifecycle
+    private void savePlayerButtonClickHandler() {
+        String name = getTrimmedName();
+        Log.d(TAG, "Player to update: " + playerToEdit.toString() + " with new name: " + name);
+        playerToEdit.setName(name);
+        try {
+            playerRepository.update(playerToEdit, context);
+        } catch (IllegalStateException ex) {
+            shoNotUniqueNameMessage(playerToEdit);
+            return;
+        }
+        Intent intent = new Intent(context, PlayerListActivity.class);
+        startActivity(intent);
+    }
 
-	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_player_menu_layout);
-		context = this;
+    private void shoNotUniqueNameMessage(Player player) {
+        if (toast != null) toast.cancel();
+        toast = Toast.makeText(context, "Player: " + player.getName() + " exists already", Toast.LENGTH_LONG);
+        toast.show();
+    }
 
-		etPlayerName = (EditText) findViewById(R.id.etName);
-		Button btnSavePlayer = (Button) findViewById(R.id.btnSavePlayer);
+    @NonNull
+    private String getTrimmedName() {
+        String rawName = etPlayerName.getText().toString();
+        return rawName.trim();
+    }
 
-		setupPlayerStorage();
-		setupPlayerToEdit();
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(PLAYER_NAME, etPlayerName.getText().toString());
+    }
 
-		if (savedInstanceState == null){
-			etPlayerName.setText(playerToEdit.getName());
-		} else {
-			etPlayerName.setText(savedInstanceState.getString(PLAYER_NAME));
-		}
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        etPlayerName.setText(savedInstanceState.getString(PLAYER_NAME));
+    }
 
-		btnSavePlayer.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				savePlayerButtonClickHandler();
-			}
-		});
-	}
-
-	private void savePlayerButtonClickHandler() {
-		String name = getTrimmedName();
-		playerToEdit.setName(name);
-		playerRepository.update(playerToEdit,context);
-		Intent intent = new Intent(context, PlayerListActivity.class);
-		startActivity(intent);
-	}
-
-	@NonNull
-	private String getTrimmedName() {
-		String rawName = etPlayerName.getText().toString();
-		return rawName.trim();
-	}
-
-	//endregion
-
-	//region Overridden Methods
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putString(PLAYER_NAME, etPlayerName.getText().toString());
-	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		etPlayerName.setText(savedInstanceState.getString(PLAYER_NAME));
-	}
-
-	//endregion
-
-	//region Private Helper Methods
-	private void setupPlayerStorage(){
-		playerRepository = new PlayerFileRepository(context);
-		allPlayers = playerRepository.getAllPlayers();
-	}
-
-	private void setupPlayerToEdit(){
-		Bundle b = this.getIntent().getExtras();
-		if (b != null){
-			int position = b.getInt("Position");
-			playerToEdit = allPlayers.get(position);
-		}
-	}
-
-
-	//endregion
+    private void setupPlayerToEdit() {
+        Bundle b = this.getIntent().getExtras();
+        if (b != null) {
+            int position = b.getInt("Position");
+            Log.d(TAG, "Position: " + position);
+            playerToEdit = allPlayers.get(position);
+        }
+    }
 }
