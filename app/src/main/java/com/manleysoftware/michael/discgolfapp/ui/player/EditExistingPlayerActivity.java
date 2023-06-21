@@ -64,11 +64,15 @@ public class EditExistingPlayerActivity extends AppCompatActivity {
     private void savePlayerButtonClickHandler() {
         String name = getTrimmedName();
         Log.d(TAG, "Player to update: " + playerToEdit.toString() + " with new name: " + name);
+        String oldName = playerToEdit.getName();
         playerToEdit.setName(name);
         try {
             playerRepository.update(playerToEdit, context);
         } catch (IllegalStateException ex) {
             shoNotUniqueNameMessage(playerToEdit);
+            //Restore old name so there's less confusion.
+            etPlayerName.setText(oldName);
+            etPlayerName.selectAll();
             return;
         }
         Intent intent = new Intent(context, PlayerListActivity.class);
