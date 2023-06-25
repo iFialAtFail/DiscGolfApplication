@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -15,26 +14,34 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.ScoreCardDataAdapter;
-import com.manleysoftware.michael.discgolfapp.BuildConfig;
-import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
-import com.manleysoftware.michael.discgolfapp.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.manleysoftware.michael.discgolfapp.BuildConfig;
+import com.manleysoftware.michael.discgolfapp.R;
+import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
+import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
+import com.manleysoftware.michael.discgolfapp.ui.Adapters.ScoreCardDataAdapter;
 import com.manleysoftware.michael.discgolfapp.ui.main.RuntimeGameActivity;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
 /**
  * Created by Michael on 8/16/2016.
  */
+@AndroidEntryPoint
 public class UnfinishedScorecardsActivity extends AppCompatActivity {
 
 	private Context context;
 	private ListView lvUnfinishedScoreCards;
-	private ScorecardRepository scorecardRepository;
+
+	@Inject
+	protected ScorecardRepository scorecardRepository;
 	private ScoreCardDataAdapter adapter;
 	private List<Scorecard> unfinishedScorecards;
 
@@ -144,7 +151,6 @@ public class UnfinishedScorecardsActivity extends AppCompatActivity {
 	}
 
 	private void initializeScoreCardStorage(){
-		scorecardRepository = new ScorecardFileRepository(context);
 		this.unfinishedScorecards = scorecardRepository.findAllUnfinishedScorecards();
 	}
 }
