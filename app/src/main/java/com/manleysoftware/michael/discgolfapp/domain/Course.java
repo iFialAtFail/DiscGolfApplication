@@ -1,5 +1,7 @@
 package com.manleysoftware.michael.discgolfapp.domain;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -12,6 +14,7 @@ public class Course implements Serializable {
 
     private int[] holes;
 
+    @NonNull
     private String courseName;
 
     public Course(String courseName, int numHoles) {

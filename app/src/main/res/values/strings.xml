@@ -15,4 +15,8 @@
     <string name="export_to_pdf">Export to PDF</string>
     <string name="export_to_excel">Export to Excel</string>
     <string name="NO_GAMES_FOUND">Oops! No finished games here!</string>
+    <string name="title_activity_main_nav">MainNavActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

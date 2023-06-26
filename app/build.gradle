@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.dagger.hilt.android'
+    id 'org.jetbrains.kotlin.android'
 }
 apply plugin: 'com.android.application'
 
@@ -55,10 +56,35 @@ android {
         targetCompatibility JavaVersion.VERSION_18
     }
     namespace 'com.manleysoftware.michael.discgolfapp'
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+ext {
+    nav_version = '2.6.0'
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // Java language implementation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
     implementation 'com.google.android.gms:play-services-ads:22.1.0'
     implementation 'com.google.firebase:firebase-core:21.1.1'
     implementation 'com.google.firebase:firebase-ads:22.1.0'

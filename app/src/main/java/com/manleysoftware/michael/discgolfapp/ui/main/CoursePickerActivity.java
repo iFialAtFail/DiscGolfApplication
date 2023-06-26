@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,45 +15,51 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseDataAdapter;
-import com.manleysoftware.michael.discgolfapp.domain.Course;
-import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.manleysoftware.michael.discgolfapp.R;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
+import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseDataAdapter;
 import com.manleysoftware.michael.discgolfapp.ui.course.AddCourseMenuActivity;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by Michael on 6/23/2016.
  */
+@AndroidEntryPoint
 public class CoursePickerActivity extends AppCompatActivity {
     private static final String COURSE_PICKER_KEY = "Course Picker Key";
     private static final int COURSE_PICKER_INTENT = 1;
 
     private CourseDataAdapter adapter;
-    private CourseRepository courseRepository;
+    //    @Inject
+//    private CourseRepository courseRepository;
     private final Context context = this;
-	private ListView lvCourseList;
+    private ListView lvCourseList;
 
-	@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_picker_layout);
-        initializeCourseRepository();
+        CoursePickerViewModel coursePickerViewModel =
+                new ViewModelProvider(this).get(CoursePickerViewModel.class);
 
         lvCourseList = (ListView) findViewById(R.id.lvCourseList);
-		RelativeLayout coursePickerRelativeLayout = (RelativeLayout) findViewById(R.id.coursePickerRelativeLayout);
-        if (!setupCourseListView()){
+        RelativeLayout coursePickerRelativeLayout = (RelativeLayout) findViewById(R.id.coursePickerRelativeLayout);
+        if (!setupCourseListView(coursePickerViewModel)) {
             showAlternativeLayout(coursePickerRelativeLayout);
         }
         lvCourseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Course course = (Course)adapter.getItem(position);
-                if (course == null){
+                Course course = (Course) adapter.getItem(position);
+                if (course == null) {
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("Course",course);
+                bundle.putSerializable("Course", course);
                 Intent intent = new Intent(getApplicationContext(), RoundPlayerPickerActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -65,9 +70,9 @@ public class CoursePickerActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder aat = new AlertDialog.Builder(context);
                 aat.setTitle("Delete?")
-                        .setMessage("Are you sure you want to delete "+parent.getItemAtPosition(position).toString()+"?")
+                        .setMessage("Are you sure you want to delete " + parent.getItemAtPosition(position).toString() + "?")
                         .setCancelable(true)
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -80,13 +85,13 @@ public class CoursePickerActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //Make the change
-                                Course courseToDelete = (Course)adapter.getItem(position);
-                                courseRepository.delete(courseToDelete, context);
+                                Course courseToDelete = (Course) adapter.getItem(position);
+                                coursePickerViewModel.delete(courseToDelete, context);
 
                                 adapter.notifyDataSetChanged();
-								if (adapter.getCount()== 0){
-									recreate();
-								}
+                                if (adapter.getCount() == 0) {
+                                    recreate();
+                                }
                             }
                         });
                 AlertDialog art = aat.create();
@@ -95,7 +100,7 @@ public class CoursePickerActivity extends AppCompatActivity {
                 return true;
             }
         });
-		Button btnNewCourse = (Button) findViewById(R.id.btnNewCourse);
+        Button btnNewCourse = (Button) findViewById(R.id.btnNewCourse);
         btnNewCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,12 +111,14 @@ public class CoursePickerActivity extends AppCompatActivity {
 
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
         recreate();
     }
 
     private void showAlternativeLayout(RelativeLayout coursePickerRelativeLayout) {
-        View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+        View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout, null);
 
         ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
         Bitmap bm5 = BitmapFactory
@@ -130,16 +137,13 @@ public class CoursePickerActivity extends AppCompatActivity {
         finish();
     }
 
-    private boolean setupCourseListView(){
-        if (courseRepository != null && courseRepository.getAllCourses().size() > 0){
-            adapter = new CourseDataAdapter(context, courseRepository.getAllCourses());
-            lvCourseList.setAdapter(adapter);
-			return true;
+    private boolean setupCourseListView(CoursePickerViewModel viewModel) {
+        if (viewModel.getCountOfCourses() <= 0) {
+            return false;
         }
-		return false;
-    }
-
-    private void initializeCourseRepository() {
-        courseRepository = new CourseFileRepository(context);
+        adapter = new CourseDataAdapter(context);
+        lvCourseList.setAdapter(adapter);
+        viewModel.getCourses().observe(this, cl -> adapter.updateCourseList(cl));
+        return true;
     }
 }

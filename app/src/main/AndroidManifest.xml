@@ -12,15 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/MenuTheme">
         <activity
-            android:name=".ui.main.MainMenuActivity"
+            android:name=".ui.main.MainNavActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme">
+            android:label="@string/title_activity_main_nav">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.main.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBarTheme">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".ui.main.RuntimeGameActivity"
@@ -41,8 +51,7 @@
         <activity android:name=".ui.scorecard.UnfinishedScorecardsActivity" />
         <activity
             android:name=".ui.scorecard.ScorecardOverview"
-            android:screenOrientation="landscape" />
-        <!--        //String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504"; //Test admob app id-->
+            android:screenOrientation="landscape" /> <!-- //String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504"; //Test admob app id -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />

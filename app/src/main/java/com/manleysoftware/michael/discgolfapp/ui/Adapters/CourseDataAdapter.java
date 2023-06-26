@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,12 +19,17 @@ import java.util.List;
  */
 public class CourseDataAdapter extends BaseAdapter {
 
-    private final List<Course> courseList;
+    private List<Course> courseList;
     private final Context context;
 
 
-    public CourseDataAdapter(Context context, List<Course> courseStorage) {
-        courseList = courseStorage;
+    public CourseDataAdapter(Context context) {
+        courseList = new ArrayList<>();
+        this.context = context;
+    }
+
+    public CourseDataAdapter(Context context, List<Course> courses) {
+        this.courseList = courses;
         this.context = context;
     }
 
@@ -61,5 +67,9 @@ public class CourseDataAdapter extends BaseAdapter {
 
         tvNameText.setText(course.getName());
         return rowView;
+    }
+
+    public void updateCourseList(List<Course> courses) {
+        this.courseList = courses;
     }
 }

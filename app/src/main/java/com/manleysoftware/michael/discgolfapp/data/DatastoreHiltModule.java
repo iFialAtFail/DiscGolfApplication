@@ -2,6 +2,7 @@ package com.manleysoftware.michael.discgolfapp.data;
 
 import android.content.Context;
 
+import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 
@@ -23,6 +24,11 @@ public class DatastoreHiltModule {
     @Provides
     public PlayerRepository filePlayerRepository(@ApplicationContext Context context) {
         return new PlayerFileRepository(context);
+    }
+
+    @Provides
+    public CourseRepository fileCourseRepository(@ApplicationContext Context context) {
+        return new CourseFileRepository(context);
     }
 
 }

@@ -2,6 +2,8 @@ package com.manleysoftware.michael.discgolfapp.data.filerepository;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
@@ -24,6 +26,7 @@ public class CourseFileRepository implements CourseRepository, Serializable {
 
     private static final long serialVersionUID = 2L;
     private static final String COURSE_STORAGE_FILE = "courseList.data";
+    @NonNull
     private List<Course> courses;
 
     //endregion
