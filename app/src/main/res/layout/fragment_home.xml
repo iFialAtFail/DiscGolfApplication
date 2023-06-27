@@ -1,88 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/switch_thumb_normal_material_light"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/middleView"
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/main_menu_fat" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:text="Mike's Disc Golf"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="35sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView1"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:gravity="center"
-                android:text="Tracker"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="35sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView1"
-                android:layout_toEndOf="@id/textView2"
-                android:fontFamily="casual"
-                android:maxWidth="900dp"
-                android:maxLines="1"
-                android:rotation="-25"
-                android:text="Free"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="36sp"
-                android:textStyle="bold" />
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/main_menu_fat"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent" />
 
 
-        </RelativeLayout>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:gravity="center"
+        android:text="Mike's Disc Golf"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        ads:layout_constraintBottom_toBottomOf="@+id/imageView"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="@+id/imageView"
+        ads:layout_constraintVertical_bias="0.198" />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:gravity="center"
+        android:text="Tracker"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        ads:layout_constraintEnd_toEndOf="@+id/imageView"
+        ads:layout_constraintStart_toStartOf="@+id/imageView"
+        ads:layout_constraintTop_toBottomOf="@+id/textView1" />
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:fontFamily="casual"
+        android:maxWidth="900dp"
+        android:maxLines="1"
+        android:rotation="-25"
+        android:text="Free"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        ads:layout_constraintStart_toEndOf="@+id/textView2"
+        ads:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <ListView
         android:id="@+id/lvMainMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/adView"
-        android:layout_below="@+id/middleView"
-        android:choiceMode="singleChoice" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:choiceMode="singleChoice"
+        ads:layout_constraintBottom_toTopOf="@+id/adView"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -90,7 +87,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/mainMenuBottomAd"></com.google.android.gms.ads.AdView>
-</RelativeLayout>
+        ads:adUnitId="@string/mainMenuBottomAd"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
