@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'com.google.dagger.hilt.android'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs'
 }
 apply plugin: 'com.android.application'
 

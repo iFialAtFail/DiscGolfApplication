@@ -143,7 +143,10 @@ public class CoursePickerActivity extends AppCompatActivity {
         }
         adapter = new CourseDataAdapter(context);
         lvCourseList.setAdapter(adapter);
-        viewModel.getCourses().observe(this, cl -> adapter.updateCourseList(cl));
+        viewModel.getCourses().observe(this, cl -> {
+            adapter.updateCourseList(cl);
+            adapter.notifyDataSetChanged();
+        });
         return true;
     }
 }

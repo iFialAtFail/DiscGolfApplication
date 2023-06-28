@@ -10,7 +10,8 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -18,7 +19,6 @@ import com.google.android.gms.ads.MobileAds;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.databinding.FragmentHomeBinding;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.MainMenuDataAdapter;
-import com.manleysoftware.michael.discgolfapp.ui.course.CourseEditorMenuActivity;
 import com.manleysoftware.michael.discgolfapp.ui.main.CoursePickerActivity;
 import com.manleysoftware.michael.discgolfapp.ui.player.PlayerListActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.FinishedScorecardsActivity;
@@ -32,8 +32,6 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -59,21 +57,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
-                        OnNewGameClick(view);
-                        break;
-                    case 1:
-                        OnResumeGameClicked(view);
-                        break;
-                    case 2:
-                        OnEditCoursesClick(view);
-                        break;
-                    case 3:
-                        OnEditPlayersClick(view);
-                        break;
-                    case 4:
-                        OnScorecardsClick(view);
-                        break;
+                    case 0 -> OnNewGameClick(view);
+                    case 1 -> OnResumeGameClicked(view);
+                    case 2 -> onEditCoursesClick(view);
+                    case 3 -> OnEditPlayersClick(view);
+                    case 4 -> OnScorecardsClick(view);
                 }
             }
         });
@@ -94,9 +82,17 @@ public class HomeFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void OnEditCoursesClick(View v) {
-        Intent intent = new Intent(requireContext(), CourseEditorMenuActivity.class);
-        startActivity(intent);
+    private void onEditCoursesClick(View v) {
+        /*
+        NavDirections action =
+        SpecifyAmountFragmentDirections
+            .actionSpecifyAmountFragmentToConfirmationFragment();
+    Navigation.findNavController(view).navigate(action);
+         */
+        NavDirections action = HomeFragmentDirections.actionNavigationHomeToNavigationNotifications();
+        Navigation.findNavController(requireView()).navigate(action);
+//        Intent intent = new Intent(requireContext(), CourseEditorMenuActivity.class);
+//        startActivity(intent);
     }
 
     private void OnEditPlayersClick(View v) {

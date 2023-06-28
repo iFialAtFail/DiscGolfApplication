@@ -60,8 +60,7 @@ public class CourseDataAdapter extends BaseAdapter {
 
         if (position % 2 == 0) {
             thumbnail.setImageResource(R.mipmap.buzz_blank_100x100);
-        }
-        else {
+        } else {
             thumbnail.setImageResource(R.mipmap.roadrunnder_blank_100x100);
         }
 

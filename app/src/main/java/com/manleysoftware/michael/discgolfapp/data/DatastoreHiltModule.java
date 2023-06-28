@@ -6,6 +6,8 @@ import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepo
 import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.ScorecardFileRepository;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
@@ -17,16 +19,19 @@ import dagger.hilt.components.SingletonComponent;
 public class DatastoreHiltModule {
 
     @Provides
+    @Singleton
     public ScorecardRepository filescorecardRepository(@ApplicationContext Context context) {
         return new ScorecardFileRepository(context);
     }
 
     @Provides
+    @Singleton
     public PlayerRepository filePlayerRepository(@ApplicationContext Context context) {
         return new PlayerFileRepository(context);
     }
 
     @Provides
+    @Singleton
     public CourseRepository fileCourseRepository(@ApplicationContext Context context) {
         return new CourseFileRepository(context);
     }
