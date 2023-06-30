@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,11 +20,16 @@ public class CourseParDataAdapter extends BaseAdapter {
 
     private final Context context;
     private LayoutInflater inflater;
-    private final List<Integer> course;
+    private List<Integer> course;
 
     public CourseParDataAdapter(Context context, List<Integer> course) {
         this.context = context;
         this.course = course;
+    }
+
+    public CourseParDataAdapter(Context context) {
+        this.course = new ArrayList<>();
+        this.context = context;
     }
 
     //custom get method to return list of integers to create course object
@@ -86,5 +92,9 @@ public class CourseParDataAdapter extends BaseAdapter {
         });
 
         return rowView;
+    }
+
+    public void setHoles(List<Integer> holes) {
+        this.course = holes;
     }
 }

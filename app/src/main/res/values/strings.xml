@@ -19,4 +19,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_main_menu">Main Menu</string>
+    <string name="title_new_course">New Course</string>
+    <string name="save">Save</string>
+    <string name="number_of_holes">Number of holes</string>
+    <string name="default_hole_count">18</string>
+    <string name="hole_count">%d</string>
 </resources>

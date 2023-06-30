@@ -7,23 +7,31 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.home.MainMenuFragment"
+        android:label="@string/title_main_menu"
+        tools:layout="@layout/fragment_main_menu" >
         <action
-            android:id="@+id/action_navigation_home_to_navigation_notifications"
-            app:destination="@id/navigation_notifications" />
+            android:id="@+id/action_navigation_main_menu_to_navigation_course_editor"
+            app:destination="@id/navigation_course_editor" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_new_course"
+        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.course.NewCourseFragment"
+        android:label="@string/title_new_course"
+        tools:layout="@layout/fragment_new_course" >
+        <action
+            android:id="@+id/action_navigation_new_course_to_navigation_course_editor"
+            app:destination="@id/navigation_course_editor" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.notifications.CourseEditorFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_course_editor" />
+        android:id="@+id/navigation_course_editor"
+        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.course.CourseEditorFragment"
+        android:label="Course Editor"
+        tools:layout="@layout/fragment_course_editor" >
+        <action
+            android:id="@+id/action_navigation_course_editor_to_navigation_new_course"
+            app:destination="@id/navigation_new_course" />
+    </fragment>
 </navigation>

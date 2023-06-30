@@ -17,23 +17,23 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
-import com.manleysoftware.michael.discgolfapp.databinding.FragmentHomeBinding;
+import com.manleysoftware.michael.discgolfapp.databinding.FragmentMainMenuBinding;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.MainMenuDataAdapter;
 import com.manleysoftware.michael.discgolfapp.ui.main.CoursePickerActivity;
 import com.manleysoftware.michael.discgolfapp.ui.player.PlayerListActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.FinishedScorecardsActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.UnfinishedScorecardsActivity;
 
-public class HomeFragment extends Fragment {
+public class MainMenuFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentMainMenuBinding binding;
 
     private final String[] menuItems = {"New Game", "Resume Game", "Course Editor", "Player Editor", "Score Cards"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentMainMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         if (BuildConfig.FLAVOR.equals("free")) {
             //String ADMOB_APP_ID = "ca-app-pub-8285085024937633~8121121504"; //Test admob app id
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
                 switch (position) {
                     case 0 -> OnNewGameClick(view);
                     case 1 -> OnResumeGameClicked(view);
-                    case 2 -> onEditCoursesClick(view);
+                    case 2 -> onEditCoursesClick();
                     case 3 -> OnEditPlayersClick(view);
                     case 4 -> OnScorecardsClick(view);
                 }
@@ -82,17 +82,9 @@ public class HomeFragment extends Fragment {
         startActivity(intent);
     }
 
-    private void onEditCoursesClick(View v) {
-        /*
-        NavDirections action =
-        SpecifyAmountFragmentDirections
-            .actionSpecifyAmountFragmentToConfirmationFragment();
-    Navigation.findNavController(view).navigate(action);
-         */
-        NavDirections action = HomeFragmentDirections.actionNavigationHomeToNavigationNotifications();
+    private void onEditCoursesClick() {
+        NavDirections action = MainMenuFragmentDirections.actionNavigationMainMenuToNavigationCourseEditor();
         Navigation.findNavController(requireView()).navigate(action);
-//        Intent intent = new Intent(requireContext(), CourseEditorMenuActivity.class);
-//        startActivity(intent);
     }
 
     private void OnEditPlayersClick(View v) {

@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.main.ui.notifications;
+package com.manleysoftware.michael.discgolfapp.ui.main.ui.course;
 
 import android.content.Context;
 
@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 
@@ -39,6 +40,12 @@ public class CourseEditorViewModel extends ViewModel {
 
     public void delete(Course courseToDelete, Context context) {
         courseRepository.delete(courseToDelete, context);
+//        courses.setValue(null);
+        courses.setValue(courseRepository.getAllCourses());
+    }
+
+    public void add(Course course, Context context) throws AlreadyExistsException {
+        courseRepository.add(course,context);
         courses.setValue(courseRepository.getAllCourses());
     }
 }

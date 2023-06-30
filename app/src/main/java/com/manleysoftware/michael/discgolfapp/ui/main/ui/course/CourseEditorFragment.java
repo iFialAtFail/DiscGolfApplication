@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.main.ui.notifications;
+package com.manleysoftware.michael.discgolfapp.ui.main.ui.course;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -27,7 +29,6 @@ import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.databinding.FragmentCourseEditorBinding;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseDataAdapter;
-import com.manleysoftware.michael.discgolfapp.ui.course.AddCourseMenuActivity;
 import com.manleysoftware.michael.discgolfapp.ui.course.EditExistingCourseActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -54,7 +55,6 @@ public class CourseEditorFragment extends Fragment {
         }
         CourseEditorViewModel courseEditorViewModel =
                 new ViewModelProvider(this).get(CourseEditorViewModel.class);
-
 
         ListView lvCourseList = binding.lvCourseList;
 
@@ -109,16 +109,10 @@ public class CourseEditorFragment extends Fragment {
 
         Button btnNewCourse = binding.btnNewCourse;
         btnNewCourse.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), AddCourseMenuActivity.class);
-            startActivityForResult(intent, 2);
+            NavDirections action = CourseEditorFragmentDirections.actionNavigationCourseEditorToNavigationNewCourse();
+            Navigation.findNavController(requireView()).navigate(action);
         });
         return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
     }
 
     private void recreate() {
@@ -142,12 +136,12 @@ public class CourseEditorFragment extends Fragment {
         View messageLayout =
                 getLayoutInflater().inflate(R.layout.listview_alternative_layout, binding.getRoot());
 
-        ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+        ImageView backgroundImage = messageLayout.findViewById(R.id.ivImage);
         Bitmap bm5 = BitmapFactory
                 .decodeResource(requireContext().getResources(), R.drawable.roadrunner_500x500);
         backgroundImage.setImageBitmap(bm5);
 
-        TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+        TextView tvNoListViewMessage = messageLayout.findViewById(R.id.tvNoListViewMessage);
         tvNoListViewMessage.setText("Oops! No courses here!\nPlease add a course.");
         courseEditorRelativeLayout.addView(messageLayout);
     }

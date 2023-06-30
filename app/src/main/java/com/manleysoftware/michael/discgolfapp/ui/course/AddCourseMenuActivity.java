@@ -1,6 +1,7 @@
 package com.manleysoftware.michael.discgolfapp.ui.course;
 
-import android.app.Activity;
+import static com.manleysoftware.michael.discgolfapp.domain.Course.MAX_HOLE_COUNT;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -11,22 +12,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseParDataAdapter;
-import com.manleysoftware.michael.discgolfapp.domain.Course;
-import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
+import androidx.activity.ComponentActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.manleysoftware.michael.discgolfapp.R;
+import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
+import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
+import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
+import com.manleysoftware.michael.discgolfapp.domain.Course;
+import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseParDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.main.ui.course.CourseEditorViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.manleysoftware.michael.discgolfapp.domain.Course.MAX_HOLE_COUNT;
-
 /**
  * Created by Michael on 6/23/2016.
  */
-public class AddCourseMenuActivity extends Activity {
+public class AddCourseMenuActivity extends ComponentActivity {
     //region Class Constants
     private static final String HOLE_ARRAY = "Hole Array";
     private static final String HOLE_COUNT = "Hole Count";
@@ -38,12 +41,12 @@ public class AddCourseMenuActivity extends Activity {
     //region Private Fields
 
     //Model References
-	private CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
     //UI References
     private List<Integer> holeParsList;
-	private CourseParDataAdapter adapter;
-	private TextView tvHoleCount;
+    private CourseParDataAdapter adapter;
+    private TextView tvHoleCount;
     private TextView tvCourseName;
     private final Context context = this;
     private Button btnSaveCourse;
@@ -59,13 +62,14 @@ public class AddCourseMenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_course_menu_layout);
-
+        CourseEditorViewModel courseEditorViewModel =
+                new ViewModelProvider(this).get(CourseEditorViewModel.class);
         initializeViewReferences();
         initializeCourseRepository();
         disableAutoKeyboard();
 
         //if First time go
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             initilizeEachHoleTo3();
         } else {
             holeParsList = new ArrayList<>();
@@ -102,8 +106,8 @@ public class AddCourseMenuActivity extends Activity {
                 int[] populatedPars = toIntArray(adapter.getCourseList());
                 Course course = new Course(nameInput, populatedPars);
                 try {
-                    courseRepository.add(course, context);
-                } catch (AlreadyExistsException whoops){
+                    courseEditorViewModel.add(course, context);
+                } catch (AlreadyExistsException whoops) {
                     showCourseAlreadyExistsToast(course);
                     return;
                 }
@@ -115,13 +119,13 @@ public class AddCourseMenuActivity extends Activity {
     }
 
     private void showCourseAlreadyExistsToast(Course course) {
-        Toast toast = Toast.makeText(context, "Course: " + course.getName() + " exists already",Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(context, "Course: " + course.getName() + " exists already", Toast.LENGTH_LONG);
         toast.show();
     }
 
     private boolean validCourseName(String nameInput) {
-        if (!Course.isValidCoursename(nameInput)){
-            Toast toast = Toast.makeText(context, "Not a valid course name! Try again!",Toast.LENGTH_LONG);
+        if (!Course.isValidCoursename(nameInput)) {
+            Toast toast = Toast.makeText(context, "Not a valid course name! Try again!", Toast.LENGTH_LONG);
             toast.show();
             return false;
         }
@@ -159,35 +163,35 @@ public class AddCourseMenuActivity extends Activity {
 
     //region Private Helper Methods
 
-    private int[] toIntArray(List<Integer> list){
+    private int[] toIntArray(List<Integer> list) {
         int[] ret = new int[list.size()];
-        for(int i = 0;i < ret.length;i++)
+        for (int i = 0; i < ret.length; i++)
             ret[i] = list.get(i);
         return ret;
     }
 
-    private List<Integer> toIntegerList(int[] array){
+    private List<Integer> toIntegerList(int[] array) {
         List<Integer> ret = new ArrayList<>();
-		for (int anArray : array) {
-			ret.add(anArray);
-		}
+        for (int anArray : array) {
+            ret.add(anArray);
+        }
         return ret;
     }
 
-    private void initilizeEachHoleTo3(){
+    private void initilizeEachHoleTo3() {
         holeParsList = new ArrayList<>();
         int numberOfHoles = Integer.parseInt(tvHoleCount.getText().toString());
-        for(int i = 0; i < numberOfHoles; i++){
+        for (int i = 0; i < numberOfHoles; i++) {
             holeParsList.add(DEFAULT_PAR_VALUE);
         }
     }
 
     private void incrementViewHoleCount() {
         int currentHole = Integer.parseInt(tvHoleCount.getText().toString());
-        if (currentHole >= MAX_HOLE_COUNT){
-			return;
-		}
-		currentHole++;
+        if (currentHole >= MAX_HOLE_COUNT) {
+            return;
+        }
+        currentHole++;
         tvHoleCount.setText(String.valueOf(currentHole));
         holeParsList.add(DEFAULT_PAR_VALUE);
         adapter.notifyDataSetChanged();
@@ -195,7 +199,7 @@ public class AddCourseMenuActivity extends Activity {
 
     private void decrementHoleCount() {
         int currentHoleCount = Integer.parseInt(tvHoleCount.getText().toString());
-        if(currentHoleCount > MIN_HOLE_COUNT) {
+        if (currentHoleCount > MIN_HOLE_COUNT) {
             currentHoleCount--;
             tvHoleCount.setText(String.valueOf(currentHoleCount));
             holeParsList.remove(currentHoleCount);
@@ -204,7 +208,7 @@ public class AddCourseMenuActivity extends Activity {
     }
 
     private void initializeCourseRepository() {
-        if (courseRepository == null){
+        if (courseRepository == null) {
             courseRepository = new CourseFileRepository(context);
         }
     }
