@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.main;
+package com.manleysoftware.michael.discgolfapp.ui.player;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,13 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.application.CourseNotFoundException;
-import com.manleysoftware.michael.discgolfapp.application.PlayersSelected;
 import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.domain.Players;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.MultiplePlayerDataAdapter;
-import com.manleysoftware.michael.discgolfapp.ui.player.PlayerEditorActivity;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.MultiplePlayerDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.course.legacy.CoursePickerActivity;
+import com.manleysoftware.michael.discgolfapp.ui.main.RuntimeGameActivity;
 
 import java.util.List;
 
@@ -158,7 +158,7 @@ public class RoundPlayerPickerActivity extends AppCompatActivity {
         bundle.putSerializable("Course",selectedCourse);
         bundle.putSerializable("Players", players);
 
-        Intent intent = new Intent(getApplicationContext(),RuntimeGameActivity.class);
+        Intent intent = new Intent(getApplicationContext(), RuntimeGameActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }

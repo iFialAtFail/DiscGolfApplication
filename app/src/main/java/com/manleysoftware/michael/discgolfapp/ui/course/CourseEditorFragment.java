@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.main.ui.course;
+package com.manleysoftware.michael.discgolfapp.ui.course;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -28,8 +28,9 @@ import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.databinding.FragmentCourseEditorBinding;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseDataAdapter;
-import com.manleysoftware.michael.discgolfapp.ui.course.EditExistingCourseActivity;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.CourseDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.course.legacy.EditExistingCourseActivity;
+import com.manleysoftware.michael.discgolfapp.viewmodel.course.CourseEditorViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

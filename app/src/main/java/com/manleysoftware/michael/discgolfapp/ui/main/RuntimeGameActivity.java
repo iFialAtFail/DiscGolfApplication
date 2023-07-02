@@ -29,6 +29,7 @@ import com.manleysoftware.michael.discgolfapp.ui.customViews.Interfaces.IHorizon
 import com.manleysoftware.michael.discgolfapp.ui.customViews.Interfaces.IScrollViewListener;
 import com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableHorizontalScrollView;
 import com.manleysoftware.michael.discgolfapp.ui.customViews.ObservableScrollView;
+import com.manleysoftware.michael.discgolfapp.ui.main.legacy.MainMenuActivity;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;

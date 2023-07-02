@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.main;
+package com.manleysoftware.michael.discgolfapp.ui.course.legacy;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -20,8 +20,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseDataAdapter;
-import com.manleysoftware.michael.discgolfapp.ui.course.AddCourseMenuActivity;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.CourseDataAdapter;
+import com.manleysoftware.michael.discgolfapp.viewmodel.course.CoursePickerViewModel;
+import com.manleysoftware.michael.discgolfapp.ui.main.legacy.MainMenuActivity;
+import com.manleysoftware.michael.discgolfapp.ui.player.RoundPlayerPickerActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

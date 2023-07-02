@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.application;
+package com.manleysoftware.michael.discgolfapp.ui.player;
 
 import java.io.Serializable;
 

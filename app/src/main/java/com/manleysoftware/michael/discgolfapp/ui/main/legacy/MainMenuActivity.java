@@ -1,27 +1,23 @@
-package com.manleysoftware.michael.discgolfapp.ui.main;
+package com.manleysoftware.michael.discgolfapp.ui.main.legacy;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.MainMenuDataAdapter;
-import com.manleysoftware.michael.discgolfapp.BuildConfig;
-import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.manleysoftware.michael.discgolfapp.ui.course.CourseEditorMenuActivity;
+import com.manleysoftware.michael.discgolfapp.BuildConfig;
+import com.manleysoftware.michael.discgolfapp.R;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.MainMenuDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.course.legacy.CourseEditorMenuActivity;
+import com.manleysoftware.michael.discgolfapp.ui.course.legacy.CoursePickerActivity;
 import com.manleysoftware.michael.discgolfapp.ui.player.PlayerListActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.FinishedScorecardsActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.UnfinishedScorecardsActivity;

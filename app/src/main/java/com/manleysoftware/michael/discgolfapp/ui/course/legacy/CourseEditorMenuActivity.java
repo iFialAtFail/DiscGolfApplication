@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.course;
+package com.manleysoftware.michael.discgolfapp.ui.course.legacy;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,13 +18,13 @@ import android.widget.TextView;
 
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.CourseDataAdapter;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.manleysoftware.michael.discgolfapp.ui.main.MainMenuActivity;
+import com.manleysoftware.michael.discgolfapp.ui.main.legacy.MainMenuActivity;
 
 /**
  * Created by Michael on 6/22/2016.

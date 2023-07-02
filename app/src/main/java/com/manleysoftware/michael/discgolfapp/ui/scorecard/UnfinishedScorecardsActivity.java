@@ -22,7 +22,7 @@ import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.data.ScorecardRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Scorecard;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.ScoreCardDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.ScoreCardDataAdapter;
 import com.manleysoftware.michael.discgolfapp.ui.main.RuntimeGameActivity;
 
 import java.util.List;

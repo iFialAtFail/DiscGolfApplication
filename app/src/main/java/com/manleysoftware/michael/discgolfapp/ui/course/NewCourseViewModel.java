@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.main.ui.course;
+package com.manleysoftware.michael.discgolfapp.ui.course;
 
 import static com.manleysoftware.michael.discgolfapp.domain.Course.MAX_HOLE_COUNT;
 

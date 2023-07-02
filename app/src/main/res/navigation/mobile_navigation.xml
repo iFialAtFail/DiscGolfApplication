@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.home.MainMenuFragment"
+        android:name="com.manleysoftware.michael.discgolfapp.ui.main.MainMenuFragment"
         android:label="@string/title_main_menu"
         tools:layout="@layout/fragment_main_menu" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_new_course"
-        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.course.NewCourseFragment"
+        android:name="com.manleysoftware.michael.discgolfapp.ui.course.NewCourseFragment"
         android:label="@string/title_new_course"
         tools:layout="@layout/fragment_new_course" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_course_editor"
-        android:name="com.manleysoftware.michael.discgolfapp.ui.main.ui.course.CourseEditorFragment"
+        android:name="com.manleysoftware.michael.discgolfapp.ui.course.CourseEditorFragment"
         android:label="Course Editor"
         tools:layout="@layout/fragment_course_editor" >
         <action

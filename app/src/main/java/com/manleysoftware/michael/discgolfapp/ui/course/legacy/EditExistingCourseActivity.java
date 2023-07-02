@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.course;
+package com.manleysoftware.michael.discgolfapp.ui.course.legacy;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseParDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.CourseParDataAdapter;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.R;

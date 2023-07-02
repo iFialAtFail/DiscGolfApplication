@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.Adapters;
+package com.manleysoftware.michael.discgolfapp.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

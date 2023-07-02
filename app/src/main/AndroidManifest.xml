@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainMenuActivity"
+            android:name=".ui.main.legacy.MainMenuActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme">
@@ -37,18 +37,18 @@
         <activity
             android:name=".ui.main.RuntimeGameActivity"
             android:theme="@style/NoActionBarTheme" />
-        <activity android:name=".ui.course.CourseEditorMenuActivity" />
-        <activity android:name=".ui.course.EditExistingCourseActivity" />
+        <activity android:name=".ui.course.legacy.CourseEditorMenuActivity" />
+        <activity android:name=".ui.course.legacy.EditExistingCourseActivity" />
         <activity
             android:name=".ui.player.EditExistingPlayerActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.main.CoursePickerActivity" />
-        <activity android:name=".ui.course.AddCourseMenuActivity" />
+        <activity android:name=".ui.course.legacy.CoursePickerActivity" />
+        <activity android:name=".ui.course.legacy.AddCourseMenuActivity" />
         <activity android:name=".ui.player.PlayerListActivity" />
         <activity
             android:name=".ui.player.PlayerEditorActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.main.RoundPlayerPickerActivity" />
+        <activity android:name=".ui.player.RoundPlayerPickerActivity" />
         <activity android:name=".ui.scorecard.FinishedScorecardsActivity" />
         <activity android:name=".ui.scorecard.UnfinishedScorecardsActivity" />
         <activity

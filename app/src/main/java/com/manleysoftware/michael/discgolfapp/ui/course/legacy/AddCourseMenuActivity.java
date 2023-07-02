@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.course;
+package com.manleysoftware.michael.discgolfapp.ui.course.legacy;
 
 import static com.manleysoftware.michael.discgolfapp.domain.Course.MAX_HOLE_COUNT;
 
@@ -20,8 +20,8 @@ import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException
 import com.manleysoftware.michael.discgolfapp.data.CourseRepository;
 import com.manleysoftware.michael.discgolfapp.data.filerepository.CourseFileRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseParDataAdapter;
-import com.manleysoftware.michael.discgolfapp.ui.main.ui.course.CourseEditorViewModel;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.CourseParDataAdapter;
+import com.manleysoftware.michael.discgolfapp.viewmodel.course.CourseEditorViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

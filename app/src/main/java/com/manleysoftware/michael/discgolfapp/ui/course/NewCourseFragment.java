@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.main.ui.course;
+package com.manleysoftware.michael.discgolfapp.ui.course;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ import androidx.navigation.Navigation;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
 import com.manleysoftware.michael.discgolfapp.databinding.FragmentNewCourseBinding;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.CourseParDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.CourseParDataAdapter;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,15 +15,17 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.manleysoftware.michael.discgolfapp.BuildConfig;
-import com.manleysoftware.michael.discgolfapp.domain.Player;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
-import com.manleysoftware.michael.discgolfapp.R;
-import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.PlayerDataAdapter;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.manleysoftware.michael.discgolfapp.ui.main.MainMenuActivity;
+import com.manleysoftware.michael.discgolfapp.BuildConfig;
+import com.manleysoftware.michael.discgolfapp.R;
+import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
+import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
+import com.manleysoftware.michael.discgolfapp.domain.Player;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.PlayerDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.main.legacy.MainMenuActivity;
 
 /**
  * Created by Michael on 6/23/2016.

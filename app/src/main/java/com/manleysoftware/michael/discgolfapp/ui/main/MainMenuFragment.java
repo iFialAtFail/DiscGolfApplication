@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.main.ui.home;
+package com.manleysoftware.michael.discgolfapp.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.databinding.FragmentMainMenuBinding;
-import com.manleysoftware.michael.discgolfapp.ui.Adapters.MainMenuDataAdapter;
-import com.manleysoftware.michael.discgolfapp.ui.main.CoursePickerActivity;
+import com.manleysoftware.michael.discgolfapp.ui.adapters.MainMenuDataAdapter;
+import com.manleysoftware.michael.discgolfapp.ui.course.legacy.CoursePickerActivity;
 import com.manleysoftware.michael.discgolfapp.ui.player.PlayerListActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.FinishedScorecardsActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.UnfinishedScorecardsActivity;

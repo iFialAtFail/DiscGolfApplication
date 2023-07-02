@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.Adapters;
+package com.manleysoftware.michael.discgolfapp.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.ImageView;
 
-import com.manleysoftware.michael.discgolfapp.application.PlayersSelected;
+import com.manleysoftware.michael.discgolfapp.ui.player.PlayersSelected;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.R;
 
