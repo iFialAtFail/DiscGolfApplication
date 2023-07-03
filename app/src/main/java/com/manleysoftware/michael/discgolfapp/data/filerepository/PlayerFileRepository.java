@@ -113,7 +113,7 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
     public Player findByPrimaryKey(Player template) {
         Player retval = null;
         for (Player player : players) {
-            if (isSamePlayerName(template, template)) {
+            if (isSamePlayerName(player, template)) {
                 retval = player;
             }
         }

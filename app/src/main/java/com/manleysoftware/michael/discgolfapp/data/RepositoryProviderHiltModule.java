@@ -16,7 +16,7 @@ import dagger.hilt.components.SingletonComponent;
 
 @InstallIn(SingletonComponent.class)
 @Module
-public class DatastoreHiltModule {
+public class RepositoryProviderHiltModule {
 
     @Provides
     @Singleton

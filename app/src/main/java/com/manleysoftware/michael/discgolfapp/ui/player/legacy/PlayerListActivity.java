@@ -1,4 +1,4 @@
-package com.manleysoftware.michael.discgolfapp.ui.player;
+package com.manleysoftware.michael.discgolfapp.ui.player.legacy;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -26,6 +26,7 @@ import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepo
 import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.ui.adapters.PlayerDataAdapter;
 import com.manleysoftware.michael.discgolfapp.ui.main.legacy.MainMenuActivity;
+import com.manleysoftware.michael.discgolfapp.ui.player.EditExistingPlayerActivity;
 
 /**
  * Created by Michael on 6/23/2016.
@@ -34,9 +35,9 @@ public class PlayerListActivity extends AppCompatActivity {
 
     //region Private Fields
 
-	private ListView lvPlayerList;
-	private PlayerRepository playerRepository;
-    private final Context context =  this;
+    private ListView lvPlayerList;
+    private PlayerRepository playerRepository;
+    private final Context context = this;
     private PlayerDataAdapter adapter;
 
     //endregion
@@ -51,30 +52,28 @@ public class PlayerListActivity extends AppCompatActivity {
         if (BuildConfig.FLAVOR.equals("free") && !BuildConfig.BUILD_TYPE.equals("debug")) {
             AdView adView = (AdView) findViewById(R.id.adViewPE);
             AdRequest request = new AdRequest.Builder().build();
-//                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-//                    .build();
-			if (adView != null)
-	            adView.loadAd(request);
+            if (adView != null)
+                adView.loadAd(request);
         }
 
 
         setupPlayerStorage();
 
         lvPlayerList = (ListView) findViewById(R.id.lvPlayerList);
-		RelativeLayout playerEditorRelativelayout = (RelativeLayout) findViewById(R.id.playerEditorRelativeLayout);
+        RelativeLayout playerEditorRelativelayout = (RelativeLayout) findViewById(R.id.playerEditorRelativeLayout);
 
-        if (!setupPlayerListView()){
-			View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout,null);
+        if (!setupPlayerListView()) {
+            View messageLayout = getLayoutInflater().inflate(R.layout.listview_alternative_layout, null);
 
-			ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
-			Bitmap bm5 = BitmapFactory
-					.decodeResource(context.getResources(), R.drawable.jade_500x500);
-			backgroundImage.setImageBitmap(bm5);
+            ImageView backgroundImage = (ImageView) messageLayout.findViewById(R.id.ivImage);
+            Bitmap bm5 = BitmapFactory
+                    .decodeResource(context.getResources(), R.drawable.jade_500x500);
+            backgroundImage.setImageBitmap(bm5);
 
-			TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
-			tvNoListViewMessage.setText("Oops! No players here yet!\nPlease add some players.");
-			playerEditorRelativelayout.addView(messageLayout);
-		}
+            TextView tvNoListViewMessage = (TextView) messageLayout.findViewById(R.id.tvNoListViewMessage);
+            tvNoListViewMessage.setText("Oops! No players here yet!\nPlease add some players.");
+            playerEditorRelativelayout.addView(messageLayout);
+        }
 
         lvPlayerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -82,9 +81,9 @@ public class PlayerListActivity extends AppCompatActivity {
                                            final int position, long id) {
                 AlertDialog.Builder aat = new AlertDialog.Builder(context);
                 aat.setTitle("Delete?")
-                        .setMessage("Are you sure you want to delete "+parent.getItemAtPosition(position).toString()+"?")
+                        .setMessage("Are you sure you want to delete " + parent.getItemAtPosition(position).toString() + "?")
                         .setCancelable(true)
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -97,14 +96,14 @@ public class PlayerListActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //Make the change
-                                Player playerToRemove = (Player)adapter.getItem(position);
+                                Player playerToRemove = (Player) adapter.getItem(position);
                                 playerRepository.delete(playerToRemove, context);
 
                                 //Commit the change to persistant memory
-								adapter.notifyDataSetChanged();
-								if (adapter.getCount()== 0){
-									recreate();
-								}
+                                adapter.notifyDataSetChanged();
+                                if (adapter.getCount() == 0) {
+                                    recreate();
+                                }
                             }
                         });
                 AlertDialog art = aat.create();
@@ -116,22 +115,22 @@ public class PlayerListActivity extends AppCompatActivity {
 
         });
 
-		lvPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(context, EditExistingPlayerActivity.class);
-				Bundle b = new Bundle();
-				b.putInt("Position", position);
-				intent.putExtras(b);
-				startActivity(intent);
-			}
-		});
+        lvPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(context, EditExistingPlayerActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("Position", position);
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
 
-		Button btnNewPlayer = (Button) findViewById(R.id.btnNewPlayer);
+        Button btnNewPlayer = (Button) findViewById(R.id.btnNewPlayer);
         btnNewPlayer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PlayerEditorActivity.class );
+                Intent intent = new Intent(getApplicationContext(), PlayerEditorActivity.class);
                 startActivityForResult(intent, 1);
             }
         });
@@ -148,8 +147,7 @@ public class PlayerListActivity extends AppCompatActivity {
     //region Overriding normal behaviours
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), MainMenuActivity.class));
         finish();
@@ -166,7 +164,7 @@ public class PlayerListActivity extends AppCompatActivity {
             lvPlayerList.setAdapter(adapter);
             return true;
         }
-		return false;
+        return false;
     }
 
     private void setupPlayerStorage() {

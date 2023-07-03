@@ -1,19 +1,20 @@
-package com.manleysoftware.michael.discgolfapp.ui.player;
+package com.manleysoftware.michael.discgolfapp.ui.player.legacy;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.application.AlreadyExistsException;
+import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
+import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Course;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
-import com.manleysoftware.michael.discgolfapp.data.filerepository.PlayerFileRepository;
-import com.manleysoftware.michael.discgolfapp.R;
-import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
 
 /**
  * Created by Michael on 6/23/2016.

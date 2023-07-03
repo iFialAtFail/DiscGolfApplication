@@ -20,7 +20,6 @@ import com.manleysoftware.michael.discgolfapp.BuildConfig;
 import com.manleysoftware.michael.discgolfapp.databinding.FragmentMainMenuBinding;
 import com.manleysoftware.michael.discgolfapp.ui.adapters.MainMenuDataAdapter;
 import com.manleysoftware.michael.discgolfapp.ui.course.legacy.CoursePickerActivity;
-import com.manleysoftware.michael.discgolfapp.ui.player.PlayerListActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.FinishedScorecardsActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.UnfinishedScorecardsActivity;
 
@@ -88,8 +87,8 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void OnEditPlayersClick(View v) {
-        Intent intent = new Intent(requireContext(), PlayerListActivity.class);
-        startActivity(intent);
+        NavDirections action = MainMenuFragmentDirections.actionNavigationHomeToPlayersEditorFragment();
+        Navigation.findNavController(requireView()).navigate(action);
     }
 
     private void OnScorecardsClick(View v) {

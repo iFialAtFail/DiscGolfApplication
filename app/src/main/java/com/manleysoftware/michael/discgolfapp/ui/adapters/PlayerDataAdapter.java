@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,11 +19,16 @@ import java.util.List;
  */
 public class PlayerDataAdapter extends BaseAdapter {
 
-    private final List<Player> playerList;
+    private List<Player> playerList;
     private final Context context;
 
     public PlayerDataAdapter(Context context, List<Player> playerStorage) {
         playerList = playerStorage;
+        this.context = context;
+    }
+
+    public PlayerDataAdapter(Context context) {
+        this.playerList = new ArrayList<>();
         this.context = context;
     }
 
@@ -62,5 +68,9 @@ public class PlayerDataAdapter extends BaseAdapter {
         tvNameText.setText(player.getName());
 		tvNameText.setFocusable(false);
         return rowView;
+    }
+
+    public void setPlayerList(List<Player> players){
+        this.playerList = players;
     }
 }

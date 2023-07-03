@@ -25,6 +25,7 @@ import com.manleysoftware.michael.discgolfapp.domain.Players;
 import com.manleysoftware.michael.discgolfapp.ui.adapters.MultiplePlayerDataAdapter;
 import com.manleysoftware.michael.discgolfapp.ui.course.legacy.CoursePickerActivity;
 import com.manleysoftware.michael.discgolfapp.ui.main.RuntimeGameActivity;
+import com.manleysoftware.michael.discgolfapp.ui.player.legacy.PlayerEditorActivity;
 
 import java.util.List;
 
@@ -38,7 +39,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class RoundPlayerPickerActivity extends AppCompatActivity {
 
-    public static final int PLAYER_PICKER_INTENT = 3;
     private static final String PLAYERS_SELECTED_KEY = "PLAYERS_SELECTED_KEY";
     private static final String NEW_PLAYER_BOOL = "NEW_PLAYER_BOOL";
 

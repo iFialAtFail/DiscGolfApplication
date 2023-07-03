@@ -18,7 +18,7 @@ import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.ui.adapters.MainMenuDataAdapter;
 import com.manleysoftware.michael.discgolfapp.ui.course.legacy.CourseEditorMenuActivity;
 import com.manleysoftware.michael.discgolfapp.ui.course.legacy.CoursePickerActivity;
-import com.manleysoftware.michael.discgolfapp.ui.player.PlayerListActivity;
+import com.manleysoftware.michael.discgolfapp.ui.player.legacy.PlayerListActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.FinishedScorecardsActivity;
 import com.manleysoftware.michael.discgolfapp.ui.scorecard.UnfinishedScorecardsActivity;
 

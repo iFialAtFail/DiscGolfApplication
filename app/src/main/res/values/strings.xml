@@ -27,4 +27,14 @@
     <string name="hole_count">%d</string>
     <string name="invalid_course_name_exception">Not a valid course name! Try again!</string>
     <string name="course_name_already_exists_exception">Course: %s exists already.</string>
+    <string name="alpha_numeric_text_only">*Alpha-Numeric Text Only</string>
+    <string name="name_label">Name:</string>
+    <string name="invalid_user_exception">Invalid input or duplicate user. Please try again.</string>
+    <string name="edit_players_header">Edit Players</string>
+    <string name="new_player">New Player</string>
+    <string name="no_players_found_message">Oops! No players here yet!\nPlease add some players.</string>
+    <string name="deletePrompt">Delete?</string>
+    <string name="delete_confirmation_question">Are you sure you want to delete %s?</string>
+    <string name="delete_button">Delete</string>
+    <string name="player_already_exists">Player: %s exists already</string>
 </resources>

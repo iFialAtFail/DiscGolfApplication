@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewPE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/playerEditorBannerAd"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+    </com.google.android.gms.ads.AdView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/adViewPE">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center">
+            <ImageView
+                android:layout_alignParentStart="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/mdgt_darker"
+                android:id="@+id/titleThumb1"/>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:src="@mipmap/mdgt_darker"
+                android:id="@+id/titleThumb2"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/titleThumb1"
+                android:layout_toStartOf="@id/titleThumb2"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/edit_players_header"
+                android:layout_centerVertical="true"
+                android:gravity="center"/>
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_player"
+            android:id="@+id/btnNewPlayer"
+            android:layout_gravity="center_horizontal" />
+
+        <ListView
+            android:id="@+id/lvPlayerList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/playerEditorRelativeLayout"/>
+    </LinearLayout>
+
+</RelativeLayout>

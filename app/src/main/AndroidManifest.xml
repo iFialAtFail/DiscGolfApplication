@@ -44,9 +44,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.course.legacy.CoursePickerActivity" />
         <activity android:name=".ui.course.legacy.AddCourseMenuActivity" />
-        <activity android:name=".ui.player.PlayerListActivity" />
+        <activity android:name=".ui.player.legacy.PlayerListActivity" />
         <activity
-            android:name=".ui.player.PlayerEditorActivity"
+            android:name=".ui.player.legacy.PlayerEditorActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.player.RoundPlayerPickerActivity" />
         <activity android:name=".ui.scorecard.FinishedScorecardsActivity" />

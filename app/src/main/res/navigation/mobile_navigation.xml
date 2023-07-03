@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_main_menu_to_navigation_course_editor"
             app:destination="@id/navigation_course_editor" />
+        <action
+            android:id="@+id/action_navigation_home_to_playersEditorFragment"
+            app:destination="@id/playersEditorFragment" />
     </fragment>
 
     <fragment
@@ -33,5 +36,26 @@
         <action
             android:id="@+id/action_navigation_course_editor_to_navigation_new_course"
             app:destination="@id/navigation_new_course" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerEditorFragment"
+        android:name="com.manleysoftware.michael.discgolfapp.ui.player.PlayerEditorFragment"
+        android:label="fragment_player_editor"
+        tools:layout="@layout/fragment_player_editor" >
+        <action
+            android:id="@+id/action_playerEditorFragment_to_playersEditorFragment"
+            app:destination="@id/playersEditorFragment" />
+        <argument
+            android:name="playerNameArg"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/playersEditorFragment"
+        android:name="com.manleysoftware.michael.discgolfapp.ui.player.PlayersEditorFragment"
+        android:label="fragment_players_editor"
+        tools:layout="@layout/fragment_players_editor" >
+        <action
+            android:id="@+id/action_playersEditorFragment_to_playerEditorFragment"
+            app:destination="@id/playerEditorFragment" />
     </fragment>
 </navigation>

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.data.PlayerRepository;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
+import com.manleysoftware.michael.discgolfapp.ui.player.legacy.PlayerListActivity;
 
 import java.util.List;
 
