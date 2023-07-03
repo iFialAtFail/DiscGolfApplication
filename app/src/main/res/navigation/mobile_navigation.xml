@@ -57,5 +57,17 @@
         <action
             android:id="@+id/action_playersEditorFragment_to_playerEditorFragment"
             app:destination="@id/playerEditorFragment" />
+        <action
+            android:id="@+id/action_playersEditorFragment_to_newPlayerFragment"
+            app:destination="@id/newPlayerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPlayerFragment"
+        android:name="com.manleysoftware.michael.discgolfapp.ui.player.NewPlayerFragment"
+        android:label="fragment_new_player"
+        tools:layout="@layout/fragment_new_player" >
+        <action
+            android:id="@+id/action_newPlayerFragment_to_playersEditorFragment"
+            app:destination="@id/playersEditorFragment" />
     </fragment>
 </navigation>

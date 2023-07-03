@@ -1,7 +1,6 @@
 package com.manleysoftware.michael.discgolfapp.ui.player;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -28,7 +27,6 @@ import com.manleysoftware.michael.discgolfapp.R;
 import com.manleysoftware.michael.discgolfapp.databinding.FragmentPlayersEditorBinding;
 import com.manleysoftware.michael.discgolfapp.domain.Player;
 import com.manleysoftware.michael.discgolfapp.ui.adapters.PlayerDataAdapter;
-import com.manleysoftware.michael.discgolfapp.ui.player.legacy.PlayerEditorActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -105,8 +103,8 @@ public class PlayersEditorFragment extends Fragment {
 
         Button btnNewPlayer = binding.btnNewPlayer;
         btnNewPlayer.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), PlayerEditorActivity.class);
-            startActivityForResult(intent, 1);
+            NavDirections action = PlayersEditorFragmentDirections.actionPlayersEditorFragmentToNewPlayerFragment();
+            Navigation.findNavController(requireView()).navigate(action);
         });
         return root;
     }
