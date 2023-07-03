@@ -13,7 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +29,6 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
     private static final String TAG = PlayerFileRepository.class.getSimpleName();
     private List<Player> players;
 
-    //endregion
-
-    //region Constructors
 
     public PlayerFileRepository(Context context) {
         PlayerRepository repo = loadFromFile(context);
@@ -42,22 +39,6 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
         }
     }
 
-    public PlayerFileRepository(Player[] arrayOfPlayers) {
-        players = new ArrayList<>();
-        players.addAll(Arrays.asList(arrayOfPlayers));
-
-    }
-
-    public PlayerFileRepository(ArrayList<Player> listOfPlayers) {
-        players.addAll(listOfPlayers);
-
-    }
-
-    //endregion
-
-
-    //region Public Methods
-
     @Override
     public void add(Player player, Context context) throws PlayerExistsAlreadyException {
         if (isUniquePlayer(player)) {
@@ -67,7 +48,6 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
             throw new PlayerExistsAlreadyException();
         }
     }
-
 
     @Override
     public void update(Player entity, Context context) throws IllegalStateException {
@@ -89,6 +69,7 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
 
     @Override
     public List<Player> getAllPlayers() {
+        players.sort(Comparator.comparing(player -> player.getName().toLowerCase()));
         return players;
     }
 
@@ -101,7 +82,6 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
         }
         return true;
     }
-
 
     @Override
     public void delete(Player player, Context context) {
@@ -166,6 +146,4 @@ public class PlayerFileRepository implements Serializable, PlayerRepository {
         }
         return null;
     }
-
-    //endregion
 }
